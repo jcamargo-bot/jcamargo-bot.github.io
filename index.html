@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seminario de Topología "Rafael Isaacs"</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Georgia, serif; color: #222; background: #fff; }
+header { border-bottom: 1px solid #ddd; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+header h1 { font-size: 1.2rem; font-weight: normal; }
+header p { font-size: 0.85rem; color: #666; margin-top: 3px; }
+nav a { font-size: 0.85rem; color: #555; text-decoration: none; margin-left: 1.5rem; }
+nav a:hover { color: #000; }
+.hero { background: #f7f7f7; padding: 2rem; border-bottom: 1px solid #ddd; }
+.hero-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 0.5rem; }
+.hero h2 { font-size: 1.5rem; font-weight: normal; margin-bottom: 0.75rem; line-height: 1.4; }
+.hero p { font-size: 0.95rem; color: #444; line-height: 1.7; max-width: 680px; }
+.meta-row { display: flex; gap: 2rem; margin-top: 1.25rem; flex-wrap: wrap; }
+.meta-item { font-size: 0.85rem; }
+.meta-item strong { display: block; color: #888; font-weight: normal; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+.main { padding: 2rem; max-width: 900px; }
+.stats { display: flex; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap; }
+.stat { background: #f7f7f7; padding: 1rem 1.5rem; border-radius: 6px; }
+.stat .num { font-size: 1.8rem; font-weight: bold; color: #222; }
+.stat .lbl { font-size: 0.8rem; color: #888; margin-top: 2px; }
+.section-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; margin-bottom: 1rem; font-weight: normal; }
+.session { display: flex; gap: 1rem; padding: 0.85rem 0; border-bottom: 1px solid #f0f0f0; align-items: flex-start; }
+.session:hover { background: #fafafa; }
+.session-num { font-size: 0.8rem; color: #aaa; min-width: 50px; padding-top: 2px; }
+.session-title { font-size: 0.95rem; color: #222; line-height: 1.4; margin-bottom: 3px; }
+.session-meta { font-size: 0.8rem; color: #999; }
+footer { border-top: 1px solid #eee; padding: 1.5rem 2rem; font-size: 0.8rem; color: #aaa; margin-top: 2rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Seminario de Topología "Rafael Isaacs"</h1>
+    <p>Escuela de Matemáticas · Universidad Industrial de Santander</p>
+  </div>
+  <nav>
+    <a href="#">Sesiones</a>
+    <a href="#">Expositores</a>
+    <a href="#">Archivo</a>
+    <a href="#">Acerca del seminario</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hero-label">Próxima sesión</div>
+  <h2>Sesión 456 — Grupos Fundamentales y el Teorema de Seifert–van Kampen</h2>
+  <p>La Topología Algebraica estudia invariantes topológicos a través de funtores hacia categorías algebraicas. El grupo fundamental es uno de los principales ejemplos: asigna a cada espacio topológico un grupo invariante bajo homeomorfismos, central en la teoría de homotopía.</p>
+  <div class="meta-row">
+    <div class="meta-item"><strong>Fecha</strong>Lunes 13 de abril, 2026</div>
+    <div class="meta-item"><strong>Hora</strong>4:00 p.m.</div>
+    <div class="meta-item"><strong>Lugar</strong>Sala Lezama, Edificio Camilo Torres</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="stats">
+    <div class="stat"><div class="num">456</div><div class="lbl">Sesiones realizadas</div></div>
+    <div class="stat"><div class="num">+5</div><div class="lbl">Años de registro</div></div>
+    <div class="stat"><div class="num">Lunes</div><div class="lbl">Cada semana, 4 p.m.</div></div>
+  </div>
+
+  <div class="section-title">Sesiones recientes</div>
+
+  <div class="session">
+    <div class="session-num">Ses. 456</div>
+    <div>
+      <div class="session-title">Grupos Fundamentales y el Teorema de Seifert–van Kampen</div>
+      <div class="session-meta">13 abril 2026</div>
+    </div>
+  </div>
+  <div class="session">
+    <div class="session-num">Ses. 455</div>
+    <div>
+      <div class="session-title">Intersecciones de ideales maximales</div>
+      <div class="session-meta">16 marzo 2026 · Camilo Andrés Acevedo Ardila · UIS</div>
+    </div>
+  </div>
+  <div class="session">
+    <div class="session-num">Ses. 454</div>
+    <div>
+      <div class="session-title">Sobre cerrados hereditarios y fracciones egipcias</div>
+      <div class="session-meta">9 marzo 2026 · Jeison Amorocho · UIS</div>
+    </div>
+  </div>
+  <div class="session">
+    <div class="session-num">Ses. 453</div>
+    <div>
+      <div class="session-title">C-representación de ideales en espacios de Banach</div>
+      <div class="session-meta">23 febrero 2026 · Julian Neira · UIS</div>
+    </div>
+  </div>
+  <div class="session">
+    <div class="session-num">Ses. 452</div>
+    <div>
+      <div class="session-title">Funciones no necesariamente continuas que preservan conexidad</div>
+      <div class="session-meta">16 febrero 2026 · UIS</div>
+    </div>
+  </div>
+  <div class="session">
+    <div class="session-num">Ses. 451</div>
+    <div>
+      <div class="session-title">El operador de Dirac en geometría</div>
+      <div class="session-meta">9 febrero 2026 · Jurgen Julio Batalla · UIS</div>
+    </div>
+  </div>
+  <div class="session">
+    <div class="session-num">Ses. 450</div>
+    <div>
+      <div class="session-title">Propiedades de la Función T de Jones</div>
+      <div class="session-meta">24 noviembre 2025 · Sergio Macías · UNAM</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>Seminario de Topología "Rafael Isaacs" · UIS · Bucaramanga, Colombia</span>
+  <span>jcamargo-bot.github.io</span>
+</footer>
+
+</body>
+</html>
