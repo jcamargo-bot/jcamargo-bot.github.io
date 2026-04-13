@@ -1,503 +1,264 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Archivo Histórico – Sesiones 1 a 328 – Seminario de Topología "Rafael Isaacs"</title>
-  <style>
-    /* ── Variables ── */
-    :root {
-      --azul:    #1a237e;
-      --azul-cl: #3949ab;
-      --acento:  #e53935;
-      --gris-f:  #f5f5f5;
-      --gris-b:  #e0e0e0;
-      --texto:   #212121;
-      --sub:     #757575;
-      --blanco:  #ffffff;
-      --radio:   8px;
-      --sombra:  0 2px 8px rgba(0,0,0,.10);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Georgia', 'Times New Roman', serif;
-      background: var(--gris-f);
-      color: var(--texto);
-      line-height: 1.7;
-      font-size: 16px;
-    }
-
-    /* ── Barra de navegación ── */
-    header {
-      background: var(--azul);
-      color: var(--blanco);
-      padding: 0 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      min-height: 64px;
-      box-shadow: 0 2px 6px rgba(0,0,0,.25);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .nav-marca {
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-      text-decoration: none;
-      color: var(--blanco);
-    }
-    .nav-marca img { height: 36px; width: auto; }
-    .nav-marca span { font-family: 'Georgia', serif; font-size: 1rem; font-weight: bold; letter-spacing: .01em; }
-    nav { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-    nav a {
-      color: rgba(255,255,255,.85);
-      text-decoration: none;
-      font-family: Arial, sans-serif;
-      font-size: .875rem;
-      letter-spacing: .03em;
-      transition: color .2s;
-    }
-    nav a:hover { color: #fff; }
-
-    /* ── Cabecera de la página ── */
-    .page-header {
-      background: var(--blanco);
-      border-bottom: 3px solid var(--azul);
-      padding: 2.5rem 2rem 2rem;
-      max-width: 900px;
-      margin: 2rem auto 0;
-      border-radius: var(--radio) var(--radio) 0 0;
-      box-shadow: var(--sombra);
-    }
-    .breadcrumb {
-      font-family: Arial, sans-serif;
-      font-size: .8rem;
-      color: var(--sub);
-      margin-bottom: 1rem;
-    }
-    .breadcrumb a { color: var(--azul-cl); text-decoration: none; }
-    .breadcrumb a:hover { text-decoration: underline; }
-    .page-header h1 {
-      font-family: 'Georgia', serif;
-      font-size: 1.9rem;
-      color: var(--azul);
-      margin-bottom: .5rem;
-    }
-    .page-header p {
-      color: var(--sub);
-      font-family: Arial, sans-serif;
-      font-size: .95rem;
-    }
-
-    /* ── Contenido principal ── */
-    main {
-      max-width: 900px;
-      margin: 0 auto 3rem;
-      background: var(--blanco);
-      border-radius: 0 0 var(--radio) var(--radio);
-      box-shadow: var(--sombra);
-      padding: 2rem;
-    }
-
-    /* ── Nota introductoria ── */
-    .nota {
-      background: #e8eaf6;
-      border-left: 4px solid var(--azul-cl);
-      border-radius: 4px;
-      padding: 1rem 1.25rem;
-      margin-bottom: 2rem;
-      font-family: Arial, sans-serif;
-      font-size: .9rem;
-      color: #37474f;
-    }
-
-    /* ── Bloque de sesión ── */
-    .sesion {
-      border-top: 1px solid var(--gris-b);
-      padding: 1.5rem 0;
-    }
-    .sesion:first-of-type { border-top: none; }
-
-    .sesion-meta {
-      display: flex;
-      align-items: baseline;
-      gap: .75rem;
-      margin-bottom: .4rem;
-      flex-wrap: wrap;
-    }
-    .sesion-num {
-      background: var(--azul);
-      color: #fff;
-      font-family: Arial, sans-serif;
-      font-size: .75rem;
-      font-weight: bold;
-      letter-spacing: .05em;
-      padding: .15rem .5rem;
-      border-radius: 3px;
-    }
-    .sesion-fecha {
-      font-family: Arial, sans-serif;
-      font-size: .85rem;
-      color: var(--sub);
-    }
-
-    .sesion h2 {
-      font-family: 'Georgia', serif;
-      font-size: 1.15rem;
-      color: var(--azul);
-      margin-bottom: .6rem;
-      line-height: 1.4;
-    }
-
-    .sesion-abstract {
-      font-size: .95rem;
-      text-align: justify;
-      margin-bottom: .75rem;
-      color: #333;
-    }
-
-    .sesion-expositor {
-      font-family: Arial, sans-serif;
-      font-size: .85rem;
-      color: var(--sub);
-    }
-    .sesion-expositor strong { color: var(--texto); font-weight: 600; }
-
-    /* ── Bloque "en construcción" ── */
-    .en-construccion {
-      border-top: 1px solid var(--gris-b);
-      padding: 1.5rem 0;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      font-family: Arial, sans-serif;
-      font-size: .9rem;
-      color: var(--sub);
-    }
-    .en-construccion .rango {
-      background: var(--gris-b);
-      color: #546e7a;
-      font-weight: bold;
-      font-size: .8rem;
-      padding: .2rem .6rem;
-      border-radius: 3px;
-      white-space: nowrap;
-    }
-
-    /* ── Volver ── */
-    .volver {
-      margin-top: 2.5rem;
-      padding-top: 1.5rem;
-      border-top: 2px solid var(--azul);
-    }
-    .volver a {
-      font-family: Arial, sans-serif;
-      font-size: .9rem;
-      color: var(--azul-cl);
-      text-decoration: none;
-    }
-    .volver a:hover { text-decoration: underline; }
-
-    /* ── Footer ── */
-    footer {
-      text-align: center;
-      font-family: Arial, sans-serif;
-      font-size: .8rem;
-      color: var(--sub);
-      padding: 2rem 1rem;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesiones 1–328 – Seminario de Topología "Rafael Isaacs"</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Georgia, serif; color: #222; background: #fff; }
+header { background: #67B93E; border-bottom: 1px solid #4a9a2a; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+header h1 { font-size: 1.2rem; font-weight: normal; color: #fff; }
+header p { font-size: 0.85rem; color: rgba(255,255,255,0.85); margin-top: 3px; }
+nav a { font-size: 0.85rem; color: rgba(255,255,255,0.85); text-decoration: none; margin-left: 1.5rem; }
+nav a:hover { color: #fff; text-decoration: underline; }
+.breadcrumb { font-size: 0.8rem; color: #999; padding: 1rem 2rem; border-bottom: 1px solid #f0f0f0; }
+.breadcrumb a { color: #67B93E; text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.content { max-width: 900px; padding: 2rem; margin: 0 auto; }
+.page-title { font-size: 1.8rem; font-weight: normal; color: #222; margin-bottom: 0.4rem; }
+.page-sub { font-size: 0.9rem; color: #999; margin-bottom: 2rem; }
+.nota { background: #f7f7f7; border-left: 3px solid #67B93E; padding: 0.9rem 1.25rem; margin-bottom: 2rem; font-size: 0.875rem; color: #555; border-radius: 0 4px 4px 0; }
+.session { display: flex; gap: 1rem; padding: 1.25rem 0; border-bottom: 1px solid #f0f0f0; align-items: flex-start; }
+.session:hover { background: #fafafa; }
+.session-num { font-size: 0.8rem; color: #aaa; min-width: 60px; padding-top: 2px; white-space: nowrap; }
+.session-title { font-size: 0.95rem; color: #222; line-height: 1.4; margin-bottom: 3px; font-weight: normal; }
+.session-meta { font-size: 0.8rem; color: #999; margin-bottom: 6px; }
+.session-desc { font-size: 0.875rem; color: #555; line-height: 1.7; margin-top: 5px; text-align: justify; }
+.session-expositor { font-size: 0.85rem; color: #777; margin-top: 6px; }
+.session-expositor strong { color: #444; font-weight: 600; }
+.en-construccion { display: flex; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid #f0f0f0; font-size: 0.875rem; color: #aaa; }
+.en-construccion .rango { background: #f0f0f0; color: #888; font-size: 0.75rem; font-weight: bold; padding: 0.2rem 0.6rem; border-radius: 3px; white-space: nowrap; }
+.back-link { display: inline-block; margin-top: 2.5rem; font-size: 0.85rem; color: #67B93E; text-decoration: none; }
+.back-link:hover { text-decoration: underline; }
+footer { border-top: 1px solid #eee; padding: 1.5rem 2rem; font-size: 0.8rem; color: #aaa; margin-top: 2rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+</style>
 </head>
 <body>
 
-<!-- ════ NAV ════ -->
 <header>
-  <a class="nav-marca" href="https://jcamargo-bot.github.io/index.html">
-    <img src="https://jcamargo-bot.github.io/LOGO%20UIS_PNG.png" alt="Logo UIS" />
-    <span>Seminario de Topología "Rafael Isaacs"</span>
-  </a>
+  <div style="display:flex; align-items:center; gap:1rem;">
+    <img src="LOGO%20UIS_PNG.png" alt="Logo UIS" style="height:50px; width:auto;">
+    <div>
+      <h1>Seminario de Topología "Rafael Isaacs"</h1>
+      <p>Escuela de Matemáticas · Universidad Industrial de Santander</p>
+    </div>
+  </div>
   <nav>
-    <a href="https://jcamargo-bot.github.io/index.html">Sesiones</a>
-    <a href="https://jcamargo-bot.github.io/index.html#expositores">Expositores</a>
-    <a href="https://seminariodetopologiarafaelisaacs.blogspot.com">Archivo histórico</a>
-    <a href="https://jcamargo-bot.github.io/index.html#acerca">Acerca del seminario</a>
+    <a href="index.html">Sesiones</a>
+    <a href="index.html#expositores">Expositores</a>
+    <a href="sesiones-1-328.html">Sesiones 1–328</a>
+    <a href="index.html#acerca">Acerca del seminario</a>
   </nav>
 </header>
 
-<!-- ════ CABECERA ════ -->
-<div class="page-header">
-  <div class="breadcrumb">
-    <a href="https://jcamargo-bot.github.io/index.html">Inicio</a> › Archivo histórico
-  </div>
-  <h1>Sesiones 1 – 328</h1>
-  <p>Registro histórico del Seminario de Topología "Rafael Isaacs" · 2010 – 2021</p>
+<div class="breadcrumb">
+  <a href="index.html">Inicio</a> › Sesiones 1–328
 </div>
 
-<!-- ════ CONTENIDO ════ -->
-<main>
+<div class="content">
+  <div class="page-title">Sesiones 1–328</div>
+  <div class="page-sub">Registro histórico del Seminario de Topología "Rafael Isaacs" · 2010–2021</div>
 
   <div class="nota">
     El registro completo de las sesiones anteriores a la 94 se irá incorporando progresivamente. Las sesiones aquí listadas corresponden al período disponible en el archivo del seminario.
   </div>
 
-  <!-- ── SESIÓN 328 ── -->
-  <div class="sesion">
-    <div class="sesion-meta">
-      <span class="sesion-num">SES. 328</span>
-      <span class="sesion-fecha">8 de marzo de 2021</span>
+  <div class="session">
+    <div class="session-num">Ses. 328</div>
+    <div>
+      <div class="session-title">Reconstrucción de coloraciones a partir de los conjuntos homogéneos</div>
+      <div class="session-meta">8 de marzo de 2021</div>
+      <div class="session-desc">Una coloración de [X]², la colección de los subconjuntos de dos elementos de X, es una función C de [X]² en {0,1}. Un subconjunto H de X es homogéneo si C es constante en [H]². El teorema de Ramsey asegura que si X es infinito, toda coloración admite un homogéneo infinito. El problema tratado es determinar cuándo se puede recobrar la coloración C a partir de la colección de sus conjuntos homogéneos. Trabajo en colaboración con Claribet Piña.</div>
+      <div class="session-expositor"><strong>Carlos Uzcátegui</strong></div>
     </div>
-    <h2>Reconstrucción de coloraciones a partir de los conjuntos homogéneos</h2>
-    <p class="sesion-abstract">
-      Una coloración de [X]<sup>2</sup>, la colección de los subconjuntos de dos elementos de X, es una función C de [X]<sup>2</sup> en {0,1}. Un subconjunto H de X es homogéneo si C es constante en [H]<sup>2</sup>. El teorema de Ramsey asegura que si X es infinito, toda coloración admite un homogéneo infinito. El problema tratado es determinar cuándo se puede recobrar la coloración C a partir de la colección de sus conjuntos homogéneos. Trabajo en colaboración con Claribet Piña.
-    </p>
-    <p class="sesion-expositor"><strong>Carlos Uzcátegui</strong></p>
   </div>
 
-  <!-- ── SESIÓN 327 ── -->
-  <div class="sesion">
-    <div class="sesion-meta">
-      <span class="sesion-num">SES. 327</span>
-      <span class="sesion-fecha">22 de febrero de 2021</span>
+  <div class="session">
+    <div class="session-num">Ses. 327</div>
+    <div>
+      <div class="session-title">Teoremas de Ramsey</div>
+      <div class="session-meta">22 de febrero de 2021</div>
+      <div class="session-desc">Cuando tenemos una partición de un conjunto, podemos asociar a cada parte un color, pensando en la partición como una coloración. Los conjuntos que quedan en una sola parte se llaman monocromáticos. El teorema de Ramsey infinito afirma que para toda coloración del conjunto {s ⊂ ℕ : |s| = k} existe un subconjunto infinito H de ℕ monocromático. Se demuestran ambos teoremas y se enuncian generalizaciones.</div>
+      <div class="session-expositor"><strong>Camilo Andrés Nuñes</strong></div>
     </div>
-    <h2>Teoremas de Ramsey</h2>
-    <p class="sesion-abstract">
-      Cuando tenemos una partición de un conjunto, podemos asociar a cada parte un color, pensando en la partición como una <em>coloración</em>. Los conjuntos que quedan en una sola parte se llaman <em>monocromáticos</em>. El teorema de Ramsey infinito afirma que para toda coloración del conjunto {s ⊂ ℕ : |s| = k} existe un subconjunto infinito H de ℕ monocromático. El teorema finito de Ramsey es un resultado análogo para conjuntos finitos. Se demuestran ambos teoremas y se enuncian dos generalizaciones sobre coloraciones de familias de subconjuntos finitos de ℕ con menos restricciones.
-    </p>
-    <p class="sesion-expositor"><strong>Camilo Andrés Nuñes</strong></p>
   </div>
 
-  <!-- ── SESIÓN 326 ── -->
-  <div class="sesion">
-    <div class="sesion-meta">
-      <span class="sesion-num">SES. 326</span>
-      <span class="sesion-fecha">7 de diciembre de 2020</span>
+  <div class="session">
+    <div class="session-num">Ses. 326</div>
+    <div>
+      <div class="session-title">Espacio Universal de Urysohn</div>
+      <div class="session-meta">7 de diciembre de 2020</div>
+      <div class="session-desc">Un espacio polaco X es un espacio topológico completamente metrizable y separable. Si un espacio polaco contiene copias isométricas de todos los espacios polacos, decimos que es universal. Un espacio X es ultrahomogéneo si toda isometría entre dos subconjuntos finitos se extiende a una isometría de X sobre sí mismo. Se demuestra que existe un único espacio polaco universal ultrahomogéneo: el espacio universal de Urysohn.</div>
+      <div class="session-expositor"><strong>José Guerrero</strong> · Universidad Industrial de Santander</div>
     </div>
-    <h2>Espacio Universal de Urysohn</h2>
-    <p class="sesion-abstract">
-      Un espacio polaco X es un espacio topológico completamente metrizable y separable. Si un espacio polaco contiene copias isométricas de todos los espacios polacos, decimos que es universal. Un ejemplo clásico es C[0,1] (Teorema de Banach-Mazur). Un espacio X es ultrahomogéneo si toda isometría entre dos subconjuntos finitos se extiende a una isometría de X sobre sí mismo. Se demuestra que existe un único espacio polaco universal ultrahomogéneo: el espacio universal de Urysohn.
-    </p>
-    <p class="sesion-expositor"><strong>José Guerrero</strong> · Universidad Industrial de Santander</p>
   </div>
 
-  <!-- ── SESIÓN 325 ── -->
-  <div class="sesion">
-    <div class="sesion-meta">
-      <span class="sesion-num">SES. 325</span>
-      <span class="sesion-fecha">23 de noviembre de 2020</span>
+  <div class="session">
+    <div class="session-num">Ses. 325</div>
+    <div>
+      <div class="session-title">Números cromáticos de grafos definidos en espacios polacos</div>
+      <div class="session-meta">23 de noviembre de 2020</div>
+      <div class="session-desc">Los grafos definidos en espacios polacos ofrecen aspectos interesantes desde el punto de vista de la teoría de conjuntos. Se presentan resultados sobre coloraciones de grafos (X, E) cuyo conjunto de vértices X es un espacio métrico completo separable y la relación E de aristas es definible.</div>
+      <div class="session-expositor"><strong>Carlos Di Prisco</strong> · Universidad de los Andes</div>
     </div>
-    <h2>Números cromáticos de grafos definidos en espacios polacos</h2>
-    <p class="sesion-abstract">
-      Los grafos definidos en espacios polacos ofrecen aspectos interesantes desde el punto de vista de la teoría de conjuntos. Se presentan resultados sobre coloraciones de grafos (X, E) cuyo conjunto de vértices X es un espacio métrico completo separable y la relación E de aristas es definible. Se estudia con especial atención el grafo definido en el espacio de los conjuntos infinitos de naturales por la operación de traslado, junto con una familia de grafos en el espacio de Cantor.
-    </p>
-    <p class="sesion-expositor"><strong>Carlos Di Prisco</strong> · Universidad de los Andes</p>
   </div>
 
-  <!-- ── SESIÓN 324 ── -->
-  <div class="sesion">
-    <div class="sesion-meta">
-      <span class="sesion-num">SES. 324</span>
-      <span class="sesion-fecha">9 de noviembre de 2020</span>
+  <div class="session">
+    <div class="session-num">Ses. 324</div>
+    <div>
+      <div class="session-title">Una colección no numerable de continuos encadenables mutuamente incomparables</div>
+      <div class="session-meta">9 de noviembre de 2020</div>
+      <div class="session-desc">Se muestra la existencia de una colección no numerable de continuos encadenables mutuamente incomparables y se hace la construcción de un par de elementos, basados en el artículo del profesor Marwan M. Awartani.</div>
+      <div class="session-expositor"><strong>Edwin Araque</strong></div>
     </div>
-    <h2>Una colección no numerable de continuos encadenables mutuamente incomparables</h2>
-    <p class="sesion-abstract">
-      Se muestra la existencia de una colección no numerable de continuos encadenables mutuamente incomparables y se hace la construcción de un par de elementos, basados en el artículo del profesor Marwan M. Awartani "An Uncountable Collection of Mutually Incomparable Chainable Continua".
-    </p>
-    <p class="sesion-expositor"><strong>Edwin Araque</strong></p>
   </div>
 
-  <!-- ── SESIÓN 323 ── -->
-  <div class="sesion">
-    <div class="sesion-meta">
-      <span class="sesion-num">SES. 323</span>
-      <span class="sesion-fecha">26 de octubre de 2020</span>
+  <div class="session">
+    <div class="session-num">Ses. 323</div>
+    <div>
+      <div class="session-title">Descripción de cocientes de Cantor y autómatas traductores</div>
+      <div class="session-meta">26 de octubre de 2020</div>
+      <div class="session-desc">Todo espacio métrico compacto es imagen del espacio de Cantor. Se presenta una extensión del concepto de autómata denominada "autómata traductor" que sirve para comparar estas representaciones.</div>
+      <div class="session-expositor"><strong>Rafael Isaacs</strong></div>
     </div>
-    <h2>Descripción de cocientes de Cantor y autómatas traductores</h2>
-    <p class="sesion-abstract">
-      Todo espacio métrico compacto es imagen del espacio de Cantor, lo que indica que las sucesiones infinitas de letras en un alfabeto finito pueden describir estos espacios. Se presenta una extensión del concepto de autómata denominada "autómata traductor" que sirve para comparar estas representaciones.
-    </p>
-    <p class="sesion-expositor"><strong>Rafael Isaacs</strong></p>
   </div>
 
-  <!-- ── SESIÓN 322 ── -->
-  <div class="sesion">
-    <div class="sesion-meta">
-      <span class="sesion-num">SES. 322</span>
-      <span class="sesion-fecha">19 de octubre de 2020</span>
+  <div class="session">
+    <div class="session-num">Ses. 322</div>
+    <div>
+      <div class="session-title">Propiedad local de Ramsey relativa al juego de Kastanas</div>
+      <div class="session-meta">19 de octubre de 2020</div>
+      <div class="session-desc">Se presentan el juego de Kastanas y su conexión con los conjuntos completamente Ramsey, una generalización del juego mediante la noción de selectividad para coideales, y una caracterización de los coideales semiselectivos.</div>
+      <div class="session-expositor"><strong>Julián C. Cano</strong> · Universidad Nacional de Colombia</div>
     </div>
-    <h2>Propiedad local de Ramsey relativa al juego de Kastanas</h2>
-    <p class="sesion-abstract">
-      Se presentan el juego de Kastanas y su conexión con los conjuntos completamente Ramsey, una generalización del juego mediante la noción de selectividad para coideales, y una caracterización de los coideales semiselectivos en términos de su interacción con la propiedad local de Ramsey a través de una versión localizada del juego de Kastanas.
-    </p>
-    <p class="sesion-expositor"><strong>Julián C. Cano</strong> · Universidad Nacional de Colombia</p>
   </div>
 
-  <!-- ── SESIÓN 321 ── -->
-  <div class="sesion">
-    <div class="sesion-meta">
-      <span class="sesion-num">SES. 321</span>
-      <span class="sesion-fecha">5 de octubre de 2020</span>
+  <div class="session">
+    <div class="session-num">Ses. 321</div>
+    <div>
+      <div class="session-title">Ideales sobre conjuntos numerables</div>
+      <div class="session-meta">5 de octubre de 2020</div>
+      <div class="session-expositor"><strong>Jorge Martinez</strong></div>
     </div>
-    <h2>Ideales sobre conjuntos numerables</h2>
-    <p class="sesion-expositor"><strong>Jorge Martinez</strong></p>
   </div>
 
-  <!-- ── SESIÓN 320 ── -->
-  <div class="sesion">
-    <div class="sesion-meta">
-      <span class="sesion-num">SES. 320</span>
-      <span class="sesion-fecha">21 de septiembre de 2020</span>
+  <div class="session">
+    <div class="session-num">Ses. 320</div>
+    <div>
+      <div class="session-title">Familias irredundantes y filtros primarios en ω</div>
+      <div class="session-meta">21 de septiembre de 2020</div>
+      <div class="session-desc">Una familia irredundante sobre ω es una familia de subconjuntos infinitos de ω tal que ningún miembro está casi-contenido en la unión de finitos miembros de la familia. Se presenta la generalización de que una familia irredundante no puede generar un ideal primario.</div>
+      <div class="session-expositor"><strong>Andrés Millán</strong> · Universidad Metropolitana, Caracas</div>
     </div>
-    <h2>Familias irredundantes y filtros primarios en ω</h2>
-    <p class="sesion-abstract">
-      Una familia irredundante sobre ω es una familia de subconjuntos infinitos de ω tal que ningún miembro está casi-contenido en la unión de finitos miembros de la familia. Un ideal es primario si es intersección de un número finito de ideales primos. Se presenta la generalización: "Una familia irredundante no puede generar un ideal primario", con varias caracterizaciones de ideales no-primarios y su impacto en la compactificación de Stone-Čech de ω.
-    </p>
-    <p class="sesion-expositor"><strong>Andrés Millán</strong> · Universidad Metropolitana, Caracas</p>
   </div>
 
-  <!-- ── SESIÓN 319 ── -->
-  <div class="sesion">
-    <div class="sesion-meta">
-      <span class="sesion-num">SES. 319</span>
-      <span class="sesion-fecha">7 de septiembre de 2020</span>
+  <div class="session">
+    <div class="session-num">Ses. 319</div>
+    <div>
+      <div class="session-title">Teorías cuánticas de campo topológicas bidimensionales y álgebras de Frobenius</div>
+      <div class="session-meta">7 de septiembre de 2020</div>
+      <div class="session-desc">Las teorías cuánticas de campo topológicas fueron introducidas por Witten en los años 80 y axiomatizadas por Atiyah. Se presenta una clasificación de las TCCTs bidimensionales en términos de álgebras de Frobenius conmutativas.</div>
+      <div class="session-expositor"><strong>Javier Murgas</strong></div>
     </div>
-    <h2>Teorías cuánticas de campo topológicas bidimensionales y álgebras de Frobenius</h2>
-    <p class="sesion-abstract">
-      Las teorías cuánticas de campo topológicas (TCCT) fueron introducidas por Witten en los años 80 y axiomatizadas por Atiyah. Una TCCT es un funtor de la categoría de n-cobordismos a la categoría de espacios vectoriales que respeta la estructura de producto tensorial. Se presenta una clasificación de las TCCTs bidimensionales en términos de álgebras de Frobenius conmutativas.
-    </p>
-    <p class="sesion-expositor"><strong>Javier Murgas</strong></p>
   </div>
 
-  <!-- ── SESIÓN 318 ── -->
-  <div class="sesion">
-    <div class="sesion-meta">
-      <span class="sesion-num">SES. 318</span>
-      <span class="sesion-fecha">16 de marzo de 2020</span>
+  <div class="session">
+    <div class="session-num">Ses. 318</div>
+    <div>
+      <div class="session-title">Unicoherencia en continuos</div>
+      <div class="session-meta">16 de marzo de 2020</div>
+      <div class="session-desc">Dado un continuo X, diremos que X es unicoherente si A ∩ B es conexo para cualesquiera subcontinuos A y B con X = A ∪ B. El intervalo [0,1] es unicoherente y la circunferencia unitaria S¹ no lo es.</div>
+      <div class="session-expositor"><strong>Jayson Nova</strong></div>
     </div>
-    <h2>Unicoherencia en continuos</h2>
-    <p class="sesion-abstract">
-      Dado un continuo X, diremos que X es unicoherente si A ∩ B es conexo para cualesquiera subcontinuos A y B con X = A ∪ B. El intervalo [0,1] es unicoherente y la circunferencia unitaria S<sup>1</sup> no lo es. Se estudian propiedades y ejemplos de continuos unicoherentes.
-    </p>
-    <p class="sesion-expositor"><strong>Jayson Nova</strong></p>
   </div>
 
-  <!-- ── SESIÓN 317 ── -->
-  <div class="sesion">
-    <div class="sesion-meta">
-      <span class="sesion-num">SES. 317</span>
-      <span class="sesion-fecha">9 de marzo de 2020</span>
+  <div class="session">
+    <div class="session-num">Ses. 317</div>
+    <div>
+      <div class="session-title">Semigrupo de Ellis conmutativo y p-iteradas inversas</div>
+      <div class="session-meta">9 de marzo de 2020</div>
+      <div class="session-desc">Sea X un espacio métrico compacto y numerable con f : X → X un homeomorfismo y E(X,f) su semigrupo de Ellis. Se prueba la equivalencia entre equicontinuidad, distalidad y periodicidad de los puntos.</div>
+      <div class="session-expositor"><strong>Andrés Enrique Quintero Santander</strong></div>
     </div>
-    <h2>Semigrupo de Ellis conmutativo y p-iteradas inversas</h2>
-    <p class="sesion-abstract">
-      Sea X un espacio métrico compacto y numerable con f : X → X un homeomorfismo y E(X,f) su semigrupo de Ellis. Se prueba la equivalencia entre: (i) (X,f) equicontinuo, (ii) (X,f) distal, y (iii) todo punto periódico. Asimismo, si (X,f) es distal y el semigrupo de Ellis es abeliano, la fórmula (f<sup>p</sup>)<sup>−1</sup> = (f<sup>−1</sup>)<sup>p</sup> es válida. Basado en el artículo de Carlos Uzcátegui y Andrés Quintero, 2017.
-    </p>
-    <p class="sesion-expositor"><strong>Andrés Enrique Quintero Santander</strong></p>
   </div>
 
-  <!-- ── SESIÓN 316 ── -->
-  <div class="sesion">
-    <div class="sesion-meta">
-      <span class="sesion-num">SES. 316</span>
-      <span class="sesion-fecha">24 de febrero de 2020</span>
+  <div class="session">
+    <div class="session-num">Ses. 316</div>
+    <div>
+      <div class="session-title">Variedades flag generalizadas</div>
+      <div class="session-meta">24 de febrero de 2020</div>
+      <div class="session-desc">Las variedades flag generalizadas son espacios homogéneos de la forma G/C(S), donde G es un grupo de Lie compacto y C(S) el centralizador de un toro en G. Se presentan resultados preliminares y propiedades de este tipo de variedades.</div>
+      <div class="session-expositor"><strong>J. Sebastián Báez</strong> · Universidad Estadual de Campinas</div>
     </div>
-    <h2>Variedades flag generalizadas</h2>
-    <p class="sesion-abstract">
-      Las variedades flag generalizadas son espacios homogéneos de la forma G/C(S), donde G es un grupo de Lie compacto y C(S) el centralizador de un toro en G. Equivalentemente, coinciden con la órbita de la representación adjunta de G en su álgebra g. Se presentan resultados preliminares y propiedades de este tipo de variedades.
-    </p>
-    <p class="sesion-expositor"><strong>J. Sebastián Báez</strong> · Universidad Estadual de Campinas</p>
   </div>
 
-  <!-- ── SESIÓN 315 ── -->
-  <div class="sesion">
-    <div class="sesion-meta">
-      <span class="sesion-num">SES. 315</span>
-      <span class="sesion-fecha">17 de febrero de 2020</span>
+  <div class="session">
+    <div class="session-num">Ses. 315</div>
+    <div>
+      <div class="session-title">Teoría de modelos y el universo de Shelah</div>
+      <div class="session-meta">17 de febrero de 2020</div>
+      <div class="session-desc">La teoría de modelos es una rama de la lógica matemática con interacciones con álgebra, teoría de números y combinatoria. Shelah clasificó las teorías completas por su habilidad de codificar configuraciones combinatorias.</div>
+      <div class="session-expositor"><strong>Samaria Montenegro</strong> · Universidad de Costa Rica</div>
     </div>
-    <h2>Teoría de modelos y el universo de Shelah</h2>
-    <p class="sesion-abstract">
-      La teoría de modelos es una rama de la lógica matemática con interacciones con álgebra, teoría de números y combinatoria. Shelah clasificó las teorías completas por su habilidad de codificar configuraciones combinatorias. Se presentan clases importantes de teorías y ejemplos fundamentales, con énfasis en cómo las propiedades modelo-teóricas se relacionan con propiedades algebraicas.
-    </p>
-    <p class="sesion-expositor"><strong>Samaria Montenegro</strong> · Universidad de Costa Rica</p>
   </div>
 
-  <!-- ── SESIÓN 314 ── -->
-  <div class="sesion">
-    <div class="sesion-meta">
-      <span class="sesion-num">SES. 314</span>
-      <span class="sesion-fecha">10 de febrero de 2020</span>
+  <div class="session">
+    <div class="session-num">Ses. 314</div>
+    <div>
+      <div class="session-title">El dragón de Heighway</div>
+      <div class="session-meta">10 de febrero de 2020</div>
+      <div class="session-desc">El SIF dado por f₁(z) = (1+i)z/2 y f₂(z) = (−1+i)z/2 + 1 genera una sucesión de curvas convergente al dragón de Heighway D. Se demuestra que el dragón de Heighway es la unión enumerable de discos topológicamente cerrados y geométricamente similares.</div>
+      <div class="session-expositor"><strong>Diego Gamboa</strong></div>
     </div>
-    <h2>El dragón de Heighway</h2>
-    <p class="sesion-abstract">
-      El SIF dado por f<sub>1</sub>(z) = (1+i)z/2 y f<sub>2</sub>(z) = (−1+i)z/2 + 1 genera, por el teorema de Hutchinson, una sucesión de curvas convergente al dragón de Heighway D, que satisface D = f<sub>1</sub>(D) ∪ f<sub>2</sub>(D). Se demuestra que el dragón de Heighway es la unión enumerable de discos topológicamente cerrados y geométricamente similares.
-    </p>
-    <p class="sesion-expositor"><strong>Diego Gamboa</strong></p>
   </div>
 
-  <!-- ── SESIÓN 313 ── -->
-  <div class="sesion">
-    <div class="sesion-meta">
-      <span class="sesion-num">SES. 313</span>
-      <span class="sesion-fecha">3 de febrero de 2020</span>
+  <div class="session">
+    <div class="session-num">Ses. 313</div>
+    <div>
+      <div class="session-title">Introducción a las particiones de espacios topológicos</div>
+      <div class="session-meta">3 de febrero de 2020</div>
+      <div class="session-desc">Las particiones de espacios topológicos estudian versiones del Teorema de Ramsey donde las estructuras coloreadas son espacios topológicos. Se introducen los problemas centrales, ejemplos clásicos y métodos recientes.</div>
+      <div class="session-expositor"><strong>Claribet Piña</strong></div>
     </div>
-    <h2>Introducción a las particiones de espacios topológicos</h2>
-    <p class="sesion-abstract">
-      Las particiones de espacios topológicos estudian versiones del Teorema de Ramsey donde las estructuras coloreadas son espacios topológicos. Se introducen los problemas centrales de esta disciplina, se dan ejemplos clásicos y se mencionan métodos y resultados recientes.
-    </p>
-    <p class="sesion-expositor"><strong>Claribet Piña</strong></p>
   </div>
 
-  <!-- ── SESIÓN 312 ── -->
-  <div class="sesion">
-    <div class="sesion-meta">
-      <span class="sesion-num">SES. 312</span>
-      <span class="sesion-fecha">27 de enero de 2020</span>
+  <div class="session">
+    <div class="session-num">Ses. 312</div>
+    <div>
+      <div class="session-title">Álgebra celular</div>
+      <div class="session-meta">27 de enero de 2020</div>
+      <div class="session-desc">En 1996 Graham y Lehrer introducen el concepto de álgebra celular. Estas álgebras son definidas en función de su base, lo cual permite obtener una familia completa de representaciones irreducibles (módulos simples).</div>
+      <div class="session-expositor"><strong>Gerardo Corredor</strong></div>
     </div>
-    <h2>Álgebra celular</h2>
-    <p class="sesion-abstract">
-      En 1996 Graham y Lehrer introducen el concepto de álgebra celular. Estas álgebras son definidas en función de su base, lo cual permite obtener una familia completa de representaciones irreducibles (módulos simples). Se presenta la construcción de dichos módulos simples.
-    </p>
-    <p class="sesion-expositor"><strong>Gerardo Corredor</strong></p>
   </div>
 
-  <!-- ── SESIONES 95–311: en construcción ── -->
   <div class="en-construccion">
-    <span class="rango">SES. 95 – 311</span>
+    <span class="rango">Ses. 95–311</span>
     <span>Registros en proceso de digitalización. Se incorporarán progresivamente.</span>
   </div>
 
-  <!-- ── SESIÓN 94 ── -->
-  <div class="sesion">
-    <div class="sesion-meta">
-      <span class="sesion-num">SES. 94</span>
-      <span class="sesion-fecha">8 de octubre de 2012</span>
+  <div class="session">
+    <div class="session-num">Ses. 94</div>
+    <div>
+      <div class="session-title">Una aplicación de los cardinales regulares para demostrar la existencia de un isomorfismo entre el espacio ℓ₁ y un espacio de Banach X</div>
+      <div class="session-meta">8 de octubre de 2012</div>
+      <div class="session-desc">Este problema se deriva de estudiar la relación entre operadores compactos y nucleares. Se estudian propiedades básicas de los números cardinales y se demuestra la existencia del isomorfismo utilizando un teorema de Rosenthal.</div>
+      <div class="session-expositor"><strong>Ronald Eduardo Paternina</strong></div>
     </div>
-    <h2>Una aplicación de los cardinales regulares para demostrar la existencia de un isomorfismo entre el espacio ℓ<sub>1</sub> y un espacio de Banach X</h2>
-    <p class="sesion-abstract">
-      Este problema se deriva de estudiar la relación entre operadores compactos y nucleares. Se estudian propiedades básicas de los números cardinales y se demuestra la existencia del isomorfismo utilizando esas propiedades junto con un teorema de Rosenthal.
-    </p>
-    <p class="sesion-expositor"><strong>Ronald Eduardo Paternina</strong></p>
   </div>
 
-  <!-- ── SESIONES 1–93: en construcción ── -->
   <div class="en-construccion">
-    <span class="rango">SES. 1 – 93</span>
+    <span class="rango">Ses. 1–93</span>
     <span>Período febrero 2010 – septiembre 2012. Registros pendientes de digitalización.</span>
   </div>
 
-  <!-- ── Volver ── -->
-  <div class="volver">
-    <a href="https://jcamargo-bot.github.io/index.html">← Volver a sesiones recientes</a>
-  </div>
+  <a class="back-link" href="index.html">← Volver a sesiones recientes</a>
+</div>
 
-</main>
-
-<!-- ════ FOOTER ════ -->
 <footer>
-  Seminario de Topología "Rafael Isaacs" · Escuela de Matemáticas · UIS · Bucaramanga, Colombia
+  <span>Seminario de Topología "Rafael Isaacs" · UIS · Bucaramanga, Colombia</span>
+  <span>jcamargo-bot.github.io</span>
 </footer>
 
 </body>
