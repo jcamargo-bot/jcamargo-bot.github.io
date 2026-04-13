@@ -11,7 +11,7 @@ header { background: #67B93E; border-bottom: 1px solid #4a9a2a; padding: 1.5rem 
 header h1 { font-size: 1.2rem; font-weight: normal; color: #fff; }
 header p { font-size: 0.85rem; color: rgba(255,255,255,0.85); margin-top: 3px; }
 nav a { font-size: 0.85rem; color: rgba(255,255,255,0.85); text-decoration: none; margin-left: 1.5rem; }
-nav a:hover { color: #000; }
+nav a:hover { color: #fff; text-decoration: underline; }
 .hero { background: #f7f7f7; padding: 2rem; border-bottom: 1px solid #ddd; }
 .hero-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 0.5rem; }
 .hero h2 { font-size: 1.5rem; font-weight: normal; margin-bottom: 0.75rem; line-height: 1.4; }
@@ -29,7 +29,8 @@ nav a:hover { color: #000; }
 .session:hover { background: #fafafa; }
 .session-num { font-size: 0.8rem; color: #aaa; min-width: 50px; padding-top: 2px; }
 .session-title { font-size: 0.95rem; color: #222; line-height: 1.4; margin-bottom: 3px; }
-.session-meta { font-size: 0.8rem; color: #999; }
+.session-meta { font-size: 0.8rem; color: #999; margin-bottom: 4px; }
+.session-desc { font-size: 0.85rem; color: #555; line-height: 1.6; margin-top: 5px; }
 footer { border-top: 1px solid #eee; padding: 1.5rem 2rem; font-size: 0.8rem; color: #aaa; margin-top: 2rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
 </style>
 </head>
@@ -53,21 +54,21 @@ footer { border-top: 1px solid #eee; padding: 1.5rem 2rem; font-size: 0.8rem; co
 
 <div class="hero">
   <div style="display:flex; align-items:center; gap:1.5rem; margin-bottom:1.5rem; padding-bottom:1.5rem; border-bottom:1px solid #ddd;">
-  <img src="IMG_0371.jpeg" alt="Prof. Rafael Isaacs" style="width:90px; height:90px; border-radius:50%; object-fit:cover; border:1px solid #ddd;">
-  <div>
-    <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color:#888;">En honor a</div>
-    <div style="font-size:1.1rem; color:#222;">Prof. Rafael Isaacs</div>
-    <div style="font-size:0.85rem; color:#999; margin-top:2px;">Matemático · Universidad Industrial de Santander</div>
+    <img src="IMG_0371.jpeg" alt="Prof. Rafael Isaacs" style="width:90px; height:90px; border-radius:50%; object-fit:cover; border:1px solid #ddd;">
+    <div>
+      <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color:#888;">En honor a</div>
+      <div style="font-size:1.1rem; color:#222;">Prof. Rafael Isaacs</div>
+      <div style="font-size:0.85rem; color:#999; margin-top:2px;">Matemático · Universidad Industrial de Santander</div>
+    </div>
   </div>
-</div>
-<div class="hero-label">Próxima sesión</div>
+  <div class="hero-label">Próxima sesión</div>
   <h2>Sesión 456 — Grupos Fundamentales y el Teorema de Seifert–van Kampen</h2>
   <p>La Topología Algebraica estudia invariantes topológicos a través de funtores hacia categorías algebraicas. El grupo fundamental es uno de los principales ejemplos: asigna a cada espacio topológico un grupo invariante bajo homeomorfismos, central en la teoría de homotopía.</p>
   <div class="meta-row">
     <div class="meta-item"><strong>Fecha</strong>Lunes 13 de abril, 2026</div>
     <div class="meta-item"><strong>Hora</strong>4:00 p.m.</div>
     <div class="meta-item"><strong>Lugar</strong>Sala Lezama, Edificio Camilo Torres</div>
-<div class="meta-item"><strong>Expositor</strong>Carlos Wilson Rodríguez Cárdenas · UIS</div>
+    <div class="meta-item"><strong>Expositor</strong>Carlos Wilson Rodríguez Cárdenas · UIS</div>
   </div>
 </div>
 
@@ -85,51 +86,66 @@ footer { border-top: 1px solid #eee; padding: 1.5rem 2rem; font-size: 0.8rem; co
     <div>
       <div class="session-title">Grupos Fundamentales y el Teorema de Seifert–van Kampen</div>
       <div class="session-meta">13 abril 2026 · Carlos Wilson Rodríguez Cárdenas · UIS</div>
+      <div class="session-desc">La Topología Algebraica estudia invariantes topológicos trasladando problemas hacia categorías algebraicas. El grupo fundamental asigna a cada espacio topológico un grupo invariante bajo homeomorfismos. El teorema de Seifert–van Kampen permite calcular este grupo en espacios complejos a partir de subespacios más simples.</div>
     </div>
   </div>
+
   <div class="session">
     <div class="session-num">Ses. 455</div>
     <div>
       <div class="session-title">Intersecciones de ideales maximales</div>
       <div class="session-meta">16 marzo 2026 · Camilo Andrés Acevedo Ardila · UIS</div>
+      <div class="session-desc">Presentación disponible en archivo adjunto.</div>
     </div>
   </div>
+
   <div class="session">
     <div class="session-num">Ses. 454</div>
     <div>
       <div class="session-title">Sobre cerrados hereditarios y fracciones egipcias</div>
       <div class="session-meta">9 marzo 2026 · Jeison Amorocho · UIS</div>
+      <div class="session-desc">A todo cerrado hereditario del espacio de Cantor se le asocia el espacio de sus elementos maximales, con interesantes propiedades descriptivas. Se estudia la compacidad local de estos espacios y su conexión con fracciones egipcias.</div>
     </div>
   </div>
+
   <div class="session">
     <div class="session-num">Ses. 453</div>
     <div>
       <div class="session-title">C-representación de ideales en espacios de Banach</div>
       <div class="session-meta">23 febrero 2026 · Julian Neira · UIS</div>
+      <div class="session-desc">Un ideal es un subconjunto de P(N) que describe la propiedad de ser pequeño. Se presentan la caracterización de Borodulin para ideales representables en espacios de Banach, el ejemplo del ideal de densidad cero Z, y la representación específica en c₀.</div>
     </div>
   </div>
+
   <div class="session">
     <div class="session-num">Ses. 452</div>
     <div>
       <div class="session-title">Funciones no necesariamente continuas que preservan conexidad</div>
-      <div class="session-meta">16 febrero 2026 · UIS</div>
+      <div class="session-meta">16 febrero 2026 · Sergio Pérez · UIS</div>
+      <div class="session-desc">Se estudian clases de funciones más amplias que las continuas que satisfacen el teorema del punto fijo de Brouwer: funciones de Darboux, conexas, de conectividad local y casicontinuas, y las relaciones entre ellas.</div>
     </div>
   </div>
+
   <div class="session">
     <div class="session-num">Ses. 451</div>
     <div>
       <div class="session-title">El operador de Dirac en geometría</div>
       <div class="session-meta">9 febrero 2026 · Jurgen Julio Batalla · UIS</div>
+      <div class="session-desc">Hace aproximadamente 100 años, Dirac inventó un operador diferencial como raíz cuadrada del operador de D'Alembert. Se discuten sus propiedades básicas y su conexión con problemas actuales en geometría riemanniana.</div>
     </div>
   </div>
- <div class="session">
+
+  <div class="session">
     <div class="session-num">Ses. 450</div>
     <div>
       <div class="session-title">Propiedades de la Función T de Jones</div>
       <div class="session-meta">24 noviembre 2025 · Sergio Macías · UNAM</div>
+      <div class="session-desc">Se presentan las principales propiedades de la Función T de Jones y una aplicación de esta herramienta en el contexto de la teoría de continuos.</div>
     </div>
   </div>
+
 </div>
+
 <div id="expositores" style="padding: 2rem; max-width: 900px; border-top: 1px solid #eee; margin-top: 1rem;">
   <div class="section-title">Expositores</div>
   <div class="session">
@@ -182,6 +198,7 @@ footer { border-top: 1px solid #eee; padding: 1.5rem 2rem; font-size: 0.8rem; co
     </div>
   </div>
 </div>
+
 <div id="acerca" style="padding: 2rem; max-width: 900px; border-top: 1px solid #eee; margin-top: 1rem;">
   <div class="section-title">Acerca del seminario</div>
   <p style="font-size: 0.95rem; color: #444; line-height: 1.8; margin-bottom: 1.25rem;">
