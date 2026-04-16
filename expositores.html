@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expositores – Seminario de Topología "Rafael Isaacs"</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Georgia, serif; color: #222; background: #fff; }
+header { background: #67B93E; border-bottom: 1px solid #4a9a2a; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+header h1 { font-size: 1.2rem; font-weight: normal; color: #fff; }
+header p { font-size: 0.85rem; color: rgba(255,255,255,0.85); margin-top: 3px; }
+nav a { font-size: 0.85rem; color: rgba(255,255,255,0.85); text-decoration: none; margin-left: 1.5rem; }
+nav a:hover { color: #fff; text-decoration: underline; }
+.breadcrumb { font-size: 0.8rem; color: #999; padding: 1rem 2rem; border-bottom: 1px solid #f0f0f0; }
+.breadcrumb a { color: #67B93E; text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.content { max-width: 860px; padding: 2rem; margin: 0 auto; }
+.page-title { font-size: 1.8rem; font-weight: normal; color: #222; margin-bottom: 0.3rem; }
+.page-sub { font-size: 0.9rem; color: #999; margin-bottom: 0.75rem; }
+
+/* Buscador */
+.search-box {
+  margin-bottom: 2rem;
+}
+.search-box input {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  font-size: 0.9rem;
+  font-family: Georgia, serif;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+  color: #222;
+}
+.search-box input:focus { border-color: #67B93E; }
+
+/* Estadísticas */
+.stats-bar {
+  display: flex;
+  gap: 2rem;
+  background: #f7f7f7;
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.stat-item { font-size: 0.85rem; color: #555; }
+.stat-item strong { color: #222; }
+
+/* Tabla de expositores */
+.expositor-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.expositor-row:hover { background: #fafafa; }
+.exp-sesion {
+  font-size: 0.78rem;
+  color: #aaa;
+  min-width: 58px;
+  flex-shrink: 0;
+  font-family: Arial, sans-serif;
+}
+.exp-nombre {
+  font-size: 0.95rem;
+  color: #222;
+  flex: 1;
+}
+.exp-inst {
+  font-size: 0.8rem;
+  color: #888;
+  text-align: right;
+  flex-shrink: 0;
+  max-width: 260px;
+}
+@media (max-width: 600px) {
+  .expositor-row { flex-wrap: wrap; }
+  .exp-inst { text-align: left; max-width: 100%; }
+}
+
+.section-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.75rem;
+  margin-top: 2rem;
+}
+.hidden { display: none; }
+.no-results {
+  font-size: 0.9rem;
+  color: #999;
+  padding: 1rem 0;
+  font-style: italic;
+}
+
+.back-link { display: inline-block; margin-top: 2.5rem; font-size: 0.85rem; color: #67B93E; text-decoration: none; }
+.back-link:hover { text-decoration: underline; }
+footer { border-top: 1px solid #eee; padding: 1.5rem 2rem; font-size: 0.8rem; color: #aaa; margin-top: 3rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex; align-items:center; gap:1rem;">
+    <img src="LOGO%20UIS_PNG.png" alt="Logo UIS" style="height:50px; width:auto;">
+    <div>
+      <h1>Seminario de Topología "Rafael Isaacs"</h1>
+      <p>Escuela de Matemáticas · Universidad Industrial de Santander</p>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html">Sesiones</a>
+    <a href="expositores.html">Expositores</a>
+    <a href="sesiones-1-328.html">Sesiones 1–328</a>
+    <a href="sesiones-329-450.html">Sesiones 329–450</a>
+    <a href="index.html#acerca">Acerca del seminario</a>
+  </nav>
+</header>
+
+<div class="breadcrumb">
+  <a href="index.html">Inicio</a> › Expositores
+</div>
+
+<div class="content">
+  <div class="page-title">Expositores</div>
+  <div class="page-sub">Seminario de Topología "Rafael Isaacs" · 2010 – 2026</div>
+
+  <div class="search-box">
+    <input type="text" id="busqueda" placeholder="Buscar por nombre, institución o número de sesión…" oninput="filtrar()">
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-item"><strong id="count-visible">147</strong> participaciones registradas</div>
+    <div class="stat-item"><strong>457</strong> sesiones realizadas</div>
+    <div class="stat-item"><strong>2010 – 2026</strong> período</div>
+  </div>
+
+  <div class="section-label">Registro completo · sesiones 457 → 94</div>
+
+  <div id="lista-expositores">
+
+    <div class="expositor-row" data-search="457 andrés felipe cruz lópez universidad industrial de santander">
+      <span class="exp-sesion">Ses. 457</span>
+      <span class="exp-nombre">Andrés Felipe Cruz López</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="456 carlos wilson rodríguez cárdenas universidad industrial de santander">
+      <span class="exp-sesion">Ses. 456</span>
+      <span class="exp-nombre">Carlos Wilson Rodríguez Cárdenas</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="455 camilo andrés acevedo ardila universidad industrial de santander">
+      <span class="exp-sesion">Ses. 455</span>
+      <span class="exp-nombre">Camilo Andrés Acevedo Ardila</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="454 jeison amorocho universidad industrial de santander">
+      <span class="exp-sesion">Ses. 454</span>
+      <span class="exp-nombre">Jeison Amorocho</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="453 julian neira universidad industrial de santander">
+      <span class="exp-sesion">Ses. 453</span>
+      <span class="exp-nombre">Julian Neira</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="452 sergio pérez universidad industrial de santander">
+      <span class="exp-sesion">Ses. 452</span>
+      <span class="exp-nombre">Sergio Pérez</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="451 jurgen julio batalla universidad industrial de santander">
+      <span class="exp-sesion">Ses. 451</span>
+      <span class="exp-nombre">Jurgen Julio Batalla</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="450 sergio macías universidad nacional autónoma de méxico unam">
+      <span class="exp-sesion">Ses. 450</span>
+      <span class="exp-nombre">Sergio Macías</span>
+      <span class="exp-inst">Universidad Nacional Autónoma de México</span>
+    </div>
+    <div class="expositor-row" data-search="449 julián neira universidad industrial de santander">
+      <span class="exp-sesion">Ses. 449</span>
+      <span class="exp-nombre">Julián Neira</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="448 nykoll garcía universidad industrial de santander">
+      <span class="exp-sesion">Ses. 448</span>
+      <span class="exp-nombre">Nykoll García</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="447 jhon freddy pérez remolina universidad industrial de santander">
+      <span class="exp-sesion">Ses. 447</span>
+      <span class="exp-nombre">Jhon Freddy Pérez Remolina</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="446 javier camargo universidad industrial de santander">
+      <span class="exp-sesion">Ses. 446</span>
+      <span class="exp-nombre">Javier Camargo</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="445 michael alexander rincón villamizar universidad industrial de santander">
+      <span class="exp-sesion">Ses. 445</span>
+      <span class="exp-nombre">Michael Alexander Rincón Villamizar</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="444 bernardo mayorga universidad industrial de santander">
+      <span class="exp-sesion">Ses. 444</span>
+      <span class="exp-nombre">Bernardo Mayorga</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="443 jeison amorocho universidad industrial de santander">
+      <span class="exp-sesion">Ses. 443</span>
+      <span class="exp-nombre">Jeison Amorocho</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="442 victor dos santos ronchim universidad estadual paulista">
+      <span class="exp-sesion">Ses. 442</span>
+      <span class="exp-nombre">Victor dos Santos Ronchim</span>
+      <span class="exp-inst">Universidad Estadual Paulista</span>
+    </div>
+    <div class="expositor-row" data-search="441 carlos wilson rodríguez cárdenas universidad industrial de santander">
+      <span class="exp-sesion">Ses. 441</span>
+      <span class="exp-nombre">Carlos Wilson Rodríguez Cárdenas</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="440 jhon freddy pérez remolina universidad industrial de santander">
+      <span class="exp-sesion">Ses. 440</span>
+      <span class="exp-nombre">Jhon Freddy Pérez Remolina</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="439 sergio andrés pérez león universidad industrial de santander">
+      <span class="exp-sesion">Ses. 439</span>
+      <span class="exp-nombre">Sergio Andrés Pérez León</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="438 jurgen julio batalla universidad industrial de santander">
+      <span class="exp-sesion">Ses. 438</span>
+      <span class="exp-nombre">Jurgen Julio Batalla</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="437 carlos uzcátegui universidad industrial de santander">
+      <span class="exp-sesion">Ses. 437</span>
+      <span class="exp-nombre">Carlos Uzcátegui</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="436 javier camargo universidad industrial de santander">
+      <span class="exp-sesion">Ses. 436</span>
+      <span class="exp-nombre">Javier Camargo</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="435 michael alexander rincón villamizar universidad industrial de santander">
+      <span class="exp-sesion">Ses. 435</span>
+      <span class="exp-nombre">Michael Alexander Rincón Villamizar</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="434 sergio andrés pérez león universidad industrial de santander">
+      <span class="exp-sesion">Ses. 434</span>
+      <span class="exp-nombre">Sergio Andrés Pérez León</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="433 jeison amorocho universidad industrial de santander">
+      <span class="exp-sesion">Ses. 433</span>
+      <span class="exp-nombre">Jeison Amorocho</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="432 jurgen julio batalla universidad industrial de santander">
+      <span class="exp-sesion">Ses. 432</span>
+      <span class="exp-nombre">Jurgen Julio Batalla</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="431 jack solano universidad industrial de santander">
+      <span class="exp-sesion">Ses. 431</span>
+      <span class="exp-nombre">Jack Solano</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="430 javier camargo universidad industrial de santander">
+      <span class="exp-sesion">Ses. 430</span>
+      <span class="exp-nombre">Javier Camargo</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="429 michael alexander rincón villamizar universidad industrial de santander">
+      <span class="exp-sesion">Ses. 429</span>
+      <span class="exp-nombre">Michael Alexander Rincón Villamizar</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="428 carlos wilson rodríguez cárdenas universidad industrial de santander">
+      <span class="exp-sesion">Ses. 428</span>
+      <span class="exp-nombre">Carlos Wilson Rodríguez Cárdenas</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="427 carlos uzcátegui universidad industrial de santander">
+      <span class="exp-sesion">Ses. 427</span>
+      <span class="exp-nombre">Carlos Uzcátegui</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="426 jhan hadder hernández tunubalá universidad industrial de santander">
+      <span class="exp-sesion">Ses. 426</span>
+      <span class="exp-nombre">Jhan Hadder Hernández Tunubalá</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="425 camilo andrés acevedo ardila universidad industrial de santander">
+      <span class="exp-sesion">Ses. 425</span>
+      <span class="exp-nombre">Camilo Andrés Acevedo Ardila</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="424 héctor pinedo tapia universidad industrial de santander">
+      <span class="exp-sesion">Ses. 424</span>
+      <span class="exp-nombre">Héctor Pinedo Tapia</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="423 jeison amorocho universidad industrial de santander">
+      <span class="exp-sesion">Ses. 423</span>
+      <span class="exp-nombre">Jeison Amorocho</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="422 jhan hernandez universidad industrial de santander">
+      <span class="exp-sesion">Ses. 422</span>
+      <span class="exp-nombre">Jhan Hernandez</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="421 yineth amorocho universidad industrial de santander">
+      <span class="exp-sesion">Ses. 421</span>
+      <span class="exp-nombre">Yineth Amorocho</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="420 camilo andrés acevedo ardila universidad industrial de santander">
+      <span class="exp-sesion">Ses. 420</span>
+      <span class="exp-nombre">Camilo Andrés Acevedo Ardila</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="419 jimmy alexander balaguera flórez universidad industrial de santander">
+      <span class="exp-sesion">Ses. 419</span>
+      <span class="exp-nombre">Jimmy Alexander Balaguera Flórez</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="418 jhon freddy pérez remolina universidad industrial de santander">
+      <span class="exp-sesion">Ses. 418</span>
+      <span class="exp-nombre">Jhon Freddy Pérez Remolina</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="417 sergio andrés pérez león universidad industrial de santander">
+      <span class="exp-sesion">Ses. 417</span>
+      <span class="exp-nombre">Sergio Andrés Pérez León</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="416 yineth amorocho universidad industrial de santander">
+      <span class="exp-sesion">Ses. 416</span>
+      <span class="exp-nombre">Yineth Amorocho</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="415 jurgen julio batalla universidad industrial de santander">
+      <span class="exp-sesion">Ses. 415</span>
+      <span class="exp-nombre">Jurgen Julio Batalla</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="414 javier camargo universidad industrial de santander">
+      <span class="exp-sesion">Ses. 414</span>
+      <span class="exp-nombre">Javier Camargo</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="413 michael alexander rincón villamizar universidad industrial de santander">
+      <span class="exp-sesion">Ses. 413</span>
+      <span class="exp-nombre">Michael Alexander Rincón Villamizar</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="412 carlos wilson rodríguez cárdenas universidad industrial de santander">
+      <span class="exp-sesion">Ses. 412</span>
+      <span class="exp-nombre">Carlos Wilson Rodríguez Cárdenas</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="411 edwar ramírez ardila universidad industrial de santander">
+      <span class="exp-sesion">Ses. 411</span>
+      <span class="exp-nombre">Edwar Ramírez Ardila</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="410 herson suárez santiago delgado edgar mantilla yeny moreno universidad industrial de santander">
+      <span class="exp-sesion">Ses. 410</span>
+      <span class="exp-nombre">Herson Suárez, Santiago Delgado, Edgar Mantilla y Yeny Moreno</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="409 carlos uzcátegui universidad industrial de santander">
+      <span class="exp-sesion">Ses. 409</span>
+      <span class="exp-nombre">Carlos Uzcátegui</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="408 jamir castellanos universidad industrial de santander">
+      <span class="exp-sesion">Ses. 408</span>
+      <span class="exp-nombre">Jamir Castellanos</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="407 josé acevedo universidad industrial de santander">
+      <span class="exp-sesion">Ses. 407</span>
+      <span class="exp-nombre">José Acevedo</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="406 sergio andrés pérez león universidad industrial de santander">
+      <span class="exp-sesion">Ses. 406</span>
+      <span class="exp-nombre">Sergio Andrés Pérez León</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="405 winston ferreira delgado universidad industrial de santander">
+      <span class="exp-sesion">Ses. 405</span>
+      <span class="exp-nombre">Winston Ferreira Delgado</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="404 jurgen julio batalla universidad industrial de santander">
+      <span class="exp-sesion">Ses. 404</span>
+      <span class="exp-nombre">Jurgen Julio Batalla</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="403 javier camargo universidad industrial de santander">
+      <span class="exp-sesion">Ses. 403</span>
+      <span class="exp-nombre">Javier Camargo</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="402 michael alexander rincón villamizar universidad industrial de santander">
+      <span class="exp-sesion">Ses. 402</span>
+      <span class="exp-nombre">Michael Alexander Rincón Villamizar</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="401 jorge rojas universidad industrial de santander">
+      <span class="exp-sesion">Ses. 401</span>
+      <span class="exp-nombre">Jorge Rojas</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="400 sergio macías rafael isaacs michael rincón unam universidad industrial de santander">
+      <span class="exp-sesion">Ses. 400</span>
+      <span class="exp-nombre">Sergio Macías · Rafael Isaacs · Michael Rincón</span>
+      <span class="exp-inst">UNAM · UIS</span>
+    </div>
+    <div class="expositor-row" data-search="399 javier mauricio sierra villabona universidad industrial de santander">
+      <span class="exp-sesion">Ses. 399</span>
+      <span class="exp-nombre">Javier Mauricio Sierra Villabona</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="398 carlos uzcátegui universidad industrial de santander">
+      <span class="exp-sesion">Ses. 398</span>
+      <span class="exp-nombre">Carlos Uzcátegui</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="397 rafael isaacs universidad industrial de santander">
+      <span class="exp-sesion">Ses. 397</span>
+      <span class="exp-nombre">Rafael Isaacs</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="396 jeison leonardo amorocho morales universidad industrial de santander">
+      <span class="exp-sesion">Ses. 396</span>
+      <span class="exp-nombre">Jeison Leonardo Amorocho Morales</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="395 sergio pérez universidad industrial de santander">
+      <span class="exp-sesion">Ses. 395</span>
+      <span class="exp-nombre">Sergio Pérez</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="394 sergio macías instituto de matemáticas unam">
+      <span class="exp-sesion">Ses. 394</span>
+      <span class="exp-nombre">Sergio Macías</span>
+      <span class="exp-inst">Instituto de Matemáticas, UNAM</span>
+    </div>
+    <div class="expositor-row" data-search="393 michael alexander rincón villamizar universidad industrial de santander">
+      <span class="exp-sesion">Ses. 393</span>
+      <span class="exp-nombre">Michael Alexander Rincón Villamizar</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="392 jeison leonardo amorocho morales universidad industrial de santander">
+      <span class="exp-sesion">Ses. 392</span>
+      <span class="exp-nombre">Jeison Leonardo Amorocho Morales</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="391 fernando garcía cortés universidad nacional autónoma de méxico unam">
+      <span class="exp-sesion">Ses. 391</span>
+      <span class="exp-nombre">Fernando García Cortés</span>
+      <span class="exp-inst">Universidad Nacional Autónoma de México</span>
+    </div>
+    <div class="expositor-row" data-search="390 félix yael lópez cayetano universidad nacional autónoma de méxico unam">
+      <span class="exp-sesion">Ses. 390</span>
+      <span class="exp-nombre">Félix Yael López Cayetano</span>
+      <span class="exp-inst">Universidad Nacional Autónoma de México</span>
+    </div>
+    <div class="expositor-row" data-search="389 natali delgado universidad industrial de santander">
+      <span class="exp-sesion">Ses. 389</span>
+      <span class="exp-nombre">Natali Delgado</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="388 jhon freddy pérez remolina universidad industrial de santander">
+      <span class="exp-sesion">Ses. 388</span>
+      <span class="exp-nombre">Jhon Freddy Pérez Remolina</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="387 sergio pérez universidad industrial de santander">
+      <span class="exp-sesion">Ses. 387</span>
+      <span class="exp-nombre">Sergio Pérez</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="386 yazmín cote universidad industrial de santander">
+      <span class="exp-sesion">Ses. 386</span>
+      <span class="exp-nombre">Yazmín Cote</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="385 jurgen alfredo julio batalla universidad industrial de santander">
+      <span class="exp-sesion">Ses. 385</span>
+      <span class="exp-nombre">Jurgen Alfredo Julio Batalla</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="384 iohan daniel estupiñán universidad industrial de santander">
+      <span class="exp-sesion">Ses. 384</span>
+      <span class="exp-nombre">Iohan Daniel Estupiñán</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="383 edwar ramírez ardila universidad industrial de santander">
+      <span class="exp-sesion">Ses. 383</span>
+      <span class="exp-nombre">Edwar Ramírez Ardila</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="382 michael rincón universidad industrial de santander">
+      <span class="exp-sesion">Ses. 382</span>
+      <span class="exp-nombre">Michael Rincón</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="381 javier camargo universidad industrial de santander">
+      <span class="exp-sesion">Ses. 381</span>
+      <span class="exp-nombre">Javier Camargo</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="380 sergio macías instituto de matemáticas unam">
+      <span class="exp-sesion">Ses. 380</span>
+      <span class="exp-nombre">Sergio Macías</span>
+      <span class="exp-inst">Instituto de Matemáticas, UNAM</span>
+    </div>
+    <div class="expositor-row" data-search="379 luis augusto martínez sánchez universidad nacional autónoma de méxico unam">
+      <span class="exp-sesion">Ses. 379</span>
+      <span class="exp-nombre">Luis Augusto Martínez Sánchez</span>
+      <span class="exp-inst">Universidad Nacional Autónoma de México</span>
+    </div>
+    <div class="expositor-row" data-search="378 julián c. cano universidad de los andes">
+      <span class="exp-sesion">Ses. 378</span>
+      <span class="exp-nombre">Julián C. Cano</span>
+      <span class="exp-inst">Universidad de los Andes</span>
+    </div>
+    <div class="expositor-row" data-search="377 álvaro andrade universidad industrial de santander">
+      <span class="exp-sesion">Ses. 377</span>
+      <span class="exp-nombre">Álvaro Andrade</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="376 julián enrique neira díaz universidad industrial de santander">
+      <span class="exp-sesion">Ses. 376</span>
+      <span class="exp-nombre">Julián Enrique Neira Díaz</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="375 maría del pilar bautista niño universidad industrial de santander">
+      <span class="exp-sesion">Ses. 375</span>
+      <span class="exp-nombre">María Del Pilar Bautista Niño</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="374 sergio andrés pérez león universidad industrial de santander">
+      <span class="exp-sesion">Ses. 374</span>
+      <span class="exp-nombre">Sergio Andrés Pérez León</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="373 iohan daniel estupiñán valbuena universidad industrial de santander">
+      <span class="exp-sesion">Ses. 373</span>
+      <span class="exp-nombre">Iohan Daniel Estupiñán Valbuena</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="372 michael rincón universidad industrial de santander">
+      <span class="exp-sesion">Ses. 372</span>
+      <span class="exp-nombre">Michael Rincón</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="371 carlos uzcátegui universidad industrial de santander">
+      <span class="exp-sesion">Ses. 371</span>
+      <span class="exp-nombre">Carlos Uzcátegui</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="370 javier camargo universidad industrial de santander">
+      <span class="exp-sesion">Ses. 370</span>
+      <span class="exp-nombre">Javier Camargo</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="369 juan david franco salazar universidad industrial de santander">
+      <span class="exp-sesion">Ses. 369</span>
+      <span class="exp-nombre">Juan David Franco Salazar</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="368 sergio pérez universidad industrial de santander">
+      <span class="exp-sesion">Ses. 368</span>
+      <span class="exp-nombre">Sergio Pérez</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="367 yazmín cote universidad industrial de santander">
+      <span class="exp-sesion">Ses. 367</span>
+      <span class="exp-nombre">Yazmín Cote</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="366 michael alexander rincón villamizar universidad industrial de santander">
+      <span class="exp-sesion">Ses. 366</span>
+      <span class="exp-nombre">Michael Alexander Rincón Villamizar</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="365 diego alexander ramírez angarita universidad industrial de santander">
+      <span class="exp-sesion">Ses. 365</span>
+      <span class="exp-nombre">Diego Alexander Ramírez Angarita</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="364 jurgen alfredo julio batalla universidad industrial de santander">
+      <span class="exp-sesion">Ses. 364</span>
+      <span class="exp-nombre">Jurgen Alfredo Julio Batalla</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="363 edwar alexis ramírez ardila universidad industrial de santander">
+      <span class="exp-sesion">Ses. 363</span>
+      <span class="exp-nombre">Edwar Alexis Ramírez Ardila</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="362 jurgen alfredo julio batalla universidad industrial de santander">
+      <span class="exp-sesion">Ses. 362</span>
+      <span class="exp-nombre">Jurgen Alfredo Julio Batalla</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="361 diego gamboa universidad industrial de santander">
+      <span class="exp-sesion">Ses. 361</span>
+      <span class="exp-nombre">Diego Gamboa</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="360 juan david franco salazar universidad industrial de santander">
+      <span class="exp-sesion">Ses. 360</span>
+      <span class="exp-nombre">Juan David Franco Salazar</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="359 sergio pérez universidad industrial de santander">
+      <span class="exp-sesion">Ses. 359</span>
+      <span class="exp-nombre">Sergio Pérez</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="358 javier camargo universidad industrial de santander">
+      <span class="exp-sesion">Ses. 358</span>
+      <span class="exp-nombre">Javier Camargo</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="357 michael rincón universidad industrial de santander">
+      <span class="exp-sesion">Ses. 357</span>
+      <span class="exp-nombre">Michael Rincón</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="356 carlos uzcátegui universidad industrial de santander">
+      <span class="exp-sesion">Ses. 356</span>
+      <span class="exp-nombre">Carlos Uzcátegui</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="355 álvaro andrade universidad industrial de santander">
+      <span class="exp-sesion">Ses. 355</span>
+      <span class="exp-nombre">Álvaro Andrade</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="354 daimon mayorga universidad industrial de santander">
+      <span class="exp-sesion">Ses. 354</span>
+      <span class="exp-nombre">Daimon Mayorga</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="353 jerson pérez universidad industrial de santander">
+      <span class="exp-sesion">Ses. 353</span>
+      <span class="exp-nombre">Jerson Pérez</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="352 javier camargo universidad industrial de santander">
+      <span class="exp-sesion">Ses. 352</span>
+      <span class="exp-nombre">Javier Camargo</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="351 natali delgado universidad industrial de santander">
+      <span class="exp-sesion">Ses. 351</span>
+      <span class="exp-nombre">Natali Delgado</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="350 michael alexander rincón villamizar universidad industrial de santander">
+      <span class="exp-sesion">Ses. 350</span>
+      <span class="exp-nombre">Michael Alexander Rincón Villamizar</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="349 juan david franco salazar universidad industrial de santander">
+      <span class="exp-sesion">Ses. 349</span>
+      <span class="exp-nombre">Juan David Franco Salazar</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="348 carlos uzcátegui universidad industrial de santander">
+      <span class="exp-sesion">Ses. 348</span>
+      <span class="exp-nombre">Carlos Uzcátegui</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="347 diego gamboa universidad industrial de santander">
+      <span class="exp-sesion">Ses. 347</span>
+      <span class="exp-nombre">Diego Gamboa</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="346 mayra isabel ferreira universidad industrial de santander">
+      <span class="exp-sesion">Ses. 346</span>
+      <span class="exp-nombre">Mayra Isabel Ferreira</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="345 javier camargo universidad industrial de santander">
+      <span class="exp-sesion">Ses. 345</span>
+      <span class="exp-nombre">Javier Camargo</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="344 maria angélica oliveros caicedo universidad industrial de santander">
+      <span class="exp-sesion">Ses. 344</span>
+      <span class="exp-nombre">Maria Angélica Oliveros Caicedo</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="343 jennyffer bohorquez universidad industrial de santander">
+      <span class="exp-sesion">Ses. 343</span>
+      <span class="exp-nombre">Jennyffer Bohorquez</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="342 mayra isabel ferreira ortiz universidad industrial de santander">
+      <span class="exp-sesion">Ses. 342</span>
+      <span class="exp-nombre">Mayra Isabel Ferreira Ortiz</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="341 johan camilo cancino rey universidad industrial de santander">
+      <span class="exp-sesion">Ses. 341</span>
+      <span class="exp-nombre">Johan Camilo Cancino Rey</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="340 karen daniela arana universidad industrial de santander">
+      <span class="exp-sesion">Ses. 340</span>
+      <span class="exp-nombre">Karen Daniela Arana</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="339 julián camilo cano ramos universidad industrial de santander">
+      <span class="exp-sesion">Ses. 339</span>
+      <span class="exp-nombre">Julián Camilo Cano Ramos</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="338 sergio macías instituto de matemáticas unam">
+      <span class="exp-sesion">Ses. 338</span>
+      <span class="exp-nombre">Sergio Macías</span>
+      <span class="exp-inst">Instituto de Matemáticas, UNAM</span>
+    </div>
+    <div class="expositor-row" data-search="337 david maya universidad autónoma del estado de méxico uaem">
+      <span class="exp-sesion">Ses. 337</span>
+      <span class="exp-nombre">David Maya</span>
+      <span class="exp-inst">Universidad Autónoma del Estado de México</span>
+    </div>
+    <div class="expositor-row" data-search="336 carlos di prisco universidad de los andes">
+      <span class="exp-sesion">Ses. 336</span>
+      <span class="exp-nombre">Carlos Di Prisco</span>
+      <span class="exp-inst">Universidad de los Andes</span>
+    </div>
+    <div class="expositor-row" data-search="335 johan camilo cancino universidad industrial de santander">
+      <span class="exp-sesion">Ses. 335</span>
+      <span class="exp-nombre">Johan Camilo Cancino</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="334 javier camargo universidad industrial de santander">
+      <span class="exp-sesion">Ses. 334</span>
+      <span class="exp-nombre">Javier Camargo</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="333 michael rincón universidad industrial de santander">
+      <span class="exp-sesion">Ses. 333</span>
+      <span class="exp-nombre">Michael Rincón</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="332 lucero madrid mendoza universidad autónoma del estado de méxico uaem">
+      <span class="exp-sesion">Ses. 332</span>
+      <span class="exp-nombre">Lucero Madrid Mendoza</span>
+      <span class="exp-inst">Universidad Autónoma del Estado de México</span>
+    </div>
+    <div class="expositor-row" data-search="331 carlos uzcátegui universidad industrial de santander">
+      <span class="exp-sesion">Ses. 331</span>
+      <span class="exp-nombre">Carlos Uzcátegui</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="330 javier camargo universidad industrial de santander">
+      <span class="exp-sesion">Ses. 330</span>
+      <span class="exp-nombre">Javier Camargo</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="329 michael rincón universidad industrial de santander">
+      <span class="exp-sesion">Ses. 329</span>
+      <span class="exp-nombre">Michael Rincón</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="328 carlos uzcátegui universidad industrial de santander">
+      <span class="exp-sesion">Ses. 328</span>
+      <span class="exp-nombre">Carlos Uzcátegui</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="327 camilo andrés nuñes universidad industrial de santander">
+      <span class="exp-sesion">Ses. 327</span>
+      <span class="exp-nombre">Camilo Andrés Nuñes</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="326 josé guerrero universidad industrial de santander">
+      <span class="exp-sesion">Ses. 326</span>
+      <span class="exp-nombre">José Guerrero</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="325 carlos di prisco universidad de los andes">
+      <span class="exp-sesion">Ses. 325</span>
+      <span class="exp-nombre">Carlos Di Prisco</span>
+      <span class="exp-inst">Universidad de los Andes</span>
+    </div>
+    <div class="expositor-row" data-search="324 edwin araque universidad industrial de santander">
+      <span class="exp-sesion">Ses. 324</span>
+      <span class="exp-nombre">Edwin Araque</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="323 rafael isaacs universidad industrial de santander">
+      <span class="exp-sesion">Ses. 323</span>
+      <span class="exp-nombre">Rafael Isaacs</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="322 julián c. cano universidad nacional de colombia unal">
+      <span class="exp-sesion">Ses. 322</span>
+      <span class="exp-nombre">Julián C. Cano</span>
+      <span class="exp-inst">Universidad Nacional de Colombia</span>
+    </div>
+    <div class="expositor-row" data-search="321 jorge martinez universidad industrial de santander">
+      <span class="exp-sesion">Ses. 321</span>
+      <span class="exp-nombre">Jorge Martinez</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="320 andrés millán universidad metropolitana caracas venezuela">
+      <span class="exp-sesion">Ses. 320</span>
+      <span class="exp-nombre">Andrés Millán</span>
+      <span class="exp-inst">Universidad Metropolitana, Caracas</span>
+    </div>
+    <div class="expositor-row" data-search="319 javier murgas universidad industrial de santander">
+      <span class="exp-sesion">Ses. 319</span>
+      <span class="exp-nombre">Javier Murgas</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="318 jayson nova universidad industrial de santander">
+      <span class="exp-sesion">Ses. 318</span>
+      <span class="exp-nombre">Jayson Nova</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="317 andrés enrique quintero santander universidad industrial de santander">
+      <span class="exp-sesion">Ses. 317</span>
+      <span class="exp-nombre">Andrés Enrique Quintero Santander</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="316 j. sebastián báez universidad estadual de campinas brasil">
+      <span class="exp-sesion">Ses. 316</span>
+      <span class="exp-nombre">J. Sebastián Báez</span>
+      <span class="exp-inst">Universidad Estadual de Campinas</span>
+    </div>
+    <div class="expositor-row" data-search="315 samaria montenegro universidad de costa rica">
+      <span class="exp-sesion">Ses. 315</span>
+      <span class="exp-nombre">Samaria Montenegro</span>
+      <span class="exp-inst">Universidad de Costa Rica</span>
+    </div>
+    <div class="expositor-row" data-search="314 diego gamboa universidad industrial de santander">
+      <span class="exp-sesion">Ses. 314</span>
+      <span class="exp-nombre">Diego Gamboa</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="313 claribet piña universidad industrial de santander">
+      <span class="exp-sesion">Ses. 313</span>
+      <span class="exp-nombre">Claribet Piña</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="312 gerardo corredor universidad industrial de santander">
+      <span class="exp-sesion">Ses. 312</span>
+      <span class="exp-nombre">Gerardo Corredor</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+    <div class="expositor-row" data-search="94 ronald eduardo paternina universidad industrial de santander">
+      <span class="exp-sesion">Ses. 94</span>
+      <span class="exp-nombre">Ronald Eduardo Paternina</span>
+      <span class="exp-inst">Universidad Industrial de Santander</span>
+    </div>
+
+  </div>
+
+  <div id="sin-resultados" class="no-results hidden">No se encontraron resultados.</div>
+
+  <a class="back-link" href="index.html">← Volver a sesiones recientes</a>
+</div>
+
+<footer>
+  <span>Seminario de Topología "Rafael Isaacs" · UIS · Bucaramanga, Colombia</span>
+  <span>jcamargo-bot.github.io</span>
+</footer>
+
+<script>
+function filtrar() {
+  const q = document.getElementById('busqueda').value.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const filas = document.querySelectorAll('.expositor-row');
+  let visibles = 0;
+  filas.forEach(fila => {
+    const texto = (fila.dataset.search || '')
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const mostrar = q === '' || texto.includes(q);
+    fila.classList.toggle('hidden', !mostrar);
+    if (mostrar) visibles++;
+  });
+  document.getElementById('count-visible').textContent = visibles;
+  document.getElementById('sin-resultados').classList.toggle('hidden', visibles > 0);
+}
+</script>
+
+</body>
+</html>
