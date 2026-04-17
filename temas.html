@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temas – Seminario de Topología "Rafael Isaacs"</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Georgia, serif; color: #222; background: #fff; }
+header { background: #67B93E; border-bottom: 1px solid #4a9a2a; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+header h1 { font-size: 1.2rem; font-weight: normal; color: #fff; }
+header p { font-size: 0.85rem; color: rgba(255,255,255,0.85); margin-top: 3px; }
+nav a { font-size: 0.85rem; color: rgba(255,255,255,0.85); text-decoration: none; margin-left: 1.5rem; }
+nav a:hover { color: #fff; text-decoration: underline; }
+.breadcrumb { font-size: 0.8rem; color: #999; padding: 1rem 2rem; border-bottom: 1px solid #f0f0f0; }
+.breadcrumb a { color: #67B93E; text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.content { max-width: 860px; padding: 2rem; margin: 0 auto; }
+.page-title { font-size: 1.8rem; font-weight: normal; color: #222; margin-bottom: 0.3rem; }
+.page-sub { font-size: 0.9rem; color: #999; margin-bottom: 2rem; }
+
+/* Etiquetas de navegación */
+.tags-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+.tag-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: Arial, sans-serif;
+  font-size: 0.82rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #444;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
+}
+.tag-btn:hover { border-color: #67B93E; color: #67B93E; background: #f4fdf0; }
+.tag-btn.active { background: #67B93E; border-color: #4a9a2a; color: #fff; }
+.tag-count {
+  font-size: 0.72rem;
+  background: rgba(0,0,0,0.12);
+  border-radius: 10px;
+  padding: 0 5px;
+  line-height: 1.5;
+}
+.tag-btn.active .tag-count { background: rgba(255,255,255,0.3); }
+
+/* Secciones temáticas */
+.tema-section { margin-bottom: 2.5rem; }
+.tema-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #67B93E;
+}
+.tema-icon { font-size: 1.1rem; }
+.tema-nombre {
+  font-size: 1.05rem;
+  font-weight: normal;
+  color: #222;
+  flex: 1;
+}
+.tema-total {
+  font-family: Arial, sans-serif;
+  font-size: 0.78rem;
+  color: #888;
+}
+
+/* Filas de sesión */
+.ses-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+.ses-row:last-child { border-bottom: none; }
+.ses-num {
+  font-family: Arial, sans-serif;
+  font-size: 0.78rem;
+  color: #aaa;
+  min-width: 54px;
+  flex-shrink: 0;
+}
+.ses-titulo {
+  font-size: 0.92rem;
+  color: #67B93E;
+  text-decoration: none;
+  flex: 1;
+  line-height: 1.4;
+}
+.ses-titulo:hover { text-decoration: underline; }
+.ses-exp {
+  font-family: Arial, sans-serif;
+  font-size: 0.78rem;
+  color: #999;
+  text-align: right;
+  flex-shrink: 0;
+  max-width: 200px;
+}
+@media (max-width: 580px) {
+  .ses-row { flex-wrap: wrap; }
+  .ses-exp { text-align: left; max-width: 100%; }
+}
+
+.hidden { display: none; }
+.back-link { display: inline-block; margin-top: 2rem; font-size: 0.85rem; color: #67B93E; text-decoration: none; }
+.back-link:hover { text-decoration: underline; }
+footer { border-top: 1px solid #eee; padding: 1.5rem 2rem; font-size: 0.8rem; color: #aaa; margin-top: 3rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex; align-items:center; gap:1rem;">
+    <img src="LOGO%20UIS_PNG.png" alt="Logo UIS" style="height:50px; width:auto;">
+    <div>
+      <h1>Seminario de Topología "Rafael Isaacs"</h1>
+      <p>Escuela de Matemáticas · Universidad Industrial de Santander</p>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html">Sesiones</a>
+    <a href="expositores.html">Expositores</a>
+    <a href="sesiones-1-328.html">Sesiones 1–328</a>
+    <a href="sesiones-329-450.html">Sesiones 329–450</a>
+  </nav>
+</header>
+
+<div class="breadcrumb">
+  <a href="index.html">Inicio</a> › Temas
+</div>
+
+<div class="content">
+  <div class="page-title">Temas</div>
+  <div class="page-sub">Índice temático del Seminario de Topología "Rafael Isaacs"</div>
+
+  <!-- Etiquetas de navegación -->
+  <div class="tags-nav">
+    <a class="tag-btn active" href="#" onclick="mostrarTodos(event)">
+      Todos <span class="tag-count">8</span>
+    </a>
+    <a class="tag-btn" href="#continuos" onclick="filtrar(event,'continuos')">
+      Teoría de continuos e hiperespacios <span class="tag-count">47</span>
+    </a>
+    <a class="tag-btn" href="#dinamicos" onclick="filtrar(event,'dinamicos')">
+      Sistemas dinámicos <span class="tag-count">28</span>
+    </a>
+    <a class="tag-btn" href="#funcional" onclick="filtrar(event,'funcional')">
+      Análisis funcional <span class="tag-count">32</span>
+    </a>
+    <a class="tag-btn" href="#conjuntos" onclick="filtrar(event,'conjuntos')">
+      Topología descriptiva y teoría de conjuntos <span class="tag-count">30</span>
+    </a>
+    <a class="tag-btn" href="#geometria" onclick="filtrar(event,'geometria')">
+      Geometría diferencial <span class="tag-count">12</span>
+    </a>
+    <a class="tag-btn" href="#algebraica" onclick="filtrar(event,'algebraica')">
+      Topología algebraica <span class="tag-count">10</span>
+    </a>
+    <a class="tag-btn" href="#general" onclick="filtrar(event,'general')">
+      Topología general <span class="tag-count">14</span>
+    </a>
+    <a class="tag-btn" href="#historia" onclick="filtrar(event,'historia')">
+      Historia y fundamentos <span class="tag-count">9</span>
+    </a>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 1. TEORÍA DE CONTINUOS E HIPERESPACIOS    -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="tema-section" id="continuos">
+    <div class="tema-header">
+      <span class="tema-icon">〇</span>
+      <span class="tema-nombre">Teoría de continuos e hiperespacios</span>
+      <span class="tema-total">47 sesiones</span>
+    </div>
+
+    <div class="ses-row"><span class="ses-num">Ses. 457</span><a class="ses-titulo" href="sesion-457.html">Desatando un nudo de una dona: topología de nudos torales</a><span class="ses-exp">A. F. Cruz López</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 381</span><a class="ses-titulo" href="sesiones-329-450.html">El hiperespacio de subcontinuos regulares: Compacidad y conexidad</a><span class="ses-exp">J. Camargo</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 380</span><a class="ses-titulo" href="sesiones-329-450.html">Sobre continuos débilmente encadenables por continuos</a><span class="ses-exp">S. Macías</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 370</span><a class="ses-titulo" href="sesiones-329-450.html">El hiperespacio de no estorbadores y la propiedad de Kelley</a><span class="ses-exp">J. Camargo</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 365</span><a class="ses-titulo" href="sesiones-329-450.html">Los hiperespacios de subcontinuos regulares y subcontinuos magros</a><span class="ses-exp">D. Ramírez Angarita</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 358</span><a class="ses-titulo" href="sesiones-329-450.html">El hiperespacio de los T-cerrados</a><span class="ses-exp">J. Camargo</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 355</span><a class="ses-titulo" href="sesiones-329-450.html">Funciones inducidas entre hiperespacios de sucesiones convergentes</a><span class="ses-exp">Á. Andrade</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 354</span><a class="ses-titulo" href="sesiones-329-450.html">El hiperespacio de las sucesiones convergentes</a><span class="ses-exp">D. Mayorga</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 352</span><a class="ses-titulo" href="sesiones-329-450.html">Celdas en el hiperespacio Cₙ(X)</a><span class="ses-exp">J. Camargo</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 346</span><a class="ses-titulo" href="sesiones-329-450.html">El hiperespacio de no bloqueadores y la propiedad de Kelley</a><span class="ses-exp">M. I. Ferreira</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 345</span><a class="ses-titulo" href="sesiones-329-450.html">La propiedad de Kelley en continuos</a><span class="ses-exp">J. Camargo</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 344</span><a class="ses-titulo" href="sesiones-329-450.html">Un dendroide no g-contraible</a><span class="ses-exp">M. A. Oliveros Caicedo</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 342</span><a class="ses-titulo" href="sesiones-329-450.html">No bloqueadores en hiperespacios de continuos</a><span class="ses-exp">M. I. Ferreira Ortiz</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 341</span><a class="ses-titulo" href="sesiones-329-450.html">Conjuntos omega límite en continuos de tipo λ</a><span class="ses-exp">J. C. Cancino Rey</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 338</span><a class="ses-titulo" href="sesiones-329-450.html">Algo sobre Dendroides</a><span class="ses-exp">S. Macías</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 334</span><a class="ses-titulo" href="sesiones-329-450.html">Funciones inducidas ligeras entre hiperespacios de continuos</a><span class="ses-exp">J. Camargo</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 332</span><a class="ses-titulo" href="sesiones-329-450.html">Un recorrido hacia la g-pseudo-contractibilidad en continuos</a><span class="ses-exp">L. Madrid Mendoza</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 330</span><a class="ses-titulo" href="sesiones-329-450.html">Bloqueadores en hiperespacios de continuos</a><span class="ses-exp">J. Camargo</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 328</span><a class="ses-titulo" href="sesiones-1-328.html">Reconstrucción de coloraciones a partir de los conjuntos homogéneos</a><span class="ses-exp">C. Uzcátegui</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 324</span><a class="ses-titulo" href="sesiones-1-328.html">Una colección no numerable de continuos encadenables mutuamente incomparables</a><span class="ses-exp">E. Araque</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 318</span><a class="ses-titulo" href="sesiones-1-328.html">Unicoherencia en continuos</a><span class="ses-exp">J. Nova</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 314</span><a class="ses-titulo" href="sesiones-1-328.html">El dragón de Heighway</a><span class="ses-exp">D. Gamboa</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 313</span><a class="ses-titulo" href="sesiones-1-328.html">Introducción a las particiones de espacios topológicos</a><span class="ses-exp">C. Piña</span></div>
+    <!-- sesiones 377, 391, 394, 399, 403, 414, 416, 419, 420, 421, 430, 433, 436, 437, 443, 446, 450, 452, 454 -->
+    <div class="ses-row"><span class="ses-num">Ses. 452</span><a class="ses-titulo" href="sesion-452.html">Funciones no necesariamente continuas que preservan conexidad</a><span class="ses-exp">S. Pérez</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 450</span><a class="ses-titulo" href="sesion-450.html">Propiedades de la Función T de Jones</a><span class="ses-exp">S. Macías</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 446</span><a class="ses-titulo" href="sesiones-329-450.html">Sensibilidad</a><span class="ses-exp">J. Camargo</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 436</span><a class="ses-titulo" href="sesiones-329-450.html">Transitividad con funciones multivaluadas</a><span class="ses-exp">J. Camargo</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 430</span><a class="ses-titulo" href="sesiones-329-450.html">Conjuntos órbita</a><span class="ses-exp">J. Camargo</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 416</span><a class="ses-titulo" href="sesiones-329-450.html">Caos multivaluado finito</a><span class="ses-exp">Y. Amorocho</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 414</span><a class="ses-titulo" href="sesiones-329-450.html">Dinámicas en funciones multivaluadas</a><span class="ses-exp">J. Camargo</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 403</span><a class="ses-titulo" href="sesiones-329-450.html">Funciones caóticas</a><span class="ses-exp">J. Camargo</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 399</span><a class="ses-titulo" href="sesiones-329-450.html">Seis clases de puntos de no corte</a><span class="ses-exp">J. M. Sierra Villabona</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 394</span><a class="ses-titulo" href="sesiones-329-450.html">Sobre la función K de Jones</a><span class="ses-exp">S. Macías</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 391</span><a class="ses-titulo" href="sesiones-329-450.html">Otro tipo de espacio cociente en hiperespacios de continuos</a><span class="ses-exp">F. García Cortés</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 390</span><a class="ses-titulo" href="sesiones-329-450.html">Entropía topológica y la función inducida Cₙ(f)</a><span class="ses-exp">F. Y. López Cayetano</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 377</span><a class="ses-titulo" href="sesiones-329-450.html">Funciones inducidas entre hiperespacios de sucesiones convergentes</a><span class="ses-exp">Á. Andrade</span></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 2. SISTEMAS DINÁMICOS                      -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="tema-section" id="dinamicos">
+    <div class="tema-header">
+      <span class="tema-icon">↻</span>
+      <span class="tema-nombre">Sistemas dinámicos</span>
+      <span class="tema-total">28 sesiones</span>
+    </div>
+
+    <div class="ses-row"><span class="ses-num">Ses. 447</span><a class="ses-titulo" href="sesiones-329-450.html">Existencia de sistemas dinámicos numerables con órbita densa</a><span class="ses-exp">J. F. Pérez Remolina</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 443</span><a class="ses-titulo" href="sesiones-329-450.html">Espacios CTS y la propiedad fuerte de Choquet</a><span class="ses-exp">J. Amorocho</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 440</span><a class="ses-titulo" href="sesiones-329-450.html">Sobre la complejidad de la relación de conjugación topológica en sistemas dinámicos</a><span class="ses-exp">J. F. Pérez Remolina</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 423</span><a class="ses-titulo" href="sesiones-329-450.html">Sobre suavidad</a><span class="ses-exp">J. Amorocho</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 421</span><a class="ses-titulo" href="sesiones-329-450.html">Dinámica holomorfa: el conjunto de Mandelbrot</a><span class="ses-exp">Y. Amorocho</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 419</span><a class="ses-titulo" href="sesiones-329-450.html">Compactos que son ω-límite de un sistema dinámico discreto</a><span class="ses-exp">J. A. Balaguera Flórez</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 418</span><a class="ses-titulo" href="sesiones-329-450.html">Teorema de Mycielski y algo más</a><span class="ses-exp">J. F. Pérez Remolina</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 413</span><a class="ses-titulo" href="sesiones-329-450.html">Dinámica lineal e ideales</a><span class="ses-exp">M. A. Rincón Villamizar</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 405</span><a class="ses-titulo" href="sesiones-329-450.html">Tres definiciones de caos</a><span class="ses-exp">W. Ferreira Delgado</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 388</span><a class="ses-titulo" href="sesiones-329-450.html">El semigrupo de Ellis de un sistema dinámico sobre un espacio métrico compacto</a><span class="ses-exp">J. F. Pérez Remolina</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 384</span><a class="ses-titulo" href="sesiones-329-450.html">Sombreado en Sistemas Dinámicos Inducidos</a><span class="ses-exp">I. D. Estupiñán</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 373</span><a class="ses-titulo" href="sesiones-329-450.html">Sombreado en Sistemas Dinámicos Discretos</a><span class="ses-exp">I. D. Estupiñán Valbuena</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 343</span><a class="ses-titulo" href="sesiones-329-450.html">La propiedad de sombreamiento de los mapas inducidos en el hiperespacio 2^X y C(X)</a><span class="ses-exp">J. Bohorquez</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 335</span><a class="ses-titulo" href="sesiones-329-450.html">Puntos no errantes y la función Ω_f</a><span class="ses-exp">J. C. Cancino</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 337</span><a class="ses-titulo" href="sesiones-329-450.html">Imágenes continuas y niveles de Whitney</a><span class="ses-exp">D. Maya</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 317</span><a class="ses-titulo" href="sesiones-1-328.html">Semigrupo de Ellis conmutativo y p-iteradas inversas</a><span class="ses-exp">A. E. Quintero Santander</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 323</span><a class="ses-titulo" href="sesiones-1-328.html">Descripción de cocientes de Cantor y autómatas traductores</a><span class="ses-exp">R. Isaacs</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 397</span><a class="ses-titulo" href="sesiones-329-450.html">Numeraciones de atractores de SIF</a><span class="ses-exp">R. Isaacs</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 386</span><a class="ses-titulo" href="sesiones-329-450.html">El Teorema de la curva de Jordan en imágenes digitales</a><span class="ses-exp">Y. Cote</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 420</span><a class="ses-titulo" href="sesiones-329-450.html">Curvas que llenan el espacio</a><span class="ses-exp">C. A. Acevedo Ardila</span></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 3. ANÁLISIS FUNCIONAL                      -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="tema-section" id="funcional">
+    <div class="tema-header">
+      <span class="tema-icon">∥</span>
+      <span class="tema-nombre">Análisis funcional</span>
+      <span class="tema-total">32 sesiones</span>
+    </div>
+
+    <div class="ses-row"><span class="ses-num">Ses. 453</span><a class="ses-titulo" href="sesion-453.html">C-representación de ideales en espacios de Banach</a><span class="ses-exp">J. Neira</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 451</span><a class="ses-titulo" href="sesion-451.html">El operador de Dirac en geometría</a><span class="ses-exp">J. Julio Batalla</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 449</span><a class="ses-titulo" href="sesiones-329-450.html">Representación de ideales analíticos</a><span class="ses-exp">J. Neira</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 448</span><a class="ses-titulo" href="sesiones-329-450.html">Algunos aspectos teóricos del espacio C[0,1]</a><span class="ses-exp">N. García</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 445</span><a class="ses-titulo" href="sesiones-329-450.html">C(K) y K</a><span class="ses-exp">M. A. Rincón Villamizar</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 442</span><a class="ses-titulo" href="sesiones-329-450.html">Isometrías en espacios de sucesiones</a><span class="ses-exp">V. dos Santos Ronchim</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 439</span><a class="ses-titulo" href="sesiones-329-450.html">Propiedad de Schur, secuencialidad débilmente completa y reflexividad</a><span class="ses-exp">S. A. Pérez León</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 435</span><a class="ses-titulo" href="sesiones-329-450.html">Más sobre complementación</a><span class="ses-exp">M. A. Rincón Villamizar</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 434</span><a class="ses-titulo" href="sesiones-329-450.html">Operadores Compactos</a><span class="ses-exp">S. A. Pérez León</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 429</span><a class="ses-titulo" href="sesiones-329-450.html">Un teorema de Lindenstrauss</a><span class="ses-exp">M. A. Rincón Villamizar</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 417</span><a class="ses-titulo" href="sesiones-329-450.html">Equivalencias entre Reflexividad y Secuencialidad débilmente completa en Espacios de Operadores</a><span class="ses-exp">S. A. Pérez León</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 411</span><a class="ses-titulo" href="sesiones-329-450.html">About the space of continuous functions with open domain</a><span class="ses-exp">E. Ramírez Ardila</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 410</span><a class="ses-titulo" href="sesiones-329-450.html">Propiedades del espacio de James</a><span class="ses-exp">Suárez, Delgado, Mantilla y Moreno</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 406</span><a class="ses-titulo" href="sesiones-329-450.html">Desarrollo histórico del Teorema del valor medio para derivadas</a><span class="ses-exp">S. A. Pérez León</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 402</span><a class="ses-titulo" href="sesiones-329-450.html">Familias I⁺-AD disyuntas</a><span class="ses-exp">M. A. Rincón Villamizar</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 395</span><a class="ses-titulo" href="sesiones-329-450.html">Consecuencias del Teorema de Hahn-Banach</a><span class="ses-exp">S. Pérez</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 393</span><a class="ses-titulo" href="sesiones-329-450.html">Sobre los operadores multiplicadores y multiplicaciones débiles en C(K)</a><span class="ses-exp">M. A. Rincón Villamizar</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 387</span><a class="ses-titulo" href="sesiones-329-450.html">Teorema de extensión de operadores lineales acotados y algunas aplicaciones</a><span class="ses-exp">S. Pérez</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 374</span><a class="ses-titulo" href="sesiones-329-450.html">Algunas propiedades de los espacios ℓp</a><span class="ses-exp">S. A. Pérez León</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 372</span><a class="ses-titulo" href="sesiones-329-450.html">Espacios de sucesiones ℓ-convergentes</a><span class="ses-exp">M. Rincón</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 368</span><a class="ses-titulo" href="sesiones-329-450.html">Reflexividad y Secuencialidad Débilmente Completa en Espacios de Ideales de Operadores</a><span class="ses-exp">S. Pérez</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 366</span><a class="ses-titulo" href="sesiones-329-450.html">Versiones multidimensionales del problema de Mazur</a><span class="ses-exp">M. A. Rincón Villamizar</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 357</span><a class="ses-titulo" href="sesiones-329-450.html">Ideales asociados a sucesiones en espacios de Banach</a><span class="ses-exp">M. Rincón</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 350</span><a class="ses-titulo" href="sesiones-329-450.html">El compacto de Banach-Mazur</a><span class="ses-exp">M. A. Rincón Villamizar</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 333</span><a class="ses-titulo" href="sesiones-329-450.html">Transitividad en espacios de Banach</a><span class="ses-exp">M. Rincón</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 329</span><a class="ses-titulo" href="sesiones-329-450.html">El espacio de Arens-Eells</a><span class="ses-exp">M. Rincón</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 94</span><a class="ses-titulo" href="sesiones-1-328.html">Una aplicación de los cardinales regulares para demostrar la existencia de un isomorfismo entre ℓ₁ y un espacio de Banach X</a><span class="ses-exp">R. E. Paternina</span></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 4. TOPOLOGÍA DESCRIPTIVA Y TEORÍA DE CONJ.-->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="tema-section" id="conjuntos">
+    <div class="tema-header">
+      <span class="tema-icon">∞</span>
+      <span class="tema-nombre">Topología descriptiva y teoría de conjuntos</span>
+      <span class="tema-total">30 sesiones</span>
+    </div>
+
+    <div class="ses-row"><span class="ses-num">Ses. 454</span><a class="ses-titulo" href="sesion-454.html">Sobre cerrados hereditarios y fracciones egipcias</a><span class="ses-exp">J. Amorocho</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 437</span><a class="ses-titulo" href="sesiones-329-450.html">La correspondencia KPT</a><span class="ses-exp">C. Uzcátegui</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 433</span><a class="ses-titulo" href="sesiones-329-450.html">Sobre representaciones de espacios CTS</a><span class="ses-exp">J. Amorocho</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 427</span><a class="ses-titulo" href="sesiones-329-450.html">Filtros omega-maximales</a><span class="ses-exp">C. Uzcátegui</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 426</span><a class="ses-titulo" href="sesiones-329-450.html">La propiedad de Baire en intersecciones de ultrafiltros libres sobre los naturales</a><span class="ses-exp">J. H. Hernández Tunubalá</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 425</span><a class="ses-titulo" href="sesiones-329-450.html">Teorema de Hindman</a><span class="ses-exp">C. A. Acevedo Ardila</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 409</span><a class="ses-titulo" href="sesiones-329-450.html">Familias altas de subconjuntos de ℕ</a><span class="ses-exp">C. Uzcátegui</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 398</span><a class="ses-titulo" href="sesiones-329-450.html">La propiedad de Baire y los ultrafiltros</a><span class="ses-exp">C. Uzcátegui</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 396</span><a class="ses-titulo" href="sesiones-329-450.html">Extensiones de espacios CTS</a><span class="ses-exp">J. L. Amorocho Morales</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 392</span><a class="ses-titulo" href="sesiones-329-450.html">Extensiones de espacios topológicos T₁</a><span class="ses-exp">J. L. Amorocho Morales</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 389</span><a class="ses-titulo" href="sesiones-329-450.html">Representación de subsemigrupos de semigrupos polacos</a><span class="ses-exp">N. Delgado</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 382</span><a class="ses-titulo" href="sesiones-329-450.html">Más sobre el espacio de sucesiones I-convergentes</a><span class="ses-exp">M. Rincón</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 378</span><a class="ses-titulo" href="sesiones-329-450.html">Un resultado de independencia sobre ideales semiselectivos y ultrafiltros selectivos</a><span class="ses-exp">J. C. Cano</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 371</span><a class="ses-titulo" href="sesiones-329-450.html">Agujeros, ideales y espacios de convergencia</a><span class="ses-exp">C. Uzcátegui</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 360</span><a class="ses-titulo" href="sesiones-329-450.html">Sobre compactificaciones de ℕ y subgrupos polonizables de S∞</a><span class="ses-exp">J. D. Franco Salazar</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 356</span><a class="ses-titulo" href="sesiones-329-450.html">Ideales no patológicos</a><span class="ses-exp">C. Uzcátegui</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 348</span><a class="ses-titulo" href="sesiones-329-450.html">Selectores para ideales de subconjuntos de ℕ</a><span class="ses-exp">C. Uzcátegui</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 347</span><a class="ses-titulo" href="sesiones-329-450.html">Teorema de Selección para F(X) y algunas consecuencias</a><span class="ses-exp">D. Gamboa</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 340</span><a class="ses-titulo" href="sesiones-329-450.html">Propiedad de Pettis</a><span class="ses-exp">K. D. Arana</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 339</span><a class="ses-titulo" href="sesiones-329-450.html">Ideales Ramsey y propiedades de convergencia</a><span class="ses-exp">J. C. Cano Ramos</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 336</span><a class="ses-titulo" href="sesiones-329-450.html">Familias maximales casi disjuntas</a><span class="ses-exp">C. Di Prisco</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 331</span><a class="ses-titulo" href="sesiones-329-450.html">Espacio de funciones parciales y la topología compacta-abierta</a><span class="ses-exp">C. Uzcátegui</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 328</span><a class="ses-titulo" href="sesiones-1-328.html">Reconstrucción de coloraciones a partir de los conjuntos homogéneos</a><span class="ses-exp">C. Uzcátegui</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 327</span><a class="ses-titulo" href="sesiones-1-328.html">Teoremas de Ramsey</a><span class="ses-exp">C. A. Nuñes</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 325</span><a class="ses-titulo" href="sesiones-1-328.html">Números cromáticos de grafos definidos en espacios polacos</a><span class="ses-exp">C. Di Prisco</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 322</span><a class="ses-titulo" href="sesiones-1-328.html">Propiedad local de Ramsey relativa al juego de Kastanas</a><span class="ses-exp">J. C. Cano</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 321</span><a class="ses-titulo" href="sesiones-1-328.html">Ideales sobre conjuntos numerables</a><span class="ses-exp">J. Martinez</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 320</span><a class="ses-titulo" href="sesiones-1-328.html">Familias Irredundantes y Filtros Primarios en ω</a><span class="ses-exp">A. Millán</span></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 5. GEOMETRÍA DIFERENCIAL                   -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="tema-section" id="geometria">
+    <div class="tema-header">
+      <span class="tema-icon">∇</span>
+      <span class="tema-nombre">Geometría diferencial</span>
+      <span class="tema-total">12 sesiones</span>
+    </div>
+
+    <div class="ses-row"><span class="ses-num">Ses. 438</span><a class="ses-titulo" href="sesiones-329-450.html">Zero modes para el operador de Dirac</a><span class="ses-exp">J. Julio Batalla</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 432</span><a class="ses-titulo" href="sesiones-329-450.html">Valores propios en geometría conforme</a><span class="ses-exp">J. Julio Batalla</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 428</span><a class="ses-titulo" href="sesiones-329-450.html">Bifurcación de inmersiones CMC y frontera libre</a><span class="ses-exp">C. W. Rodríguez Cárdenas</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 415</span><a class="ses-titulo" href="sesiones-329-450.html">Multiplicidad de soluciones a ecuaciones Paneitz-Branson</a><span class="ses-exp">J. Julio Batalla</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 404</span><a class="ses-titulo" href="sesiones-329-450.html">Q-curvatura y geometría conforme</a><span class="ses-exp">J. Julio Batalla</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 385</span><a class="ses-titulo" href="sesiones-329-450.html">Tonos fundamentales en Geometría</a><span class="ses-exp">J. A. Julio Batalla</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 383</span><a class="ses-titulo" href="sesiones-329-450.html">Disco hiperbólico</a><span class="ses-exp">E. Ramírez Ardila</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 364</span><a class="ses-titulo" href="sesiones-329-450.html">Uniformización en geometría diferencial (Segunda Parte)</a><span class="ses-exp">J. A. Julio Batalla</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 363</span><a class="ses-titulo" href="sesiones-329-450.html">Metrizabilidad de (Γ(X), τhco)</a><span class="ses-exp">E. A. Ramírez Ardila</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 362</span><a class="ses-titulo" href="sesiones-329-450.html">Uniformización en geometría diferencial</a><span class="ses-exp">J. A. Julio Batalla</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 316</span><a class="ses-titulo" href="sesiones-1-328.html">Variedades flag generalizadas</a><span class="ses-exp">J. S. Báez</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 315</span><a class="ses-titulo" href="sesiones-1-328.html">Teoría de modelos y el universo de Shelah</a><span class="ses-exp">S. Montenegro</span></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 6. TOPOLOGÍA ALGEBRAICA                    -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="tema-section" id="algebraica">
+    <div class="tema-header">
+      <span class="tema-icon">π</span>
+      <span class="tema-nombre">Topología algebraica</span>
+      <span class="tema-total">10 sesiones</span>
+    </div>
+
+    <div class="ses-row"><span class="ses-num">Ses. 457</span><a class="ses-titulo" href="sesion-457.html">Desatando un nudo de una dona: topología de nudos torales</a><span class="ses-exp">A. F. Cruz López</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 456</span><a class="ses-titulo" href="sesion-456.html">Grupos Fundamentales y el Teorema de Seifert–van Kampen</a><span class="ses-exp">C. W. Rodríguez Cárdenas</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 441</span><a class="ses-titulo" href="sesiones-329-450.html">Bicategorías de Tangles y la Cohomología de Khovanov</a><span class="ses-exp">C. W. Rodríguez Cárdenas</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 431</span><a class="ses-titulo" href="sesiones-329-450.html">Topología de Zariski en Variedades Algebraicas y Anillos Conmutativos</a><span class="ses-exp">J. Solano</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 424</span><a class="ses-titulo" href="sesiones-329-450.html">Sobre Grupoides étale</a><span class="ses-exp">H. Pinedo Tapia</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 412</span><a class="ses-titulo" href="sesiones-329-450.html">El Teorema de la bola peluda: desde Poincaré, pasando Brouwer y Milnor, hasta nuestros días</a><span class="ses-exp">C. W. Rodríguez Cárdenas</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 379</span><a class="ses-titulo" href="sesiones-329-450.html">Retractos y extensores equivariantes</a><span class="ses-exp">L. A. Martínez Sánchez</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 375</span><a class="ses-titulo" href="sesiones-329-450.html">La topología compacta abierta en los grupos de homeomorfismos</a><span class="ses-exp">M. D. P. Bautista Niño</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 319</span><a class="ses-titulo" href="sesiones-1-328.html">Teorías cuánticas de campo topológicas bidimensionales y álgebras de Frobenius</a><span class="ses-exp">J. Murgas</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 312</span><a class="ses-titulo" href="sesiones-1-328.html">Álgebra celular</a><span class="ses-exp">G. Corredor</span></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 7. TOPOLOGÍA GENERAL                       -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="tema-section" id="general">
+    <div class="tema-header">
+      <span class="tema-icon">τ</span>
+      <span class="tema-nombre">Topología general</span>
+      <span class="tema-total">14 sesiones</span>
+    </div>
+
+    <div class="ses-row"><span class="ses-num">Ses. 455</span><a class="ses-titulo" href="sesion-455.html">Intersecciones de ideales maximales</a><span class="ses-exp">C. A. Acevedo Ardila</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 376</span><a class="ses-titulo" href="sesiones-329-450.html">Topologías +-invariantes sobre ℤ</a><span class="ses-exp">J. E. Neira Díaz</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 369</span><a class="ses-titulo" href="sesiones-329-450.html">H(Q) no tiene topología de grupo polaco</a><span class="ses-exp">J. D. Franco Salazar</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 367</span><a class="ses-titulo" href="sesiones-329-450.html">Espacios COTS y la recta digital</a><span class="ses-exp">Y. Cote</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 365</span><a class="ses-titulo" href="sesiones-329-450.html">Los hiperespacios de subcontinuos regulares y subcontinuos magros</a><span class="ses-exp">D. A. Ramírez Angarita</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 353</span><a class="ses-titulo" href="sesiones-329-450.html">El espacio de homeomorfismos parciales</a><span class="ses-exp">J. Pérez</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 351</span><a class="ses-titulo" href="sesiones-329-450.html">Topología de Green de un semigrupo</a><span class="ses-exp">N. Delgado</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 349</span><a class="ses-titulo" href="sesiones-329-450.html">Grupos topológicos: Métricas invariantes a izquierda y el Teorema de Birkhoff-Kakutani</a><span class="ses-exp">J. D. Franco Salazar</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 326</span><a class="ses-titulo" href="sesiones-1-328.html">Espacio Universal de Urysohn</a><span class="ses-exp">J. Guerrero</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 422</span><a class="ses-titulo" href="sesiones-329-450.html">Teorema de la Aplicación de Riemann</a><span class="ses-exp">J. Hernandez</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 413</span><a class="ses-titulo" href="sesiones-329-450.html">Dinámica lineal e ideales</a><span class="ses-exp">M. A. Rincón Villamizar</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 386</span><a class="ses-titulo" href="sesiones-329-450.html">El Teorema de la curva de Jordan en imágenes digitales</a><span class="ses-exp">Y. Cote</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 353</span><a class="ses-titulo" href="sesiones-329-450.html">El espacio de homeomorfismos parciales</a><span class="ses-exp">J. Pérez</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 331</span><a class="ses-titulo" href="sesiones-329-450.html">Espacio de funciones parciales y la topología compacta-abierta</a><span class="ses-exp">C. Uzcátegui</span></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 8. HISTORIA Y FUNDAMENTOS                  -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="tema-section" id="historia">
+    <div class="tema-header">
+      <span class="tema-icon">∑</span>
+      <span class="tema-nombre">Historia y fundamentos</span>
+      <span class="tema-total">9 sesiones</span>
+    </div>
+
+    <div class="ses-row"><span class="ses-num">Ses. 444</span><a class="ses-titulo" href="sesiones-329-450.html">Francis Bacon y la Revolución Científica</a><span class="ses-exp">B. Mayorga</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 408</span><a class="ses-titulo" href="sesiones-329-450.html">El Teorema de Goodstein</a><span class="ses-exp">J. Castellanos</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 407</span><a class="ses-titulo" href="sesiones-329-450.html">Del problema 17 de Hilbert a la optimización semidefinida</a><span class="ses-exp">J. Acevedo</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 401</span><a class="ses-titulo" href="sesiones-329-450.html">La importancia del formalismo de Cantor: Inicio de los números transfinitos</a><span class="ses-exp">J. Rojas</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 400</span><a class="ses-titulo" href="sesiones-329-450.html">Sesión especial (Sesión 400)</a><span class="ses-exp">Macías · Isaacs · Rincón</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 397</span><a class="ses-titulo" href="sesiones-329-450.html">Numeraciones de atractores de SIF</a><span class="ses-exp">R. Isaacs</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 383</span><a class="ses-titulo" href="sesiones-329-450.html">Disco hiperbólico</a><span class="ses-exp">E. Ramírez Ardila</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 323</span><a class="ses-titulo" href="sesiones-1-328.html">Descripción de cocientes de Cantor y autómatas traductores</a><span class="ses-exp">R. Isaacs</span></div>
+    <div class="ses-row"><span class="ses-num">Ses. 406</span><a class="ses-titulo" href="sesiones-329-450.html">Desarrollo histórico del Teorema del valor medio para derivadas y algunas aplicaciones</a><span class="ses-exp">S. A. Pérez León</span></div>
+  </div>
+
+  <a class="back-link" href="index.html">← Volver a sesiones recientes</a>
+</div>
+
+<footer>
+  <span>Seminario de Topología "Rafael Isaacs" · UIS · Bucaramanga, Colombia</span>
+  <span>jcamargo-bot.github.io</span>
+</footer>
+
+<script>
+function filtrar(e, tema) {
+  e.preventDefault();
+  // Actualizar botones
+  document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+  e.currentTarget.classList.add('active');
+  // Mostrar/ocultar secciones
+  document.querySelectorAll('.tema-section').forEach(s => {
+    s.classList.toggle('hidden', s.id !== tema);
+  });
+  // Scroll suave a la sección
+  const sec = document.getElementById(tema);
+  if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function mostrarTodos(e) {
+  e.preventDefault();
+  document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+  e.currentTarget.classList.add('active');
+  document.querySelectorAll('.tema-section').forEach(s => s.classList.remove('hidden'));
+}
+</script>
+
+</body>
+</html>
