@@ -19,6 +19,14 @@ nav a:hover { color: #fff; text-decoration: underline; }
 .meta-row { display: flex; gap: 2rem; margin-top: 1.25rem; flex-wrap: wrap; }
 .meta-item { font-size: 0.85rem; }
 .meta-item strong { display: block; color: #888; font-weight: normal; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+.share-bar { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid #e0e0e0; }
+.share-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-right: 0.25rem; }
+.share-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-family: Arial, sans-serif; color: #444; text-decoration: none; border: 1px solid #ddd; border-radius: 5px; padding: 0.35rem 0.75rem; background: #fff; transition: background 0.15s, border-color 0.15s; }
+.share-btn:hover { background: #f0f0f0; border-color: #bbb; }
+.share-btn.whatsapp:hover { background: #e8f8ef; border-color: #25D366; color: #128C7E; }
+.share-btn.telegram:hover { background: #e8f4fb; border-color: #229ED9; color: #229ED9; }
+.share-btn.email:hover { background: #f5f0ff; border-color: #888; color: #333; }
+.share-btn.x:hover { background: #f0f0f0; border-color: #000; color: #000; }
 .main { padding: 2rem; max-width: 900px; }
 .stats { display: flex; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap; }
 .stat { background: #f7f7f7; padding: 1rem 1.5rem; border-radius: 6px; }
@@ -62,7 +70,7 @@ footer { border-top: 1px solid #eee; padding: 1.5rem 2rem; font-size: 0.8rem; co
       <div style="font-size:0.85rem; color:#999; margin-top:2px;">Matemático · Universidad Industrial de Santander</div>
     </div>
   </div>
-  
+
   <div class="hero-label">Próxima sesión</div>
   <h2>Sesión 457 — Desatando un nudo de una dona: topología de nudos torales</h2>
   <p>El grupo fundamental π₁(X) captura, en términos algebraicos, la esencia de los agujeros de un espacio X: cómo se pueden deformar lazos sin romperlos. Usaremos el Teorema de Seifert–van Kampen para calcular el grupo fundamental del nudo toral K(m,n), un encaje suave de S¹ en el toro 𝕋².</p>
@@ -71,6 +79,33 @@ footer { border-top: 1px solid #eee; padding: 1.5rem 2rem; font-size: 0.8rem; co
     <div class="meta-item"><strong>Hora</strong>4:00 p.m.</div>
     <div class="meta-item"><strong>Lugar</strong>Sala Lezama, Edificio Camilo Torres</div>
     <div class="meta-item"><strong>Expositor</strong>Andrés Felipe Cruz López · UIS</div>
+  </div>
+
+  <div class="share-bar">
+    <span class="share-label">Comparte:</span>
+    <a class="share-btn whatsapp"
+       href="https://wa.me/?text=Seminario%20de%20Topolog%C3%ADa%20%22Rafael%20Isaacs%22%20%E2%80%93%20UIS%20%7C%20jcamargo-bot.github.io"
+       target="_blank" rel="noopener">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+    <a class="share-btn telegram"
+       href="https://t.me/share/url?url=https://jcamargo-bot.github.io&text=Seminario%20de%20Topolog%C3%ADa%20%22Rafael%20Isaacs%22%20%E2%80%93%20UIS"
+       target="_blank" rel="noopener">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="#229ED9"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      Telegram
+    </a>
+    <a class="share-btn x"
+       href="https://twitter.com/intent/tweet?url=https://jcamargo-bot.github.io&text=Seminario%20de%20Topolog%C3%ADa%20%22Rafael%20Isaacs%22%20%E2%80%93%20UIS%20%F0%9F%93%90"
+       target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      X
+    </a>
+    <a class="share-btn email"
+       href="mailto:?subject=Seminario%20de%20Topolog%C3%ADa%20%22Rafael%20Isaacs%22%20%E2%80%93%20UIS&body=Te%20comparto%20el%20sitio%20del%20Seminario%20de%20Topolog%C3%ADa%20Rafael%20Isaacs%20de%20la%20UIS%3A%20https://jcamargo-bot.github.io">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+      Correo
+    </a>
   </div>
 </div>
 
@@ -82,32 +117,32 @@ footer { border-top: 1px solid #eee; padding: 1.5rem 2rem; font-size: 0.8rem; co
   </div>
 
   <div id="acerca" style="padding: 2rem; max-width: 900px; border-top: 1px solid #eee; margin-top: 1rem;">
-  <div class="section-title">Acerca del seminario</div>
-  <p style="font-size: 0.95rem; color: #444; line-height: 1.8; margin-bottom: 1.25rem;">
-    Cada lunes en la sala Lezama del edificio Camilo Torres de la Universidad Industrial de Santander, a las 4 de la tarde, un grupo de profesores, estudiantes y amigos nos reunimos para socializar temas relacionados con la Topología.
-  </p>
-  <p style="font-size: 0.95rem; color: #444; line-height: 1.8; margin-bottom: 1.25rem;">
-    El seminario lleva el nombre del profesor <strong>Rafael Isaacs</strong>, en reconocimiento a su labor y dedicación a las matemáticas en la Escuela de Matemáticas de la UIS.
-  </p>
-  <div style="display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem;">
-    <div>
-      <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 4px;">Lugar</div>
-      <div style="font-size: 0.9rem; color: #222;">Sala Lezama, Edificio Camilo Torres</div>
-    </div>
-    <div>
-      <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 4px;">Frecuencia</div>
-      <div style="font-size: 0.9rem; color: #222;">Todos los lunes</div>
-    </div>
-    <div>
-      <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 4px;">Hora</div>
-      <div style="font-size: 0.9rem; color: #222;">4:00 p.m.</div>
-    </div>
-    <div>
-      <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 4px;">Institución</div>
-      <div style="font-size: 0.9rem; color: #222;">Escuela de Matemáticas, UIS</div>
+    <div class="section-title">Acerca del seminario</div>
+    <p style="font-size: 0.95rem; color: #444; line-height: 1.8; margin-bottom: 1.25rem;">
+      Cada lunes en la sala Lezama del edificio Camilo Torres de la Universidad Industrial de Santander, a las 4 de la tarde, un grupo de profesores, estudiantes y amigos nos reunimos para socializar temas relacionados con la Topología.
+    </p>
+    <p style="font-size: 0.95rem; color: #444; line-height: 1.8; margin-bottom: 1.25rem;">
+      El seminario lleva el nombre del profesor <strong>Rafael Isaacs</strong>, en reconocimiento a su labor y dedicación a las matemáticas en la Escuela de Matemáticas de la UIS.
+    </p>
+    <div style="display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem;">
+      <div>
+        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 4px;">Lugar</div>
+        <div style="font-size: 0.9rem; color: #222;">Sala Lezama, Edificio Camilo Torres</div>
+      </div>
+      <div>
+        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 4px;">Frecuencia</div>
+        <div style="font-size: 0.9rem; color: #222;">Todos los lunes</div>
+      </div>
+      <div>
+        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 4px;">Hora</div>
+        <div style="font-size: 0.9rem; color: #222;">4:00 p.m.</div>
+      </div>
+      <div>
+        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 4px;">Institución</div>
+        <div style="font-size: 0.9rem; color: #222;">Escuela de Matemáticas, UIS</div>
+      </div>
     </div>
   </div>
-</div>
 
   <div class="section-title">Sesiones recientes</div>
 
@@ -193,7 +228,6 @@ footer { border-top: 1px solid #eee; padding: 1.5rem 2rem; font-size: 0.8rem; co
   </div>
 
 </div>
-
 
 <footer>
   <span>Seminario de Topología "Rafael Isaacs" · UIS · Bucaramanga, Colombia</span>
