@@ -1,66 +1,46 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Seminario de Topología "Rafael Isaacs" · UIS</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: Georgia, serif; color: #444; line-height: 1.8; background: #fff; }
-
-    /* ── HEADER ── */
-    header { background: #67B93E; border-bottom: 4px solid #4a9a2a; padding: 18px 32px; }
-    .header-inner { display: flex; align-items: center; gap: 18px; }
-    .header-inner img { height: 50px; width: auto; }
-    .header-inner h1 { color: #fff; font-size: 1.25rem; margin: 0; }
-    .header-inner p  { color: #e8f5e0; font-size: 0.85rem; margin: 0; }
-    nav { margin-top: 10px; display: flex; gap: 20px; flex-wrap: wrap; }
-    nav a { color: #fff; text-decoration: none; font-size: 0.9rem; font-family: Georgia, serif; }
-    nav a:hover { text-decoration: underline; }
-
-    /* ── HERO (próxima sesión) ── */
-    .hero { background: #f7f7f7; border-bottom: 1px solid #ddd; padding: 32px; }
-    .hero-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: .08em;
-                  color: #67B93E; border-bottom: 1px solid #67B93E; display: inline-block;
-                  padding-bottom: 2px; margin-bottom: 10px; }
-    .hero h2 { font-size: 1.4rem; color: #222; margin-bottom: 14px; }
-    .hero-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
-    .hero-meta .chip { background: #fff; border: 1px solid #ccc; border-radius: 6px;
-                       padding: 4px 12px; font-size: 0.82rem; color: #555; }
-    .hero p.desc { font-size: 0.95rem; color: #555; max-width: 760px; }
-    .hero a.btn { display: inline-block; margin-top: 16px; background: #67B93E; color: #fff;
-                  padding: 8px 20px; border-radius: 4px; text-decoration: none; font-size: 0.9rem; }
-    .hero a.btn:hover { background: #4a9a2a; }
-
-    /* ── LISTA DE SESIONES ── */
-    main { max-width: 860px; margin: 0 auto; padding: 32px; }
-    .section-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: .08em;
-                     color: #67B93E; border-bottom: 1px solid #67B93E; padding-bottom: 3px;
-                     margin-bottom: 20px; margin-top: 32px; }
-    .session { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid #eee; }
-    .session-num { min-width: 80px; font-size: 0.78rem; text-transform: uppercase;
-                   color: #888; padding-top: 3px; }
-    .session-title-link { color: #67B93E; text-decoration: none; font-size: 1rem; }
-    .session-title-link:hover { text-decoration: underline; }
-    .session-meta { font-size: 0.82rem; color: #888; margin-top: 2px; }
-    .session-desc { font-size: 0.88rem; color: #666; margin-top: 4px; }
-
-    /* ── FOOTER ── */
-    footer { border-top: 1px solid #ddd; padding: 20px 32px;
-             display: flex; justify-content: space-between; flex-wrap: wrap;
-             font-size: 0.82rem; color: #aaa; margin-top: 40px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seminario de Topología "Rafael Isaacs"</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Georgia, serif; color: #222; background: #fff; }
+header { background: #67B93E; border-bottom: 1px solid #4a9a2a; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+header h1 { font-size: 1.2rem; font-weight: normal; color: #fff; }
+header p { font-size: 0.85rem; color: rgba(255,255,255,0.85); margin-top: 3px; }
+nav a { font-size: 0.85rem; color: rgba(255,255,255,0.85); text-decoration: none; margin-left: 1.5rem; }
+nav a:hover { color: #fff; text-decoration: underline; }
+.hero { background: #f7f7f7; padding: 2rem; border-bottom: 1px solid #ddd; }
+.hero-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 0.5rem; }
+.hero h2 { font-size: 1.5rem; font-weight: normal; margin-bottom: 0.75rem; line-height: 1.4; }
+.hero p { font-size: 0.95rem; color: #444; line-height: 1.7; max-width: 680px; }
+.meta-row { display: flex; gap: 2rem; margin-top: 1.25rem; flex-wrap: wrap; }
+.meta-item { font-size: 0.85rem; }
+.meta-item strong { display: block; color: #888; font-weight: normal; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+.main { padding: 2rem; max-width: 900px; }
+.stats { display: flex; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap; }
+.stat { background: #f7f7f7; padding: 1rem 1.5rem; border-radius: 6px; }
+.stat .num { font-size: 1.8rem; font-weight: bold; color: #222; }
+.stat .lbl { font-size: 0.8rem; color: #888; margin-top: 2px; }
+.section-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; margin-bottom: 1rem; font-weight: normal; }
+.session { display: flex; gap: 1rem; padding: 0.85rem 0; border-bottom: 1px solid #f0f0f0; align-items: flex-start; }
+.session-num { min-width: 80px; font-size: 0.78rem; color: #aaa; padding-top: 3px; }
+.session-title { font-size: 0.95rem; color: #222; margin-bottom: 2px; }
+.session-title-link { font-size: 0.95rem; color: #67B93E; text-decoration: none; margin-bottom: 2px; display: block; }
+.session-title-link:hover { text-decoration: underline; }
+.session-meta { font-size: 0.8rem; color: #999; }
+.session-desc { font-size: 0.85rem; color: #555; margin-top: 4px; line-height: 1.6; }
+footer { border-top: 1px solid #eee; padding: 1.5rem 2rem; display: flex; justify-content: space-between; font-size: 0.8rem; color: #aaa; margin-top: 2rem; flex-wrap: wrap; gap: 0.5rem; }
+</style>
 </head>
 <body>
 
-<!-- ════ HEADER ════ -->
 <header>
-  <div class="header-inner">
-    <img src="LOGO%20UIS_PNG.png" alt="Logo UIS">
-    <div>
-      <h1>Seminario de Topología "Rafael Isaacs"</h1>
-      <p>Escuela de Matemáticas · Universidad Industrial de Santander</p>
-    </div>
+  <div>
+    <h1>Seminario de Topología "Rafael Isaacs"</h1>
+    <p>Escuela de Matemáticas · Universidad Industrial de Santander · Bucaramanga</p>
   </div>
   <nav>
     <a href="expositores.html">Expositores</a>
@@ -70,30 +50,33 @@
   </nav>
 </header>
 
-<!-- ════ HERO: PRÓXIMA SESIÓN ════ -->
 <div class="hero">
   <div class="hero-label">Próxima sesión</div>
   <h2>Los buenos órdenes y el problema de la predicción</h2>
-  <div class="hero-meta">
-    <span class="chip">Sesión 460</span>
-    <span class="chip">Lunes 11 de mayo, 2026</span>
-    <span class="chip">4:00 p.m. · Sala Lezama</span>
-    <span class="chip">Ana Bossa · UIS</span>
+  <p>El teorema de Zermelo establece que todo conjunto puede ser bien ordenado. Se utiliza esta propiedad para abordar el problema de predecir el presente: determinar el valor de una función en un instante t conociendo solo su comportamiento pasado, mediante la estrategia propuesta por Hardin y Taylor.</p>
+  <div class="meta-row">
+    <div class="meta-item"><strong>Fecha</strong>Lunes 11 de mayo, 2026</div>
+    <div class="meta-item"><strong>Hora</strong>4:00 p.m.</div>
+    <div class="meta-item"><strong>Lugar</strong>Sala Lezama, Edificio Camilo Torres</div>
+    <div class="meta-item"><strong>Expositora</strong>Ana Bossa · UIS</div>
   </div>
-  <p class="desc">El teorema de Zermelo establece que todo conjunto puede ser bien ordenado. Se utiliza esta propiedad para abordar el problema de predecir el presente: determinar el valor de una función en un instante t conociendo solo su comportamiento pasado, mediante la estrategia propuesta por Hardin y Taylor.</p>
-  <a class="btn" href="sesion-460.html">Ver detalles →</a>
 </div>
 
-<!-- ════ LISTA DE SESIONES ════ -->
-<main>
-  <div class="section-label">Sesiones recientes</div>
+<div class="main">
+  <div class="stats">
+    <div class="stat"><div class="num">460</div><div class="lbl">Sesiones realizadas</div></div>
+    <div class="stat"><div class="num">+5</div><div class="lbl">Años de registro</div></div>
+    <div class="stat"><div class="num">Lunes</div><div class="lbl">Cada semana, 4 p.m.</div></div>
+  </div>
+
+  <div class="section-title">Sesiones recientes</div>
 
   <div class="session">
     <div class="session-num">Ses. 460</div>
     <div>
       <a href="sesion-460.html" class="session-title-link">Los buenos órdenes y el problema de la predicción</a>
       <div class="session-meta">11 mayo 2026 · Ana Bossa · UIS</div>
-      <div class="session-desc">Teorema de Zermelo, buenos órdenes y estrategia de Hardin–Taylor para el problema de predicción del presente y el futuro.</div>
+      <div class="session-desc">El teorema de Zermelo establece que todo conjunto puede ser bien ordenado. Se estudia la estrategia de Hardin y Taylor para predecir el presente y el futuro de una función arbitraria, con resultados sobre el tamaño topológico y la medida de Lebesgue del conjunto de aciertos.</div>
     </div>
   </div>
 
@@ -102,7 +85,7 @@
     <div>
       <a href="sesion-459.html" class="session-title-link">El espacio ℓ∞/c₀</a>
       <div class="session-meta">4 mayo 2026 · Sofía Vanegas · UIS</div>
-      <div class="session-desc">Identificación isométrica de ℓ∞/c₀ con C(βℕ∖ℕ) y conexiones con la compactificación de Stone–Čech.</div>
+      <div class="session-desc">Los espacios ℓ∞ y c₀ son ejemplos clásicos en la teoría de espacios de Banach. El espacio cociente ℓ∞/c₀ se identifica isométricamente con C(βℕ∖ℕ), conectando el análisis funcional con la compactificación de Stone–Čech de ℕ.</div>
     </div>
   </div>
 
@@ -111,7 +94,7 @@
     <div>
       <a href="sesion-458.html" class="session-title-link">Variantes del problema de los 14 conjuntos de Kuratowski</a>
       <div class="session-meta">28 abril 2026 · Jack Solano · UIS</div>
-      <div class="session-desc">Estudio de las variantes del problema de Kuratowski modificando operadores y estructura algebraica subyacente.</div>
+      <div class="session-desc">En 1922 Kuratowski introdujo el operador clausura y preguntó cuántos conjuntos distintos pueden generarse desde un subconjunto inicial por clausura y complemento. La respuesta fue 14. Se exploran variantes del problema modificando operadores y estructuras algebraicas subyacentes.</div>
     </div>
   </div>
 
@@ -127,48 +110,54 @@
   <div class="session">
     <div class="session-num">Ses. 456</div>
     <div>
-      <a href="sesion-456.html" class="session-title-link">Sesión 456</a>
-      <div class="session-meta">14 abril 2026</div>
+      <a href="sesion-456.html" class="session-title-link">Grupos Fundamentales y el Teorema de Seifert–van Kampen</a>
+      <div class="session-meta">13 abril 2026 · Carlos Wilson Rodríguez Cárdenas · UIS</div>
+      <div class="session-desc">La Topología Algebraica estudia invariantes topológicos trasladando problemas hacia categorías algebraicas. El grupo fundamental asigna a cada espacio topológico un grupo invariante bajo homeomorfismos. El teorema de Seifert–van Kampen permite calcular este grupo en espacios complejos a partir de subespacios más simples.</div>
     </div>
   </div>
 
   <div class="session">
     <div class="session-num">Ses. 455</div>
     <div>
-      <a href="sesion-455.html" class="session-title-link">Sesión 455</a>
-      <div class="session-meta">16 marzo 2026</div>
+      <a href="sesion-455.html" class="session-title-link">Intersecciones de ideales maximales</a>
+      <div class="session-meta">16 marzo 2026 · Camilo Andrés Acevedo Ardila · UIS</div>
+      <div class="session-desc">Presentación disponible en archivo adjunto.</div>
     </div>
   </div>
 
   <div class="session">
     <div class="session-num">Ses. 454</div>
     <div>
-      <div class="session-title-link" style="color:#444;">Sobre cerrados hereditarios y fracciones egipcias</div>
+      <a href="sesion-454.html" class="session-title-link">Sobre cerrados hereditarios y fracciones egipcias</a>
       <div class="session-meta">9 marzo 2026 · Jeison Amorocho · UIS</div>
+      <div class="session-desc">A todo cerrado hereditario del espacio de Cantor se le asocia el espacio de sus elementos maximales, con interesantes propiedades descriptivas. Se estudia la compacidad local de estos espacios y su conexión con fracciones egipcias.</div>
     </div>
   </div>
 
   <div class="session">
     <div class="session-num">Ses. 453</div>
     <div>
-      <div class="session-title-link" style="color:#444;">C-representación de ideales en espacios de Banach</div>
+      <a href="sesion-453.html" class="session-title-link">C-representación de ideales en espacios de Banach</a>
       <div class="session-meta">23 febrero 2026 · Julian Neira · UIS</div>
+      <div class="session-desc">Un ideal es un subconjunto de P(ℕ) que describe la propiedad de ser pequeño. Se presentan la caracterización de Borodulin para ideales representables en espacios de Banach, el ejemplo del ideal de densidad cero Z, y la representación específica en c₀.</div>
     </div>
   </div>
 
   <div class="session">
     <div class="session-num">Ses. 452</div>
     <div>
-      <div class="session-title-link" style="color:#444;">Funciones no necesariamente continuas que preservan conexidad</div>
-      <div class="session-meta">16 febrero 2026 · UIS</div>
+      <a href="sesion-452.html" class="session-title-link">Funciones no necesariamente continuas que preservan conexidad</a>
+      <div class="session-meta">16 febrero 2026 · Sergio Pérez · UIS</div>
+      <div class="session-desc">Se estudian clases de funciones más amplias que las continuas que satisfacen el teorema del punto fijo de Brouwer: funciones de Darboux, conexas, de conectividad local y casicontinuas, y las relaciones entre ellas.</div>
     </div>
   </div>
 
   <div class="session">
     <div class="session-num">Ses. 451</div>
     <div>
-      <div class="session-title-link" style="color:#444;">El operador de Dirac en geometría</div>
+      <a href="sesion-451.html" class="session-title-link">El operador de Dirac en geometría</a>
       <div class="session-meta">9 febrero 2026 · Jurgen Julio Batalla · UIS</div>
+      <div class="session-desc">Hace aproximadamente 100 años, Dirac inventó un operador diferencial como raíz cuadrada del operador de D'Alembert. Se discuten sus propiedades básicas y su conexión con problemas actuales en geometría riemanniana.</div>
     </div>
   </div>
 
@@ -177,6 +166,7 @@
     <div>
       <a href="sesion-450.html" class="session-title-link">Propiedades de la Función T de Jones</a>
       <div class="session-meta">24 noviembre 2025 · Sergio Macías · UNAM</div>
+      <div class="session-desc">Se presentan las principales propiedades de la Función T de Jones y una aplicación de esta herramienta en el contexto de la teoría de continuos.</div>
     </div>
   </div>
 
@@ -185,7 +175,7 @@
     <div>
       <a href="sesiones-329-450.html" class="session-title-link">Sesiones 329 a 450</a>
       <div class="session-meta">2021 – 2025 · Varios expositores</div>
-      <div class="session-desc">Registro del seminario con enlaces directos al blog.</div>
+      <div class="session-desc">Registro del seminario con enlaces directos al blog para consultar resúmenes, presentaciones e imágenes de cada sesión.</div>
     </div>
   </div>
 
@@ -198,9 +188,8 @@
     </div>
   </div>
 
-</main>
+</div>
 
-<!-- ════ FOOTER ════ -->
 <footer>
   <span>Seminario de Topología "Rafael Isaacs" · UIS · Bucaramanga, Colombia</span>
   <span>jcamargo-bot.github.io</span>
