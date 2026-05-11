@@ -79,6 +79,22 @@ footer { border-top: 1px solid #eee; padding: 1.5rem 2rem; font-size: 0.8rem; co
   <p class="body-text">En ese trabajo planteó la pregunta: ¿cuál es el máximo número de conjuntos distintos que pueden generarse a partir de un único subconjunto inicial aplicando sucesivamente clausura (k) y complemento (c)? La respuesta fue 14.</p>
   <p class="body-text">Desde entonces han surgido múltiples variantes del problema, modificando los operadores permitidos (clausura, complemento, interior, unión, intersección), la estructura algebraica subyacente (monoides, semirretículos, retículos) y la cantidad de conjuntos iniciales (uno o varios). Este trabajo de grado estudia precisamente esas variantes y sus cotas asociadas, con base en los trabajos de Gardner (2008), Sherman (2010) y Shum (2017).</p>
 
+  <div class="cert-box">
+    <div class="cert-box-title">Certificado de participación</div>
+    <div class="cert-form">
+      <input type="text" id="nombreParticipante" placeholder="Nombre completo del participante">
+      <select id="rolParticipante">
+        <option value="participó como expositor en">Expositor</option>
+        <option value="participó como expositora en" selected>Expositora</option>
+        <option value="participó como invitado en">Invitado</option>
+        <option value="participó como invitada en">Invitada</option>
+        <option value="participó en">Asistente</option>
+      </select>
+      <button class="cert-btn" onclick="generarCertificado()">Descargar certificado</button>
+    </div>
+    <div class="cert-nota">El certificado se genera directamente en tu navegador y se descarga como PDF.</div>
+  </div>
+  
   <a class="back-link" href="index.html">← Volver a sesiones recientes</a>
 </div>
 
