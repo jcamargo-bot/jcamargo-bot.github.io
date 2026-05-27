@@ -3,21 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>La fibración de Hopf · puntos y circunferencias</title>
+<title>Ecuación cuántica de Yang-Baxter · tres partículas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0a0c11;
-    --panel:#0f121a;
-    --panel-2:#12161f;
-    --line:#1d2330;
-    --txt:#dfe3ec;
-    --muted:#7b8294;
-    --faint:#4a5163;
-    --accent:#5ad1c9;
-    --accent-warm:#e9b15a;
+    --bg:#0a0c11; --panel:#0f121a; --panel-2:#12161f; --line:#1d2330;
+    --txt:#dfe3ec; --muted:#7b8294; --faint:#4a5163;
+    --accent:#5ad1c9; --accent-warm:#e9b15a;
+    --pA:#e0556a; --pB:#5fce8a; --pC:#5aa6e8;
     --serif:"Spectral",Georgia,serif;
     --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
   }
@@ -25,557 +20,522 @@
   html,body{margin:0;height:100%;}
   body{
     background:
-      radial-gradient(1200px 700px at 80% -10%, rgba(90,209,201,.06), transparent 60%),
+      radial-gradient(1100px 650px at 78% -10%, rgba(90,209,201,.06), transparent 60%),
       radial-gradient(900px 600px at 0% 110%, rgba(233,177,90,.05), transparent 55%),
       var(--bg);
-    color:var(--txt);
-    font-family:var(--mono);
-    font-size:13px;
-    overflow:hidden;
+    color:var(--txt); font-family:var(--mono); font-size:13px; overflow:hidden;
   }
-  #app{display:grid;grid-template-columns:316px 1fr;height:100vh;}
+  #app{display:grid;grid-template-rows:auto 1fr;height:100vh;}
+  header{border-bottom:1px solid var(--line);padding:16px 24px;display:flex;
+    align-items:baseline;gap:20px;flex-wrap:wrap;
+    background:linear-gradient(180deg,var(--panel),#0c0e15);}
+  header h1{font-family:var(--serif);font-weight:600;font-size:23px;margin:0;letter-spacing:.2px;}
+  header .eq{font-size:15px;color:var(--accent);letter-spacing:.5px;}
+  header .eq b{color:var(--txt);font-weight:500;}
+  header .tag{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--faint);}
 
-  /* ---- sidebar ---- */
-  #side{
-    border-right:1px solid var(--line);
-    background:linear-gradient(180deg,var(--panel),#0c0e15);
-    padding:20px 18px;
-    overflow-y:auto;
-    display:flex;flex-direction:column;gap:18px;
-  }
-  #side::-webkit-scrollbar{width:8px;}
-  #side::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px;}
-  h1{
-    font-family:var(--serif);font-weight:600;font-size:25px;line-height:1.05;
-    margin:0;letter-spacing:.2px;
-  }
-  h1 .sub{display:block;font-family:var(--mono);font-size:11px;font-weight:400;
-    color:var(--muted);letter-spacing:.5px;margin-top:7px;text-transform:uppercase;}
-  .group{display:flex;flex-direction:column;gap:9px;}
-  .label{font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--faint);}
-  #baseWrap{position:relative;width:100%;aspect-ratio:1/1;border:1px solid var(--line);
-    border-radius:10px;overflow:hidden;background:radial-gradient(circle at 50% 35%,#13182300,#0a0c11);}
-  #baseCanvas{width:100%;height:100%;display:block;cursor:crosshair;}
-  #baseHint{position:absolute;left:10px;bottom:8px;font-size:10px;color:var(--muted);
-    letter-spacing:.4px;pointer-events:none;}
-  .btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-  button{
-    font-family:var(--mono);font-size:11.5px;color:var(--txt);
-    background:var(--panel-2);border:1px solid var(--line);border-radius:7px;
-    padding:9px 8px;cursor:pointer;transition:all .15s ease;letter-spacing:.3px;
-  }
-  button:hover{border-color:var(--accent);color:#fff;background:#161b26;}
-  button.warm:hover{border-color:var(--accent-warm);}
-  button.full{grid-column:1 / -1;}
-  .ctrl{display:flex;align-items:center;justify-content:space-between;gap:10px;}
-  .switch{position:relative;width:38px;height:20px;flex:0 0 auto;}
-  .switch input{display:none;}
-  .track{position:absolute;inset:0;background:#222838;border:1px solid var(--line);
-    border-radius:20px;transition:.2s;}
-  .knob{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
-    background:var(--muted);transition:.2s;}
-  .switch input:checked + .track{background:rgba(90,209,201,.25);border-color:var(--accent);}
-  .switch input:checked + .track .knob{left:20px;background:var(--accent);}
-  input[type=range]{width:100%;-webkit-appearance:none;height:3px;background:var(--line);
-    border-radius:3px;outline:none;}
-  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;
-    border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid var(--bg);}
-  input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;
-    background:var(--accent);cursor:pointer;border:2px solid var(--bg);}
-  .reads{font-size:10.5px;color:var(--muted);}
-  .note{font-size:10.5px;line-height:1.55;color:var(--muted);}
+  #main{display:grid;grid-template-columns:1fr 1fr;height:100%;overflow:hidden;}
+  .col{overflow-y:auto;padding:20px 22px;display:flex;flex-direction:column;gap:18px;}
+  .col:first-child{border-right:1px solid var(--line);}
+  .col::-webkit-scrollbar{width:8px;}
+  .col::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px;}
+
+  h2{font-family:var(--serif);font-weight:600;font-size:17px;margin:0;}
+  .sub{font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:var(--faint);margin-top:3px;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;}
+  .note{font-size:11px;line-height:1.6;color:var(--muted);}
   .note b{color:var(--txt);font-weight:500;}
-  .count{font-size:10.5px;color:var(--accent);}
-  .footer{font-size:9.5px;color:var(--faint);line-height:1.5;border-top:1px solid var(--line);padding-top:12px;}
 
-  /* ---- main ---- */
-  #main{display:grid;grid-template-columns:1fr 1fr;height:100vh;}
-  .panel{position:relative;overflow:hidden;}
-  .panel:first-child{border-right:1px solid var(--line);}
-  .panel canvas{width:100%;height:100%;display:block;cursor:grab;}
-  .panel canvas:active{cursor:grabbing;}
-  .ptitle{position:absolute;top:14px;left:16px;pointer-events:none;}
-  .ptitle .t{font-family:var(--serif);font-size:18px;color:var(--txt);}
-  .ptitle .d{font-size:10px;letter-spacing:.6px;color:var(--muted);margin-top:3px;}
-  .badge{position:absolute;top:16px;right:16px;font-size:9.5px;letter-spacing:1px;
-    color:var(--faint);border:1px solid var(--line);border-radius:5px;padding:4px 7px;
-    text-transform:uppercase;}
-  .phint{position:absolute;bottom:12px;left:16px;font-size:10px;color:var(--faint);pointer-events:none;}
+  #braidWrap{position:relative;width:100%;aspect-ratio:5/4;background:var(--panel);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+  #braid{width:100%;height:100%;display:block;}
+  #braidLabel{position:absolute;top:12px;left:14px;font-size:11px;color:var(--muted);
+    letter-spacing:.5px;pointer-events:none;}
+  #braidLabel b{color:var(--accent);}
 
-  @media (max-width:960px){
-    #app{grid-template-columns:1fr;grid-template-rows:auto 1fr;}
-    #main{grid-template-columns:1fr;grid-template-rows:1fr 1fr;}
-    .panel:first-child{border-right:none;border-bottom:1px solid var(--line);}
-    #side{flex-direction:row;flex-wrap:wrap;overflow:visible;height:auto;}
-    #baseWrap{width:180px;}
+  .ctrls{display:flex;flex-direction:column;gap:12px;}
+  .row{display:flex;align-items:center;gap:12px;}
+  .row .lbl{flex:0 0 116px;color:var(--muted);font-size:11px;}
+  .row .val{flex:0 0 56px;text-align:right;font-size:11px;color:var(--accent);}
+  input[type=range]{flex:1;-webkit-appearance:none;height:3px;background:var(--line);border-radius:3px;outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;
+    background:var(--accent);cursor:pointer;border:2px solid var(--bg);}
+  input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--accent);
+    cursor:pointer;border:2px solid var(--bg);}
+  button{font-family:var(--mono);font-size:11.5px;color:var(--txt);background:var(--panel-2);
+    border:1px solid var(--line);border-radius:7px;padding:8px 12px;cursor:pointer;transition:.15s;letter-spacing:.3px;}
+  button:hover{border-color:var(--accent);color:#fff;background:#161b26;}
+  button.on{border-color:var(--accent);color:var(--accent);}
+  .legend{display:flex;gap:16px;font-size:11px;color:var(--muted);flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+
+  /* matrices */
+  .mtx4{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;font-size:12px;max-width:280px;}
+  .mtx4 div{background:var(--panel-2);border:1px solid var(--line);border-radius:5px;
+    padding:8px 4px;text-align:center;color:var(--txt);}
+  .mtx2{display:grid;grid-template-columns:repeat(2,1fr);gap:4px;font-size:12px;width:94px;}
+  .mtx2 div{background:var(--panel-2);border:1px solid var(--line);border-radius:5px;padding:7px 4px;text-align:center;color:var(--txt);}
+  .rel{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--txt);line-height:1.5;}
+  #ladderWrap{width:100%;margin:4px 0 12px;}
+  #ladder{width:100%;display:block;}
+  .qnums{display:flex;flex-direction:column;gap:7px;}
+  .qline{display:flex;align-items:center;gap:8px;font-size:11px;}
+  .qline .qlab{flex:0 0 32px;color:var(--muted);}
+  .qline .qbarwrap{flex:1;height:11px;background:var(--panel-2);border:1px solid var(--line);border-radius:6px;overflow:hidden;}
+  .qline .qbar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-warm));}
+  .qline .qv{flex:0 0 62px;text-align:right;color:var(--accent);}
+  .resid{font-family:var(--serif);font-size:15px;color:var(--accent);}
+  .resid .num{color:var(--accent-warm);}
+
+  .heats{display:flex;gap:18px;flex-wrap:wrap;}
+  .heatbox{display:flex;flex-direction:column;gap:8px;}
+  .heatcap{font-size:11px;color:var(--muted);letter-spacing:.4px;}
+  .heatcap b{color:var(--txt);}
+  .hgrid{display:grid;grid-template-columns:auto repeat(8,16px);grid-auto-rows:16px;gap:2px;align-items:center;}
+  .hgrid .hk{font-size:8.5px;color:var(--faint);text-align:center;line-height:1;}
+  .hgrid .hkr{font-size:8.5px;color:var(--faint);text-align:right;padding-right:4px;}
+  .hgrid .cell{width:16px;height:16px;border-radius:3px;}
+
+  .state{display:flex;flex-direction:column;gap:10px;}
+  .kets{display:flex;gap:6px;flex-wrap:wrap;}
+  .kets button{padding:6px 9px;font-size:11px;}
+  .bars{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;align-items:end;height:96px;
+    border-bottom:1px solid var(--line);}
+  .bcol{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;position:relative;}
+  .bar{width:70%;border-radius:3px 3px 0 0;}
+  .blab{position:absolute;bottom:-16px;font-size:8.5px;color:var(--faint);}
+  .barscap{font-size:11px;color:var(--muted);margin-top:18px;}
+
+  @media (max-width:980px){
+    #main{grid-template-columns:1fr;grid-auto-rows:min-content;overflow-y:auto;}
+    .col{overflow:visible;}
+    .col:first-child{border-right:none;border-bottom:1px solid var(--line);}
   }
 </style>
 </head>
 <body>
 <div id="app">
-  <aside id="side">
-    <h1>La fibración de Hopf<span class="sub">Puntos en S² · circunferencias en S³</span></h1>
+  <header>
+    <h1>Ecuación de Yang-Baxter</h1>
+    <div class="eq"><b>Ř₁₂ Ř₂₃ Ř₁₂ = Ř₂₃ Ř₁₂ Ř₂₃</b>  &nbsp;sobre&nbsp; V⊗V⊗V</div>
+    <div class="tag">tres partículas · relación de trenza · movimiento de Reidemeister III</div>
+  </header>
 
-    <div class="group">
-      <div class="label">Base S² — clic para añadir una fibra</div>
-      <div id="baseWrap">
-        <canvas id="baseCanvas"></canvas>
-        <div id="baseHint">arrastra: rotar · clic: añadir punto</div>
-      </div>
-      <div class="count" id="fiberCount">0 fibras</div>
-    </div>
-
-    <div class="group">
-      <div class="label">Configuraciones</div>
-      <div class="btns">
-        <button data-preset="single">Una fibra</button>
-        <button data-preset="link">Enlace de Hopf</button>
-        <button data-preset="torus">Toro (latitud)</button>
-        <button data-preset="nested">Toros anidados</button>
-        <button class="full warm" data-preset="clear">Limpiar todo</button>
-      </div>
-    </div>
-
-    <div class="group">
-      <div class="label">Representación</div>
-      <div class="ctrl">
-        <span>Superficie de los toros</span>
-        <label class="switch"><input type="checkbox" id="surf"><span class="track"><span class="knob"></span></span></label>
-      </div>
-      <div class="note">Rellena cada familia de latitud θ como un toro continuo (su pared), en lugar de mostrar las circunferencias sueltas.</div>
-    </div>
-
-    <div class="group">
-      <div class="label">Animación</div>
-      <div class="ctrl">
-        <span>Rotación 4D</span>
-        <label class="switch"><input type="checkbox" id="rot4d" checked><span class="track"><span class="knob"></span></span></label>
-      </div>
-      <div class="ctrl">
-        <span>Flujo de Hopf</span>
-        <label class="switch"><input type="checkbox" id="flow" checked><span class="track"><span class="knob"></span></span></label>
-      </div>
+  <div id="main">
+    <!-- ===================== Izquierda: geometría ===================== -->
+    <div class="col">
       <div>
-        <div class="ctrl"><span>Velocidad 4D</span><span class="reads" id="spdRead">0.40</span></div>
-        <input type="range" id="speed" min="0" max="1.2" step="0.01" value="0.40">
+        <h2>Tres partículas que se trenzan</h2>
+        <div class="sub">líneas de universo · el tiempo fluye hacia arriba</div>
+      </div>
+
+      <div id="braidWrap">
+        <canvas id="braid"></canvas>
+        <div id="braidLabel"></div>
+      </div>
+
+      <div class="card ctrls">
+        <div class="row">
+          <span class="lbl">Deslizar (RIII)</span>
+          <input type="range" id="slide" min="-1" max="1" step="0.001" value="-1">
+          <span class="val" id="slideVal">−1.00</span>
+        </div>
+        <div class="row" style="gap:10px;">
+          <button id="autoBtn" class="on">Animar deslizamiento</button>
+          <button id="flowBtn" class="on">Flujo de partículas</button>
+        </div>
+        <div class="legend">
+          <span><i class="dot" style="background:var(--pA)"></i>partícula 1</span>
+          <span><i class="dot" style="background:var(--pB)"></i>partícula 2</span>
+          <span><i class="dot" style="background:var(--pC)"></i>partícula 3</span>
+        </div>
+      </div>
+
+      <div class="card note">
+        <b>Qué estás viendo.</b> Cada cruce de dos hebras representa una aplicación de la matriz Ř
+        (la dispersión de dos partículas). Las tres hebras forman el medio giro positivo Δ de la trenza
+        de 3 hilos. Al <b>deslizar la hebra central</b> de un lado al otro pasas por el punto triple
+        y conviertes la palabra σ₁σ₂σ₁ en σ₂σ₁σ₂: ambas describen la misma trenza, es decir, el mismo
+        operador. Esa invariancia ante el orden de las colisiones es justo la ecuación de Yang-Baxter:
+        el resultado de la dispersión a tres cuerpos no depende del orden en que ocurran las colisiones
+        de a pares.
       </div>
     </div>
 
-    <div class="note">
-      <b>Idea.</b> Cada <b>punto</b> de la esfera base S² determina una <b>circunferencia</b> (una fibra, un gran círculo de S³).
-      A la izquierda ves esas fibras tras la proyección estereográfica S³ → ℝ³;
-      a la derecha, S³ ⊂ ℝ⁴ girando de verdad en cuatro dimensiones y proyectado a ℝ³.
-      Dos puntos distintos dan circunferencias enlazadas: el enlace de Hopf.
-    </div>
+    <!-- ===================== Derecha: álgebra ===================== -->
+    <div class="col">
+      <div>
+        <h2>El grupo cuántico U_q(𝔰𝔩₂)</h2>
+        <div class="sub">de donde proviene la matriz R de la izquierda</div>
+      </div>
 
-    <div class="footer">
-      h(z₁,z₂) = (2z₁z̄₂, |z₁|²−|z₂|²),  con |z₁|²+|z₂|²=1.<br>
-      Fibra sobre (θ,φ): z₁=cos(θ/2)e^{i(φ+t)}, z₂=sin(θ/2)e^{it}, t∈[0,2π).
-    </div>
-  </aside>
+      <div class="card">
+        <div class="row">
+          <span class="lbl">parámetro q</span>
+          <input type="range" id="q" min="0.30" max="2.20" step="0.01" value="1.30">
+          <span class="val" id="qVal">1.30</span>
+        </div>
+        <div class="note" style="margin-top:6px;">q es el parámetro de deformación. En el límite q→1
+          se recupera el álgebra envolvente clásica U(𝔰𝔩₂) y la trenza Ř se vuelve el simple intercambio τ.</div>
+      </div>
 
-  <section id="main">
-    <div class="panel" id="panelStereo">
-      <canvas id="stereoCanvas"></canvas>
-      <div class="ptitle"><div class="t">Proyección estereográfica</div><div class="d">S³ → ℝ³ · circunferencias de Villarceau</div></div>
-      <div class="badge">ℝ³</div>
-      <div class="phint">arrastra para rotar · rueda para acercar</div>
+      <div class="card">
+        <div class="heatcap" style="margin-bottom:10px;"><b>Generadores y relaciones</b></div>
+        <div class="rel">
+          <div>generadores: &nbsp;E, &nbsp;F, &nbsp;K, &nbsp;K⁻¹</div>
+          <div>K E K⁻¹ = q²·E</div>
+          <div>K F K⁻¹ = q⁻²·F</div>
+          <div>[E, F] = (K − K⁻¹) / (q − q⁻¹)</div>
+        </div>
+        <div class="heatcap" style="margin:14px 0 8px;"><b>Estructura de Hopf</b></div>
+        <div class="rel">
+          <div>Δ(K)=K⊗K &nbsp;·&nbsp; ε(K)=1 &nbsp;·&nbsp; S(K)=K⁻¹</div>
+          <div>Δ(E)=E⊗K + 1⊗E &nbsp;·&nbsp; ε(E)=0 &nbsp;·&nbsp; S(E)=−EK⁻¹</div>
+          <div>Δ(F)=F⊗1 + K⁻¹⊗F &nbsp;·&nbsp; ε(F)=0 &nbsp;·&nbsp; S(F)=−KF</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:4px;">
+          <div class="heatcap"><b>Representación V<sub>n</sub></b> &nbsp;·&nbsp; dim = <span id="dimVal">2</span></div>
+          <div class="row" style="gap:8px;width:auto;">
+            <span class="lbl" style="flex:none;">n</span>
+            <input type="range" id="nrep" min="1" max="6" step="1" value="1" style="width:96px;">
+            <span class="val" id="nVal" style="flex:none;">1</span>
+          </div>
+        </div>
+        <div id="ladderWrap"><svg id="ladder" preserveAspectRatio="xMidYMid meet"></svg></div>
+        <div class="row" style="gap:8px;">
+          <button id="applyE">E · subir</button>
+          <button id="applyF">F · bajar</button>
+          <button id="ladderAuto" class="on">animar</button>
+        </div>
+        <div class="note" id="ladderMsg" style="margin-top:8px;"></div>
+      </div>
+
+      <div class="card">
+        <div class="heatcap" style="margin-bottom:10px;"><b>q-números</b> &nbsp;[m] = (q<sup>m</sup> − q<sup>−m</sup>) / (q − q⁻¹)</div>
+        <div id="qnums" class="qnums"></div>
+        <div class="note" style="margin-top:8px;">Los pesos de K son q<sup>n−2k</sup> y los coeficientes de E, F
+          son q-enteros [m]. Cuando q→1 cada [m]→m y se recobra la teoría clásica de 𝔰𝔩₂.</div>
+      </div>
+
+      <div class="card">
+        <div class="heatcap" style="margin-bottom:10px;"><b>De U_q(𝔰𝔩₂) a la trenza</b></div>
+        <div style="display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start;">
+          <div>
+            <div class="heatcap" style="margin-bottom:6px;color:var(--faint)">E, F, K en V₁ &nbsp;(2×2)</div>
+            <div id="efk" style="display:flex;gap:12px;"></div>
+          </div>
+          <div>
+            <div class="heatcap" style="margin-bottom:6px;color:var(--faint)">Ř en V₁⊗V₁ &nbsp;(4×4)</div>
+            <div class="mtx4" id="rmtx"></div>
+          </div>
+        </div>
+        <div class="note" id="rNote" style="margin-top:10px;"></div>
+        <div class="note" style="margin-top:8px;">La relación de trenza equivale a la forma usual
+          R₁₂R₁₃R₂₃ = R₂₃R₁₃R₁₂ tomando R = τ∘ℛ, con τ el flip.</div>
+      </div>
     </div>
-    <div class="panel" id="panelFour">
-      <canvas id="fourCanvas"></canvas>
-      <div class="ptitle"><div class="t">Vista 4D</div><div class="d">S³ ⊂ ℝ⁴ · rotación en cuatro dimensiones</div></div>
-      <div class="badge">ℝ⁴ → ℝ³</div>
-      <div class="phint">arrastra para rotar la cámara · S³ gira solo en 4D</div>
-    </div>
-  </section>
+  </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (function(){
   "use strict";
-  const TAU = Math.PI*2;
-  const N = 150;                 // segmentos por circunferencia
-  const D4 = 2.2;                // distancia de proyección 4D
-  const STEREO_SCALE = 1.0;
-  const FOUR_SCALE = 1.65;
-
-  // ---------- color por (theta, phi) ----------
-  function fiberColor(theta, phi){
-    const hue = (phi/TAU) % 1;
-    const light = 0.42 + 0.20*(theta/Math.PI);
-    return new THREE.Color().setHSL(hue, 0.72, light);
-  }
-
-  // ---------- muestreo de la fibra en R^4 ----------
-  function fiberR4(theta, phi){
-    const a = Math.cos(theta/2), b = Math.sin(theta/2);
-    const arr = new Float32Array(N*4);
-    for(let i=0;i<N;i++){
-      const t = TAU*i/N;
-      arr[4*i  ] = a*Math.cos(phi+t); // X1
-      arr[4*i+1] = a*Math.sin(phi+t); // X2
-      arr[4*i+2] = b*Math.cos(t);     // X3
-      arr[4*i+3] = b*Math.sin(t);     // X4
-    }
-    return arr;
-  }
-
-  // estereográfica desde el polo (0,0,0,1)
-  function stereoPositions(r4){
-    const out = new Float32Array(N*3);
-    for(let i=0;i<N;i++){
-      const X1=r4[4*i],X2=r4[4*i+1],X3=r4[4*i+2],X4=r4[4*i+3];
-      let den = 1-X4; if(Math.abs(den)<0.04) den = den<0?-0.04:0.04;
-      const s = STEREO_SCALE/den;
-      out[3*i  ]=X1*s; out[3*i+1]=X3*s; out[3*i+2]=X2*s;
-    }
-    return out;
-  }
-
-  // ---------- estado ----------
-  const fibers = [];   // {theta,phi,color,r4,stereo, lineS,lineF,dot,markS,markF}
-  const surfaces = []; // {theta,r4,count,meshS,meshF}
-  let rot4dOn = true, flowOn = true, speed = 0.40, surfaceMode = false;
-  let alpha = 0.6, beta = 0.2, flowParam = 0;
+  const css = getComputedStyle(document.documentElement);
+  const C = n => css.getPropertyValue(n).trim();
+  const PANEL = C('--panel');
+  const COL = [C('--pA'),C('--pB'),C('--pC')];
 
   // ============================================================
-  //  Three.js: tres escenas / renderers independientes
+  //  U_q(sl2): q-números, representación V_n (animada), matriz R
   // ============================================================
-  function makeView(canvas, opts){
-    const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 200);
-    const target = new THREE.Vector3(0,0,0);
-    const ctrl = { az:opts.az, pol:opts.pol, r:opts.r };
-    function place(){
-      const r=ctrl.r, p=ctrl.pol, a=ctrl.az;
-      camera.position.set(
-        target.x + r*Math.sin(p)*Math.cos(a),
-        target.y + r*Math.cos(p),
-        target.z + r*Math.sin(p)*Math.sin(a)
-      );
-      camera.lookAt(target);
+  let curQ=1.30, nRep=1, kPos=0, ladderAuto=true;
+  const SVGNS='http://www.w3.org/2000/svg';
+  let nodePos=[];
+
+  function qInt(m,q){                       // q-entero [m]
+    if(Math.abs(q-1)<1e-7) return m;
+    return (Math.pow(q,m)-Math.pow(q,-m))/(q-1/q);
+  }
+  function fmt(x){ if(Math.abs(x)<1e-9) return '0'; return (Math.round(x*100)/100).toString(); }
+  function supExp(e){
+    const map={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+    return e.toString().split('').map(c=>map[c]||c).join('');
+  }
+
+  // ---- matriz Ř (V1⊗V1) y E,F,K (V1) ----
+  function Rcheck(q){ return [[q,0,0,0],[0,0,1,0],[0,1,q-1/q,0],[0,0,0,q]]; }
+  function renderMtx4(M){
+    const el=document.getElementById('rmtx'); el.innerHTML='';
+    for(let i=0;i<4;i++)for(let j=0;j<4;j++){
+      const d=document.createElement('div'); const v=M[i][j];
+      d.textContent=fmt(v); if(Math.abs(v)<1e-9) d.style.color='var(--faint)'; el.appendChild(d);
     }
-    place();
-    // controles de cámara
-    let dragging=false, px=0, py=0, moved=0;
-    canvas.addEventListener('pointerdown',e=>{dragging=true;px=e.clientX;py=e.clientY;moved=0;canvas.setPointerCapture(e.pointerId);});
-    canvas.addEventListener('pointermove',e=>{
-      if(!dragging)return;
-      const dx=e.clientX-px, dy=e.clientY-py; px=e.clientX;py=e.clientY;
-      moved+=Math.abs(dx)+Math.abs(dy);
-      ctrl.az -= dx*0.008;
-      ctrl.pol = Math.max(0.08, Math.min(Math.PI-0.08, ctrl.pol - dy*0.008));
-      place();
-    });
-    canvas.addEventListener('pointerup',e=>{
-      dragging=false;
-      if(moved<6 && opts.onClick) opts.onClick(e);
-    });
-    canvas.addEventListener('wheel',e=>{
-      e.preventDefault();
-      ctrl.r = Math.max(opts.rMin||1.4, Math.min(opts.rMax||40, ctrl.r*(1+Math.sign(e.deltaY)*0.1)));
-      place();
-    },{passive:false});
-    function resize(){
-      const w=canvas.clientWidth, h=canvas.clientHeight;
-      if(w===0||h===0)return;
-      renderer.setSize(w,h,false);
-      camera.aspect=w/h; camera.updateProjectionMatrix();
+  }
+  function mtx2(M){
+    const w=document.createElement('div'); w.className='mtx2';
+    for(let i=0;i<2;i++)for(let j=0;j<2;j++){
+      const d=document.createElement('div'); const v=M[i][j];
+      d.textContent=fmt(v); if(Math.abs(v)<1e-9) d.style.color='var(--faint)'; w.appendChild(d);
     }
-    return {renderer,scene,camera,resize,ctrl,raycast:(e)=>{
-      const rect=canvas.getBoundingClientRect();
-      const x=((e.clientX-rect.left)/rect.width)*2-1;
-      const y=-((e.clientY-rect.top)/rect.height)*2+1;
-      const ray=new THREE.Raycaster();
-      ray.setFromCamera(new THREE.Vector2(x,y),camera);
-      return ray;
-    }};
+    return w;
   }
-
-  const baseV = makeView(document.getElementById('baseCanvas'),
-      {az:0.9,pol:1.15,r:2.7,rMin:1.8,rMax:6,onClick:onBaseClick});
-  const stereoV = makeView(document.getElementById('stereoCanvas'),
-      {az:0.7,pol:1.05,r:6.2,rMin:1.5,rMax:40});
-  const fourV = makeView(document.getElementById('fourCanvas'),
-      {az:0.7,pol:1.05,r:5.0,rMin:1.5,rMax:40});
-
-  // ---------- decoración común: ejes tenues ----------
-  function addAxes(scene,len){
-    const g=new THREE.BufferGeometry();
-    const v=[ -len,0,0, len,0,0,  0,-len,0, 0,len,0,  0,0,-len, 0,0,len ];
-    g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
-    const m=new THREE.LineBasicMaterial({color:0x2a3040});
-    scene.add(new THREE.LineSegments(g,m));
-  }
-  addAxes(stereoV.scene,9);
-  addAxes(fourV.scene,2.4);
-
-  // ============================================================
-  //  Esfera base S²
-  // ============================================================
-  const baseRadius = 1;
-  // relleno translúcido para el raycast
-  const fillGeo = new THREE.SphereGeometry(baseRadius,48,32);
-  const fillMat = new THREE.MeshBasicMaterial({color:0x0d3a3a,transparent:true,opacity:0.10});
-  const baseSphere = new THREE.Mesh(fillGeo,fillMat);
-  baseV.scene.add(baseSphere);
-  // rejilla lat/long
-  (function(){
-    const m=new THREE.LineBasicMaterial({color:0x2f3848,transparent:true,opacity:0.7});
-    for(let k=1;k<8;k++){               // latitudes
-      const th=Math.PI*k/8, r=Math.sin(th)*baseRadius, y=Math.cos(th)*baseRadius;
-      const pts=[]; for(let i=0;i<=64;i++){const a=TAU*i/64;pts.push(new THREE.Vector3(r*Math.cos(a),y,r*Math.sin(a)));}
-      const g=new THREE.BufferGeometry().setFromPoints(pts);
-      baseV.scene.add(new THREE.LineLoop(g,m));
-    }
-    for(let k=0;k<8;k++){               // longitudes
-      const a=Math.PI*k/8; const pts=[];
-      for(let i=0;i<=64;i++){const th=Math.PI*i/64;
-        pts.push(new THREE.Vector3(Math.sin(th)*Math.cos(a)*baseRadius,Math.cos(th)*baseRadius,Math.sin(th)*Math.sin(a)*baseRadius));}
-      const g=new THREE.BufferGeometry().setFromPoints(pts);
-      baseV.scene.add(new THREE.Line(g,m));
-    }
-  })();
-
-  function onBaseClick(e){
-    const ray=baseV.raycast(e);
-    const hits=ray.intersectObject(baseSphere);
-    if(!hits.length)return;
-    const p=hits[0].point.clone().normalize();
-    // mapeo: usamos (x,y,z) con y = cos(theta) acorde a la rejilla
-    const theta=Math.acos(Math.max(-1,Math.min(1,p.y)));
-    let phi=Math.atan2(p.z,p.x); if(phi<0)phi+=TAU;
-    addFiber(theta,phi);
-    refreshSurfaces(); applyMode();
-  }
-
-  // ============================================================
-  //  Construcción / destrucción de fibras
-  // ============================================================
-  function dotMaterial(c){return new THREE.MeshBasicMaterial({color:c});}
-  const dotGeo = new THREE.SphereGeometry(0.035,12,10);
-  const markGeo = new THREE.SphereGeometry(0.05,12,10);
-
-  function addFiber(theta,phi){
-    theta=Math.max(0.06*Math.PI,Math.min(0.94*Math.PI,theta));
-    const color=fiberColor(theta,phi);
-    const r4=fiberR4(theta,phi);
-    const stereo=stereoPositions(r4);
-
-    // línea estereográfica
-    const gS=new THREE.BufferGeometry();
-    gS.setAttribute('position',new THREE.BufferAttribute(stereo,3));
-    const lineS=new THREE.LineLoop(gS,new THREE.LineBasicMaterial({color}));
-    stereoV.scene.add(lineS);
-
-    // línea 4D (se actualiza por frame)
-    const gF=new THREE.BufferGeometry();
-    gF.setAttribute('position',new THREE.BufferAttribute(new Float32Array(N*3),3));
-    const lineF=new THREE.LineLoop(gF,new THREE.LineBasicMaterial({color}));
-    fourV.scene.add(lineF);
-
-    // punto en S²
-    const dot=new THREE.Mesh(dotGeo,dotMaterial(color));
-    dot.position.set(Math.sin(theta)*Math.cos(phi),Math.cos(theta),Math.sin(theta)*Math.sin(phi))
-       .multiplyScalar(baseRadius*1.02);
-    baseV.scene.add(dot);
-
-    // marcadores del flujo
-    const markS=new THREE.Mesh(markGeo,dotMaterial(color)); markS.visible=false; stereoV.scene.add(markS);
-    const markF=new THREE.Mesh(markGeo,dotMaterial(color)); markF.visible=false; fourV.scene.add(markF);
-
-    fibers.push({theta,phi,color,r4,stereo,lineS,lineF,dot,markS,markF});
-    updateCount();
-  }
-
-  function clearFibers(){
-    fibers.forEach(f=>{
-      stereoV.scene.remove(f.lineS); f.lineS.geometry.dispose(); f.lineS.material.dispose();
-      fourV.scene.remove(f.lineF);  f.lineF.geometry.dispose(); f.lineF.material.dispose();
-      baseV.scene.remove(f.dot);    f.dot.material.dispose();
-      stereoV.scene.remove(f.markS);f.markS.material.dispose();
-      fourV.scene.remove(f.markF);  f.markF.material.dispose();
-    });
-    fibers.length=0; clearSurfaces(); updateCount();
-  }
-
-  // ============================================================
-  //  Superficies de los toros (paredes continuas)
-  // ============================================================
-  const SURF_PHI=110, SURF_T=46;
-  function surfMaterial(){
-    return new THREE.MeshBasicMaterial({vertexColors:true,side:THREE.DoubleSide,
-      transparent:true,opacity:0.72,depthWrite:false});
-  }
-  function buildSurface(theta){
-    const np=SURF_PHI+1, nt=SURF_T+1, count=np*nt;
-    const r4=new Float32Array(count*4), col=new Float32Array(count*3), posS=new Float32Array(count*3);
-    const a=Math.cos(theta/2), b=Math.sin(theta/2), c=new THREE.Color();
-    for(let i=0;i<np;i++){
-      const phi=TAU*i/SURF_PHI;
-      for(let j=0;j<nt;j++){
-        const t=TAU*j/SURF_T, k=i*nt+j;
-        const X1=a*Math.cos(phi+t), X2=a*Math.sin(phi+t), X3=b*Math.cos(t), X4=b*Math.sin(t);
-        r4[4*k]=X1; r4[4*k+1]=X2; r4[4*k+2]=X3; r4[4*k+3]=X4;
-        // estereográfica estática
-        let den=1-X4; if(Math.abs(den)<0.04) den=den<0?-0.04:0.04;
-        const s=STEREO_SCALE/den;
-        posS[3*k]=X1*s; posS[3*k+1]=X3*s; posS[3*k+2]=X2*s;
-        // color arcoíris por phi con sombreado de tubo segun t
-        const shade=0.5+0.5*(0.5+0.5*Math.cos(t));
-        c.copy(fiberColor(theta,phi));
-        col[3*k]=c.r*shade; col[3*k+1]=c.g*shade; col[3*k+2]=c.b*shade;
-      }
-    }
-    const idx=[];
-    for(let i=0;i<SURF_PHI;i++) for(let j=0;j<SURF_T;j++){
-      const a0=i*nt+j, a1=(i+1)*nt+j, a2=(i+1)*nt+(j+1), a3=i*nt+(j+1);
-      idx.push(a0,a1,a2, a0,a2,a3);
-    }
-    const gS=new THREE.BufferGeometry();
-    gS.setAttribute('position',new THREE.BufferAttribute(posS,3));
-    gS.setAttribute('color',new THREE.BufferAttribute(col,3));
-    gS.setIndex(idx);
-    const meshS=new THREE.Mesh(gS,surfMaterial()); stereoV.scene.add(meshS);
-
-    const gF=new THREE.BufferGeometry();
-    gF.setAttribute('position',new THREE.BufferAttribute(new Float32Array(count*3),3));
-    gF.setAttribute('color',new THREE.BufferAttribute(col.slice(),3));
-    gF.setIndex(idx.slice());
-    const meshF=new THREE.Mesh(gF,surfMaterial()); fourV.scene.add(meshF);
-
-    surfaces.push({theta,r4,count,meshS,meshF});
-  }
-  function clearSurfaces(){
-    surfaces.forEach(s=>{
-      stereoV.scene.remove(s.meshS); s.meshS.geometry.dispose(); s.meshS.material.dispose();
-      fourV.scene.remove(s.meshF);  s.meshF.geometry.dispose(); s.meshF.material.dispose();
-    });
-    surfaces.length=0;
-  }
-  function refreshSurfaces(){
-    clearSurfaces();
-    if(!surfaceMode) return;
-    const seen=new Set();
-    fibers.forEach(f=>{
-      const key=f.theta.toFixed(4);
-      if(!seen.has(key)){ seen.add(key); buildSurface(f.theta); }
+  function renderEFK(q){
+    const E=[[0,1],[0,0]], F=[[0,0],[1,0]], K=[[q,0],[0,1/q]];
+    const el=document.getElementById('efk'); el.innerHTML='';
+    [['E',E],['F',F],['K',K]].forEach(([name,M])=>{
+      const box=document.createElement('div');
+      const cap=document.createElement('div'); cap.className='heatcap';
+      cap.style.cssText='text-align:center;margin-bottom:4px;color:var(--accent)'; cap.textContent=name;
+      box.appendChild(cap); box.appendChild(mtx2(M)); el.appendChild(box);
     });
   }
-  function applyMode(){
-    fibers.forEach(f=>{ f.lineS.visible=!surfaceMode; f.lineF.visible=!surfaceMode; });
+
+  // ---- q-números [1..5] ----
+  function renderQnums(q){
+    const el=document.getElementById('qnums'); el.innerHTML='';
+    const vals=[1,2,3,4,5].map(m=>qInt(m,q));
+    const vmax=Math.max(...vals.map(Math.abs),1e-6);
+    [1,2,3,4,5].forEach((m,i)=>{
+      const line=document.createElement('div'); line.className='qline';
+      const lab=document.createElement('div'); lab.className='qlab'; lab.textContent='['+m+']';
+      const bw=document.createElement('div'); bw.className='qbarwrap';
+      const bar=document.createElement('div'); bar.className='qbar'; bar.style.width=(Math.abs(vals[i])/vmax*100)+'%';
+      bw.appendChild(bar);
+      const v=document.createElement('div'); v.className='qv'; v.textContent=vals[i].toFixed(3);
+      line.appendChild(lab); line.appendChild(bw); line.appendChild(v); el.appendChild(line);
+    });
   }
 
-  function updateCount(){
-    const n=fibers.length;
-    document.getElementById('fiberCount').textContent = n+(n===1?' fibra':' fibras');
+  // ---- escalera de pesos de V_n (SVG) ----
+  function addText(svg,x,y,t,color,anchor,size){
+    const e=document.createElementNS(SVGNS,'text');
+    e.setAttribute('x',x);e.setAttribute('y',y);e.setAttribute('fill',color);
+    e.setAttribute('text-anchor',anchor);e.setAttribute('font-size',size);
+    e.setAttribute('font-family','ui-monospace, monospace'); e.textContent=t; svg.appendChild(e);
   }
-
-  // ============================================================
-  //  Configuraciones predefinidas
-  // ============================================================
-  function preset(name){
-    clearFibers();
-    if(name==='clear') return;
-    if(name==='single'){ addFiber(Math.PI/2,0); }
-    else if(name==='link'){ addFiber(Math.PI/2,0); addFiber(Math.PI/2,Math.PI); }
-    else if(name==='torus'){
-      const M=24; for(let i=0;i<M;i++) addFiber(Math.PI/2, TAU*i/M);
+  function addArrow(svg,x1,y1,x2,y2,color,which){
+    const l=document.createElementNS(SVGNS,'line');
+    l.setAttribute('x1',x1);l.setAttribute('y1',y1);l.setAttribute('x2',x2);l.setAttribute('y2',y2);
+    l.setAttribute('stroke',color);l.setAttribute('stroke-width','1.6');
+    l.setAttribute('marker-end','url(#arrow'+which+')');
+    svg.appendChild(l);
+  }
+  function addDefs(svg){
+    const defs=document.createElementNS(SVGNS,'defs');
+    [['arrowE',C('--accent')],['arrowF',C('--accent-warm')]].forEach(([id,col])=>{
+      const m=document.createElementNS(SVGNS,'marker');
+      m.setAttribute('id',id);m.setAttribute('viewBox','0 0 10 10');m.setAttribute('refX','8');m.setAttribute('refY','5');
+      m.setAttribute('markerWidth','6');m.setAttribute('markerHeight','6');m.setAttribute('orient','auto-start-reverse');
+      const p=document.createElementNS(SVGNS,'path'); p.setAttribute('d','M0,0 L10,5 L0,10 z'); p.setAttribute('fill',col);
+      m.appendChild(p); defs.appendChild(m);
+    });
+    svg.appendChild(defs);
+  }
+  function buildLadder(){
+    const svg=document.getElementById('ladder'); svg.innerHTML='';
+    const d=nRep+1, w=svg.clientWidth||360, rowH=46, top=26, h=top*2+(d-1)*rowH;
+    svg.setAttribute('viewBox',`0 0 ${w} ${h}`); svg.style.height=h+'px';
+    addDefs(svg);
+    const cx=w*0.30; nodePos=[];
+    for(let k=0;k<d;k++) nodePos.push(top+k*rowH);   // v_0 arriba (peso máximo)
+    for(let k=0;k<d;k++){
+      const y=nodePos[k];
+      if(k<d-1){ const y2=nodePos[k+1];
+        addArrow(svg,cx+34,y+12,cx+34,y2-12,C('--accent-warm'),'F');
+        addText(svg,cx+58,(y+y2)/2+4,'F·['+(k+1)+']',C('--accent-warm'),'start',10.5); }
+      if(k>0){ const y0=nodePos[k-1];
+        addArrow(svg,cx-34,y-12,cx-34,y0+12,C('--accent'),'E');
+        addText(svg,cx-58,(y+y0)/2+4,'['+(nRep-k+1)+']·E',C('--accent'),'end',10.5); }
     }
-    else if(name==='nested'){
-      const thetas=[Math.PI/6,Math.PI/3,Math.PI/2,2*Math.PI/3,5*Math.PI/6];
-      const M=14;
-      thetas.forEach(th=>{ for(let i=0;i<M;i++) addFiber(th, TAU*i/M); });
+    for(let k=0;k<d;k++){
+      const y=nodePos[k];
+      const circ=document.createElementNS(SVGNS,'circle');
+      circ.setAttribute('cx',cx);circ.setAttribute('cy',y);circ.setAttribute('r',13);
+      circ.setAttribute('fill',C('--panel-2'));circ.setAttribute('stroke',C('--line'));
+      svg.appendChild(circ);
+      addText(svg,cx,y+4,'v'+k,C('--muted'),'middle',11);
+      addText(svg,cx+w*0.42,y+4,'K: q'+supExp(nRep-2*k),C('--txt'),'start',11);
     }
-    refreshSurfaces(); applyMode();
+    const tok=document.createElementNS(SVGNS,'circle');
+    tok.setAttribute('id','token');tok.setAttribute('r',13);
+    tok.setAttribute('cx',cx);tok.setAttribute('cy',nodePos[kPos]);
+    tok.setAttribute('fill','none');tok.setAttribute('stroke',C('--pB'));tok.setAttribute('stroke-width','3');
+    tok.style.transition='cy .35s ease'; svg.appendChild(tok);
+  }
+  function moveToken(){ const t=document.getElementById('token'); if(t) t.setAttribute('cy',nodePos[kPos]); }
+  function ladderMsg(t){ document.getElementById('ladderMsg').innerHTML=t; }
+
+  function applyE(){
+    if(kPos===0){ ladderMsg('E·v₀ = 0 &nbsp;(peso máximo: E aniquila el estado más alto).'); return; }
+    const coef=qInt(nRep-kPos+1,curQ), from=kPos; kPos--; moveToken();
+    ladderMsg('E·v'+from+' = ['+(nRep-from+1)+']·v'+kPos+' = '+coef.toFixed(3)+'·v'+kPos+' &nbsp;(sube un peldaño).');
+  }
+  function applyF(){
+    if(kPos===nRep){ ladderMsg('F·v'+nRep+' = 0 &nbsp;(peso mínimo: F aniquila el estado más bajo).'); return; }
+    const coef=qInt(kPos+1,curQ), from=kPos; kPos++; moveToken();
+    ladderMsg('F·v'+from+' = ['+(from+1)+']·v'+kPos+' = '+coef.toFixed(3)+'·v'+kPos+' &nbsp;(baja un peldaño).');
+  }
+  function rebuildLadder(){
+    kPos=Math.min(kPos,nRep);
+    document.getElementById('dimVal').textContent=(nRep+1);
+    document.getElementById('nVal').textContent=nRep;
+    buildLadder();
   }
 
-  // ============================================================
-  //  Animación
-  // ============================================================
-  let last=performance.now();
-  function animate(now){
-    const dt=Math.min(0.05,(now-last)/1000); last=now;
-    if(rot4dOn){ alpha += speed*dt; beta += speed*0.61*dt; }
-    if(flowOn){ flowParam = (flowParam + 0.18*dt) % 1; }
-
-    const ca=Math.cos(alpha), sa=Math.sin(alpha);
-    const cb=Math.cos(beta),  sb=Math.sin(beta);
-    const showMarks = flowOn && !surfaceMode;
-
-    if(!surfaceMode){
-      for(const f of fibers){
-        const r4=f.r4, pos=f.lineF.geometry.attributes.position.array;
-        for(let i=0;i<N;i++){
-          const X1=r4[4*i],X2=r4[4*i+1],X3=r4[4*i+2],X4=r4[4*i+3];
-          // rotación 4D: plano (X1,X4) y plano (X2,X3)
-          const x1= X1*ca - X4*sa;
-          const x4= X1*sa + X4*ca;
-          const x2= X2*cb - X3*sb;
-          const x3= X2*sb + X3*cb;
-          const fp = D4/(D4 - x4);
-          pos[3*i  ]= x1*fp*FOUR_SCALE;
-          pos[3*i+1]= x3*fp*FOUR_SCALE;
-          pos[3*i+2]= x2*fp*FOUR_SCALE;
-        }
-        f.lineF.geometry.attributes.position.needsUpdate=true;
-
-        // marcadores del flujo de Hopf
-        f.markS.visible=showMarks; f.markF.visible=showMarks;
-        if(showMarks){
-          const idx=Math.floor(flowParam*N)%N;
-          f.markS.position.set(f.stereo[3*idx],f.stereo[3*idx+1],f.stereo[3*idx+2]);
-          f.markF.position.set(pos[3*idx],pos[3*idx+1],pos[3*idx+2]);
-        }
-      }
-    } else {
-      for(const f of fibers){ f.markS.visible=false; f.markF.visible=false; }
-      for(const s of surfaces){
-        const r4=s.r4, pos=s.meshF.geometry.attributes.position.array, count=s.count;
-        for(let k=0;k<count;k++){
-          const X1=r4[4*k],X2=r4[4*k+1],X3=r4[4*k+2],X4=r4[4*k+3];
-          const x1= X1*ca - X4*sa;
-          const x4= X1*sa + X4*ca;
-          const x2= X2*cb - X3*sb;
-          const x3= X2*sb + X3*cb;
-          const fp = D4/(D4 - x4);
-          pos[3*k  ]= x1*fp*FOUR_SCALE;
-          pos[3*k+1]= x3*fp*FOUR_SCALE;
-          pos[3*k+2]= x2*fp*FOUR_SCALE;
-        }
-        s.meshF.geometry.attributes.position.needsUpdate=true;
-      }
-    }
-
-    baseV.renderer.render(baseV.scene,baseV.camera);
-    stereoV.renderer.render(stereoV.scene,stereoV.camera);
-    fourV.renderer.render(fourV.scene,fourV.camera);
-    requestAnimationFrame(animate);
+  function updateUq(q){
+    curQ=q;
+    renderMtx4(Rcheck(q)); renderEFK(q); renderQnums(q);
+    const sym=Math.abs(q-1)<0.02;
+    document.getElementById('rNote').innerHTML =
+      'La R-matriz universal ℛ de U_q(𝔰𝔩₂), evaluada en V₁⊗V₁, da (tras el flip) la matriz Ř de la izquierda. '+
+      'Como U_q(𝔰𝔩₂) es cuasitriangular, ℛ satisface Yang-Baxter, y por eso Ř cumple la relación de trenza. '+
+      (sym ? '<b>En q≈1, Ř es casi el intercambio τ: el trenzado se vuelve trivial (categoría simétrica).</b>'
+           : 'Para q≠1, Ř es un trenzado genuino, no simétrico.');
   }
 
-  // ============================================================
-  //  UI
-  // ============================================================
-  document.querySelectorAll('[data-preset]').forEach(b=>{
-    b.addEventListener('click',()=>preset(b.dataset.preset));
+  // eventos
+  document.getElementById('q').addEventListener('input',e=>{
+    const q=parseFloat(e.target.value);
+    document.getElementById('qVal').textContent=q.toFixed(2);
+    updateUq(q);
   });
-  document.getElementById('rot4d').addEventListener('change',e=>rot4dOn=e.target.checked);
-  document.getElementById('flow').addEventListener('change',e=>flowOn=e.target.checked);
-  document.getElementById('surf').addEventListener('change',e=>{surfaceMode=e.target.checked; refreshSurfaces(); applyMode();});
-  const spd=document.getElementById('speed'), spdRead=document.getElementById('spdRead');
-  spd.addEventListener('input',()=>{speed=parseFloat(spd.value);spdRead.textContent=speed.toFixed(2);});
+  document.getElementById('nrep').addEventListener('input',e=>{
+    nRep=parseInt(e.target.value); kPos=0; rebuildLadder(); ladderMsg('');
+  });
+  document.getElementById('applyE').addEventListener('click',()=>{
+    ladderAuto=false; document.getElementById('ladderAuto').classList.remove('on'); applyE();
+  });
+  document.getElementById('applyF').addEventListener('click',()=>{
+    ladderAuto=false; document.getElementById('ladderAuto').classList.remove('on'); applyF();
+  });
+  document.getElementById('ladderAuto').addEventListener('click',e=>{
+    ladderAuto=!ladderAuto; e.target.classList.toggle('on',ladderAuto);
+  });
+  let ladderDir=1;
+  setInterval(()=>{
+    if(!ladderAuto) return;
+    if(kPos>=nRep) ladderDir=-1; else if(kPos<=0) ladderDir=1;
+    if(ladderDir>0) applyF(); else applyE();
+  },950);
 
-  function resizeAll(){ baseV.resize(); stereoV.resize(); fourV.resize(); }
-  window.addEventListener('resize',resizeAll);
-  // dar tiempo al layout antes de medir
-  setTimeout(()=>{resizeAll(); preset('nested');},60);
+  // ============================================================
+  //  Trenza / partículas (canvas 2D)
+  // ============================================================
+  const canvas=document.getElementById('braid'), ctx=canvas.getContext('2d');
+  let W=0,H=0;
+  function resize(){
+    const r=canvas.getBoundingClientRect(), dpr=Math.min(window.devicePixelRatio,2);
+    W=r.width; H=r.height;
+    canvas.width=W*dpr; canvas.height=H*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
 
-  requestAnimationFrame(animate);
+  const smooth = u => u*u*(3-2*u);
+  function geom(){
+    const padX=Math.max(60,W*0.16), padY=44;
+    const cx=W/2, S=Math.min((W-2*padX)/2, 130);
+    return {yB:H-padY, yT:padY, cx, xL:cx-S, xM:cx, xR:cx+S, amp:0.72*S};
+  }
+  // x de cada hebra en funcion de u in [0,1] (0 abajo, 1 arriba) y deslizamiento
+  function xA(u,g){ return g.xL + (g.xR-g.xL)*smooth(u); }            // 1 -> 3
+  function xC(u,g){ return g.xR + (g.xL-g.xR)*smooth(u); }            // 3 -> 1
+  function xB(u,g,slide){ return g.xM + g.amp*Math.sin(Math.PI*u)*slide; } // 2 -> 2 (bulto)
+  function yOf(u,g){ return g.yB + (g.yT-g.yB)*u; }
+
+  function strandPath(xfn,g,slide){
+    ctx.beginPath();
+    const M=90;
+    for(let i=0;i<=M;i++){const u=i/M; const x=xfn(u,g,slide), y=yOf(u,g);
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}
+  }
+  function drawStrand(xfn,g,slide,color){
+    // casing (color del panel) para crear el hueco bajo la hebra superior
+    ctx.lineCap='round'; ctx.lineJoin='round';
+    strandPath(xfn,g,slide); ctx.strokeStyle=PANEL; ctx.lineWidth=15; ctx.stroke();
+    strandPath(xfn,g,slide); ctx.strokeStyle=color; ctx.lineWidth=6.5; ctx.stroke();
+  }
+
+  function drawBead(xfn,g,slide,u,color){
+    const x=xfn(u,g,slide), y=yOf(u,g);
+    ctx.save();
+    ctx.shadowColor=color; ctx.shadowBlur=14;
+    ctx.beginPath(); ctx.arc(x,y,7.5,0,Math.PI*2);
+    ctx.fillStyle=color; ctx.fill();
+    ctx.restore();
+    ctx.beginPath(); ctx.arc(x,y,7.5,0,Math.PI*2);
+    ctx.strokeStyle=PANEL; ctx.lineWidth=2; ctx.stroke();
+  }
+
+  function drawEnds(g){
+    ctx.fillStyle='#3a4252'; ctx.font='11px '+C('--mono');
+    ctx.textAlign='center';
+    const bx=[g.xL,g.xM,g.xR];
+    bx.forEach((x,i)=>{
+      ctx.beginPath();ctx.arc(x,g.yB,3,0,Math.PI*2);ctx.fill();
+      ctx.fillText((i+1).toString(), x, g.yB+18);
+    });
+    // arriba: orden invertido 3,2,1
+    const tx=[g.xL,g.xM,g.xR], top=[3,2,1];
+    tx.forEach((x,i)=>{
+      ctx.beginPath();ctx.arc(x,g.yT,3,0,Math.PI*2);ctx.fill();
+      ctx.fillText(top[i].toString(), x, g.yT-9);
+    });
+  }
+
+  let slide=-1, autoSlide=true, flow=true, t0=performance.now();
+  function render(now){
+    const t=(now-t0)/1000;
+    if(autoSlide){ slide=Math.sin(t*0.55); document.getElementById('slide').value=slide.toFixed(3);
+      document.getElementById('slideVal').textContent=(slide<0?'−':' ')+Math.abs(slide).toFixed(2); }
+    const g=geom();
+
+    ctx.fillStyle=PANEL; ctx.fillRect(0,0,W,H);
+    drawEnds(g);
+
+    // orden de dibujo: C (debajo) -> B -> A (encima)  => capas A>B>C, cruces positivos
+    drawStrand(xC,g,slide,COL[2]);
+    drawStrand((u,gg)=>xB(u,gg,slide),g,slide,COL[1]);
+    drawStrand(xA,g,slide,COL[0]);
+
+    if(flow){
+      const u=(t*0.13)%1;
+      // beads en el mismo nivel u: misma capa de dibujo que las hebras
+      drawBead(xC,g,slide,u,COL[2]);
+      drawBead((uu,gg)=>xB(uu,gg,slide),g,slide,u,COL[1]);
+      drawBead(xA,g,slide,u,COL[0]);
+    }
+
+    // etiqueta
+    const lab=document.getElementById('braidLabel');
+    let w = slide<-0.15 ? '<b>σ₂σ₁σ₂</b>' : (slide>0.15 ? '<b>σ₁σ₂σ₁</b>' : '<b>punto triple</b>');
+    lab.innerHTML = 'medio giro Δ &nbsp;·&nbsp; '+w;
+
+    requestAnimationFrame(render);
+  }
+
+  document.getElementById('slide').addEventListener('input',e=>{
+    autoSlide=false; document.getElementById('autoBtn').classList.remove('on');
+    slide=parseFloat(e.target.value);
+    document.getElementById('slideVal').textContent=(slide<0?'−':' ')+Math.abs(slide).toFixed(2);
+  });
+  document.getElementById('autoBtn').addEventListener('click',e=>{
+    autoSlide=!autoSlide; e.target.classList.toggle('on',autoSlide); if(autoSlide)t0=performance.now();
+  });
+  document.getElementById('flowBtn').addEventListener('click',e=>{
+    flow=!flow; e.target.classList.toggle('on',flow);
+  });
+
+  window.addEventListener('resize',resize);
+
+  // init
+  updateUq(1.30);
+  setTimeout(()=>{resize(); rebuildLadder(); requestAnimationFrame(render);},60);
+  window.addEventListener('resize',()=>rebuildLadder());
 })();
 </script>
 </body>
 </html>
-Mostrando animacion.html.
