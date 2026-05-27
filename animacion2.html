@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>La fibración de Hopf · puntos y circunferencias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0c11;
+    --panel:#0f121a;
+    --panel-2:#12161f;
+    --line:#1d2330;
+    --txt:#dfe3ec;
+    --muted:#7b8294;
+    --faint:#4a5163;
+    --accent:#5ad1c9;
+    --accent-warm:#e9b15a;
+    --serif:"Spectral",Georgia,serif;
+    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;height:100%;}
+  body{
+    background:
+      radial-gradient(1200px 700px at 80% -10%, rgba(90,209,201,.06), transparent 60%),
+      radial-gradient(900px 600px at 0% 110%, rgba(233,177,90,.05), transparent 55%),
+      var(--bg);
+    color:var(--txt);
+    font-family:var(--mono);
+    font-size:13px;
+    overflow:hidden;
+  }
+  #app{display:grid;grid-template-columns:316px 1fr;height:100vh;}
+
+  /* ---- sidebar ---- */
+  #side{
+    border-right:1px solid var(--line);
+    background:linear-gradient(180deg,var(--panel),#0c0e15);
+    padding:20px 18px;
+    overflow-y:auto;
+    display:flex;flex-direction:column;gap:18px;
+  }
+  #side::-webkit-scrollbar{width:8px;}
+  #side::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px;}
+  h1{
+    font-family:var(--serif);font-weight:600;font-size:25px;line-height:1.05;
+    margin:0;letter-spacing:.2px;
+  }
+  h1 .sub{display:block;font-family:var(--mono);font-size:11px;font-weight:400;
+    color:var(--muted);letter-spacing:.5px;margin-top:7px;text-transform:uppercase;}
+  .group{display:flex;flex-direction:column;gap:9px;}
+  .label{font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--faint);}
+  #baseWrap{position:relative;width:100%;aspect-ratio:1/1;border:1px solid var(--line);
+    border-radius:10px;overflow:hidden;background:radial-gradient(circle at 50% 35%,#13182300,#0a0c11);}
+  #baseCanvas{width:100%;height:100%;display:block;cursor:crosshair;}
+  #baseHint{position:absolute;left:10px;bottom:8px;font-size:10px;color:var(--muted);
+    letter-spacing:.4px;pointer-events:none;}
+  .btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  button{
+    font-family:var(--mono);font-size:11.5px;color:var(--txt);
+    background:var(--panel-2);border:1px solid var(--line);border-radius:7px;
+    padding:9px 8px;cursor:pointer;transition:all .15s ease;letter-spacing:.3px;
+  }
+  button:hover{border-color:var(--accent);color:#fff;background:#161b26;}
+  button.warm:hover{border-color:var(--accent-warm);}
+  button.full{grid-column:1 / -1;}
+  .ctrl{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .switch{position:relative;width:38px;height:20px;flex:0 0 auto;}
+  .switch input{display:none;}
+  .track{position:absolute;inset:0;background:#222838;border:1px solid var(--line);
+    border-radius:20px;transition:.2s;}
+  .knob{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
+    background:var(--muted);transition:.2s;}
+  .switch input:checked + .track{background:rgba(90,209,201,.25);border-color:var(--accent);}
+  .switch input:checked + .track .knob{left:20px;background:var(--accent);}
+  input[type=range]{width:100%;-webkit-appearance:none;height:3px;background:var(--line);
+    border-radius:3px;outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;
+    border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid var(--bg);}
+  input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;
+    background:var(--accent);cursor:pointer;border:2px solid var(--bg);}
+  .reads{font-size:10.5px;color:var(--muted);}
+  .note{font-size:10.5px;line-height:1.55;color:var(--muted);}
+  .note b{color:var(--txt);font-weight:500;}
+  .count{font-size:10.5px;color:var(--accent);}
+  .footer{font-size:9.5px;color:var(--faint);line-height:1.5;border-top:1px solid var(--line);padding-top:12px;}
+
+  /* ---- main ---- */
+  #main{display:grid;grid-template-columns:1fr 1fr;height:100vh;}
+  .panel{position:relative;overflow:hidden;}
+  .panel:first-child{border-right:1px solid var(--line);}
+  .panel canvas{width:100%;height:100%;display:block;cursor:grab;}
+  .panel canvas:active{cursor:grabbing;}
+  .ptitle{position:absolute;top:14px;left:16px;pointer-events:none;}
+  .ptitle .t{font-family:var(--serif);font-size:18px;color:var(--txt);}
+  .ptitle .d{font-size:10px;letter-spacing:.6px;color:var(--muted);margin-top:3px;}
+  .badge{position:absolute;top:16px;right:16px;font-size:9.5px;letter-spacing:1px;
+    color:var(--faint);border:1px solid var(--line);border-radius:5px;padding:4px 7px;
+    text-transform:uppercase;}
+  .phint{position:absolute;bottom:12px;left:16px;font-size:10px;color:var(--faint);pointer-events:none;}
+
+  @media (max-width:960px){
+    #app{grid-template-columns:1fr;grid-template-rows:auto 1fr;}
+    #main{grid-template-columns:1fr;grid-template-rows:1fr 1fr;}
+    .panel:first-child{border-right:none;border-bottom:1px solid var(--line);}
+    #side{flex-direction:row;flex-wrap:wrap;overflow:visible;height:auto;}
+    #baseWrap{width:180px;}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="side">
+    <h1>La fibración de Hopf<span class="sub">Puntos en S² · circunferencias en S³</span></h1>
+
+    <div class="group">
+      <div class="label">Base S² — clic para añadir una fibra</div>
+      <div id="baseWrap">
+        <canvas id="baseCanvas"></canvas>
+        <div id="baseHint">arrastra: rotar · clic: añadir punto</div>
+      </div>
+      <div class="count" id="fiberCount">0 fibras</div>
+    </div>
+
+    <div class="group">
+      <div class="label">Configuraciones</div>
+      <div class="btns">
+        <button data-preset="single">Una fibra</button>
+        <button data-preset="link">Enlace de Hopf</button>
+        <button data-preset="torus">Toro (latitud)</button>
+        <button data-preset="nested">Toros anidados</button>
+        <button class="full warm" data-preset="clear">Limpiar todo</button>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="label">Representación</div>
+      <div class="ctrl">
+        <span>Superficie de los toros</span>
+        <label class="switch"><input type="checkbox" id="surf"><span class="track"><span class="knob"></span></span></label>
+      </div>
+      <div class="note">Rellena cada familia de latitud θ como un toro continuo (su pared), en lugar de mostrar las circunferencias sueltas.</div>
+    </div>
+
+    <div class="group">
+      <div class="label">Animación</div>
+      <div class="ctrl">
+        <span>Rotación 4D</span>
+        <label class="switch"><input type="checkbox" id="rot4d" checked><span class="track"><span class="knob"></span></span></label>
+      </div>
+      <div class="ctrl">
+        <span>Flujo de Hopf</span>
+        <label class="switch"><input type="checkbox" id="flow" checked><span class="track"><span class="knob"></span></span></label>
+      </div>
+      <div>
+        <div class="ctrl"><span>Velocidad 4D</span><span class="reads" id="spdRead">0.40</span></div>
+        <input type="range" id="speed" min="0" max="1.2" step="0.01" value="0.40">
+      </div>
+    </div>
+
+    <div class="note">
+      <b>Idea.</b> Cada <b>punto</b> de la esfera base S² determina una <b>circunferencia</b> (una fibra, un gran círculo de S³).
+      A la izquierda ves esas fibras tras la proyección estereográfica S³ → ℝ³;
+      a la derecha, S³ ⊂ ℝ⁴ girando de verdad en cuatro dimensiones y proyectado a ℝ³.
+      Dos puntos distintos dan circunferencias enlazadas: el enlace de Hopf.
+    </div>
+
+    <div class="footer">
+      h(z₁,z₂) = (2z₁z̄₂, |z₁|²−|z₂|²),  con |z₁|²+|z₂|²=1.<br>
+      Fibra sobre (θ,φ): z₁=cos(θ/2)e^{i(φ+t)}, z₂=sin(θ/2)e^{it}, t∈[0,2π).
+    </div>
+  </aside>
+
+  <section id="main">
+    <div class="panel" id="panelStereo">
+      <canvas id="stereoCanvas"></canvas>
+      <div class="ptitle"><div class="t">Proyección estereográfica</div><div class="d">S³ → ℝ³ · circunferencias de Villarceau</div></div>
+      <div class="badge">ℝ³</div>
+      <div class="phint">arrastra para rotar · rueda para acercar</div>
+    </div>
+    <div class="panel" id="panelFour">
+      <canvas id="fourCanvas"></canvas>
+      <div class="ptitle"><div class="t">Vista 4D</div><div class="d">S³ ⊂ ℝ⁴ · rotación en cuatro dimensiones</div></div>
+      <div class="badge">ℝ⁴ → ℝ³</div>
+      <div class="phint">arrastra para rotar la cámara · S³ gira solo en 4D</div>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  "use strict";
+  const TAU = Math.PI*2;
+  const N = 150;                 // segmentos por circunferencia
+  const D4 = 2.2;                // distancia de proyección 4D
+  const STEREO_SCALE = 1.0;
+  const FOUR_SCALE = 1.65;
+
+  // ---------- color por (theta, phi) ----------
+  function fiberColor(theta, phi){
+    const hue = (phi/TAU) % 1;
+    const light = 0.42 + 0.20*(theta/Math.PI);
+    return new THREE.Color().setHSL(hue, 0.72, light);
+  }
+
+  // ---------- muestreo de la fibra en R^4 ----------
+  function fiberR4(theta, phi){
+    const a = Math.cos(theta/2), b = Math.sin(theta/2);
+    const arr = new Float32Array(N*4);
+    for(let i=0;i<N;i++){
+      const t = TAU*i/N;
+      arr[4*i  ] = a*Math.cos(phi+t); // X1
+      arr[4*i+1] = a*Math.sin(phi+t); // X2
+      arr[4*i+2] = b*Math.cos(t);     // X3
+      arr[4*i+3] = b*Math.sin(t);     // X4
+    }
+    return arr;
+  }
+
+  // estereográfica desde el polo (0,0,0,1)
+  function stereoPositions(r4){
+    const out = new Float32Array(N*3);
+    for(let i=0;i<N;i++){
+      const X1=r4[4*i],X2=r4[4*i+1],X3=r4[4*i+2],X4=r4[4*i+3];
+      let den = 1-X4; if(Math.abs(den)<0.04) den = den<0?-0.04:0.04;
+      const s = STEREO_SCALE/den;
+      out[3*i  ]=X1*s; out[3*i+1]=X3*s; out[3*i+2]=X2*s;
+    }
+    return out;
+  }
+
+  // ---------- estado ----------
+  const fibers = [];   // {theta,phi,color,r4,stereo, lineS,lineF,dot,markS,markF}
+  const surfaces = []; // {theta,r4,count,meshS,meshF}
+  let rot4dOn = true, flowOn = true, speed = 0.40, surfaceMode = false;
+  let alpha = 0.6, beta = 0.2, flowParam = 0;
+
+  // ============================================================
+  //  Three.js: tres escenas / renderers independientes
+  // ============================================================
+  function makeView(canvas, opts){
+    const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 200);
+    const target = new THREE.Vector3(0,0,0);
+    const ctrl = { az:opts.az, pol:opts.pol, r:opts.r };
+    function place(){
+      const r=ctrl.r, p=ctrl.pol, a=ctrl.az;
+      camera.position.set(
+        target.x + r*Math.sin(p)*Math.cos(a),
+        target.y + r*Math.cos(p),
+        target.z + r*Math.sin(p)*Math.sin(a)
+      );
+      camera.lookAt(target);
+    }
+    place();
+    // controles de cámara
+    let dragging=false, px=0, py=0, moved=0;
+    canvas.addEventListener('pointerdown',e=>{dragging=true;px=e.clientX;py=e.clientY;moved=0;canvas.setPointerCapture(e.pointerId);});
+    canvas.addEventListener('pointermove',e=>{
+      if(!dragging)return;
+      const dx=e.clientX-px, dy=e.clientY-py; px=e.clientX;py=e.clientY;
+      moved+=Math.abs(dx)+Math.abs(dy);
+      ctrl.az -= dx*0.008;
+      ctrl.pol = Math.max(0.08, Math.min(Math.PI-0.08, ctrl.pol - dy*0.008));
+      place();
+    });
+    canvas.addEventListener('pointerup',e=>{
+      dragging=false;
+      if(moved<6 && opts.onClick) opts.onClick(e);
+    });
+    canvas.addEventListener('wheel',e=>{
+      e.preventDefault();
+      ctrl.r = Math.max(opts.rMin||1.4, Math.min(opts.rMax||40, ctrl.r*(1+Math.sign(e.deltaY)*0.1)));
+      place();
+    },{passive:false});
+    function resize(){
+      const w=canvas.clientWidth, h=canvas.clientHeight;
+      if(w===0||h===0)return;
+      renderer.setSize(w,h,false);
+      camera.aspect=w/h; camera.updateProjectionMatrix();
+    }
+    return {renderer,scene,camera,resize,ctrl,raycast:(e)=>{
+      const rect=canvas.getBoundingClientRect();
+      const x=((e.clientX-rect.left)/rect.width)*2-1;
+      const y=-((e.clientY-rect.top)/rect.height)*2+1;
+      const ray=new THREE.Raycaster();
+      ray.setFromCamera(new THREE.Vector2(x,y),camera);
+      return ray;
+    }};
+  }
+
+  const baseV = makeView(document.getElementById('baseCanvas'),
+      {az:0.9,pol:1.15,r:2.7,rMin:1.8,rMax:6,onClick:onBaseClick});
+  const stereoV = makeView(document.getElementById('stereoCanvas'),
+      {az:0.7,pol:1.05,r:6.2,rMin:1.5,rMax:40});
+  const fourV = makeView(document.getElementById('fourCanvas'),
+      {az:0.7,pol:1.05,r:5.0,rMin:1.5,rMax:40});
+
+  // ---------- decoración común: ejes tenues ----------
+  function addAxes(scene,len){
+    const g=new THREE.BufferGeometry();
+    const v=[ -len,0,0, len,0,0,  0,-len,0, 0,len,0,  0,0,-len, 0,0,len ];
+    g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
+    const m=new THREE.LineBasicMaterial({color:0x2a3040});
+    scene.add(new THREE.LineSegments(g,m));
+  }
+  addAxes(stereoV.scene,9);
+  addAxes(fourV.scene,2.4);
+
+  // ============================================================
+  //  Esfera base S²
+  // ============================================================
+  const baseRadius = 1;
+  // relleno translúcido para el raycast
+  const fillGeo = new THREE.SphereGeometry(baseRadius,48,32);
+  const fillMat = new THREE.MeshBasicMaterial({color:0x0d3a3a,transparent:true,opacity:0.10});
+  const baseSphere = new THREE.Mesh(fillGeo,fillMat);
+  baseV.scene.add(baseSphere);
+  // rejilla lat/long
+  (function(){
+    const m=new THREE.LineBasicMaterial({color:0x2f3848,transparent:true,opacity:0.7});
+    for(let k=1;k<8;k++){               // latitudes
+      const th=Math.PI*k/8, r=Math.sin(th)*baseRadius, y=Math.cos(th)*baseRadius;
+      const pts=[]; for(let i=0;i<=64;i++){const a=TAU*i/64;pts.push(new THREE.Vector3(r*Math.cos(a),y,r*Math.sin(a)));}
+      const g=new THREE.BufferGeometry().setFromPoints(pts);
+      baseV.scene.add(new THREE.LineLoop(g,m));
+    }
+    for(let k=0;k<8;k++){               // longitudes
+      const a=Math.PI*k/8; const pts=[];
+      for(let i=0;i<=64;i++){const th=Math.PI*i/64;
+        pts.push(new THREE.Vector3(Math.sin(th)*Math.cos(a)*baseRadius,Math.cos(th)*baseRadius,Math.sin(th)*Math.sin(a)*baseRadius));}
+      const g=new THREE.BufferGeometry().setFromPoints(pts);
+      baseV.scene.add(new THREE.Line(g,m));
+    }
+  })();
+
+  function onBaseClick(e){
+    const ray=baseV.raycast(e);
+    const hits=ray.intersectObject(baseSphere);
+    if(!hits.length)return;
+    const p=hits[0].point.clone().normalize();
+    // mapeo: usamos (x,y,z) con y = cos(theta) acorde a la rejilla
+    const theta=Math.acos(Math.max(-1,Math.min(1,p.y)));
+    let phi=Math.atan2(p.z,p.x); if(phi<0)phi+=TAU;
+    addFiber(theta,phi);
+    refreshSurfaces(); applyMode();
+  }
+
+  // ============================================================
+  //  Construcción / destrucción de fibras
+  // ============================================================
+  function dotMaterial(c){return new THREE.MeshBasicMaterial({color:c});}
+  const dotGeo = new THREE.SphereGeometry(0.035,12,10);
+  const markGeo = new THREE.SphereGeometry(0.05,12,10);
+
+  function addFiber(theta,phi){
+    theta=Math.max(0.06*Math.PI,Math.min(0.94*Math.PI,theta));
+    const color=fiberColor(theta,phi);
+    const r4=fiberR4(theta,phi);
+    const stereo=stereoPositions(r4);
+
+    // línea estereográfica
+    const gS=new THREE.BufferGeometry();
+    gS.setAttribute('position',new THREE.BufferAttribute(stereo,3));
+    const lineS=new THREE.LineLoop(gS,new THREE.LineBasicMaterial({color}));
+    stereoV.scene.add(lineS);
+
+    // línea 4D (se actualiza por frame)
+    const gF=new THREE.BufferGeometry();
+    gF.setAttribute('position',new THREE.BufferAttribute(new Float32Array(N*3),3));
+    const lineF=new THREE.LineLoop(gF,new THREE.LineBasicMaterial({color}));
+    fourV.scene.add(lineF);
+
+    // punto en S²
+    const dot=new THREE.Mesh(dotGeo,dotMaterial(color));
+    dot.position.set(Math.sin(theta)*Math.cos(phi),Math.cos(theta),Math.sin(theta)*Math.sin(phi))
+       .multiplyScalar(baseRadius*1.02);
+    baseV.scene.add(dot);
+
+    // marcadores del flujo
+    const markS=new THREE.Mesh(markGeo,dotMaterial(color)); markS.visible=false; stereoV.scene.add(markS);
+    const markF=new THREE.Mesh(markGeo,dotMaterial(color)); markF.visible=false; fourV.scene.add(markF);
+
+    fibers.push({theta,phi,color,r4,stereo,lineS,lineF,dot,markS,markF});
+    updateCount();
+  }
+
+  function clearFibers(){
+    fibers.forEach(f=>{
+      stereoV.scene.remove(f.lineS); f.lineS.geometry.dispose(); f.lineS.material.dispose();
+      fourV.scene.remove(f.lineF);  f.lineF.geometry.dispose(); f.lineF.material.dispose();
+      baseV.scene.remove(f.dot);    f.dot.material.dispose();
+      stereoV.scene.remove(f.markS);f.markS.material.dispose();
+      fourV.scene.remove(f.markF);  f.markF.material.dispose();
+    });
+    fibers.length=0; clearSurfaces(); updateCount();
+  }
+
+  // ============================================================
+  //  Superficies de los toros (paredes continuas)
+  // ============================================================
+  const SURF_PHI=110, SURF_T=46;
+  function surfMaterial(){
+    return new THREE.MeshBasicMaterial({vertexColors:true,side:THREE.DoubleSide,
+      transparent:true,opacity:0.72,depthWrite:false});
+  }
+  function buildSurface(theta){
+    const np=SURF_PHI+1, nt=SURF_T+1, count=np*nt;
+    const r4=new Float32Array(count*4), col=new Float32Array(count*3), posS=new Float32Array(count*3);
+    const a=Math.cos(theta/2), b=Math.sin(theta/2), c=new THREE.Color();
+    for(let i=0;i<np;i++){
+      const phi=TAU*i/SURF_PHI;
+      for(let j=0;j<nt;j++){
+        const t=TAU*j/SURF_T, k=i*nt+j;
+        const X1=a*Math.cos(phi+t), X2=a*Math.sin(phi+t), X3=b*Math.cos(t), X4=b*Math.sin(t);
+        r4[4*k]=X1; r4[4*k+1]=X2; r4[4*k+2]=X3; r4[4*k+3]=X4;
+        // estereográfica estática
+        let den=1-X4; if(Math.abs(den)<0.04) den=den<0?-0.04:0.04;
+        const s=STEREO_SCALE/den;
+        posS[3*k]=X1*s; posS[3*k+1]=X3*s; posS[3*k+2]=X2*s;
+        // color arcoíris por phi con sombreado de tubo segun t
+        const shade=0.5+0.5*(0.5+0.5*Math.cos(t));
+        c.copy(fiberColor(theta,phi));
+        col[3*k]=c.r*shade; col[3*k+1]=c.g*shade; col[3*k+2]=c.b*shade;
+      }
+    }
+    const idx=[];
+    for(let i=0;i<SURF_PHI;i++) for(let j=0;j<SURF_T;j++){
+      const a0=i*nt+j, a1=(i+1)*nt+j, a2=(i+1)*nt+(j+1), a3=i*nt+(j+1);
+      idx.push(a0,a1,a2, a0,a2,a3);
+    }
+    const gS=new THREE.BufferGeometry();
+    gS.setAttribute('position',new THREE.BufferAttribute(posS,3));
+    gS.setAttribute('color',new THREE.BufferAttribute(col,3));
+    gS.setIndex(idx);
+    const meshS=new THREE.Mesh(gS,surfMaterial()); stereoV.scene.add(meshS);
+
+    const gF=new THREE.BufferGeometry();
+    gF.setAttribute('position',new THREE.BufferAttribute(new Float32Array(count*3),3));
+    gF.setAttribute('color',new THREE.BufferAttribute(col.slice(),3));
+    gF.setIndex(idx.slice());
+    const meshF=new THREE.Mesh(gF,surfMaterial()); fourV.scene.add(meshF);
+
+    surfaces.push({theta,r4,count,meshS,meshF});
+  }
+  function clearSurfaces(){
+    surfaces.forEach(s=>{
+      stereoV.scene.remove(s.meshS); s.meshS.geometry.dispose(); s.meshS.material.dispose();
+      fourV.scene.remove(s.meshF);  s.meshF.geometry.dispose(); s.meshF.material.dispose();
+    });
+    surfaces.length=0;
+  }
+  function refreshSurfaces(){
+    clearSurfaces();
+    if(!surfaceMode) return;
+    const seen=new Set();
+    fibers.forEach(f=>{
+      const key=f.theta.toFixed(4);
+      if(!seen.has(key)){ seen.add(key); buildSurface(f.theta); }
+    });
+  }
+  function applyMode(){
+    fibers.forEach(f=>{ f.lineS.visible=!surfaceMode; f.lineF.visible=!surfaceMode; });
+  }
+
+  function updateCount(){
+    const n=fibers.length;
+    document.getElementById('fiberCount').textContent = n+(n===1?' fibra':' fibras');
+  }
+
+  // ============================================================
+  //  Configuraciones predefinidas
+  // ============================================================
+  function preset(name){
+    clearFibers();
+    if(name==='clear') return;
+    if(name==='single'){ addFiber(Math.PI/2,0); }
+    else if(name==='link'){ addFiber(Math.PI/2,0); addFiber(Math.PI/2,Math.PI); }
+    else if(name==='torus'){
+      const M=24; for(let i=0;i<M;i++) addFiber(Math.PI/2, TAU*i/M);
+    }
+    else if(name==='nested'){
+      const thetas=[Math.PI/6,Math.PI/3,Math.PI/2,2*Math.PI/3,5*Math.PI/6];
+      const M=14;
+      thetas.forEach(th=>{ for(let i=0;i<M;i++) addFiber(th, TAU*i/M); });
+    }
+    refreshSurfaces(); applyMode();
+  }
+
+  // ============================================================
+  //  Animación
+  // ============================================================
+  let last=performance.now();
+  function animate(now){
+    const dt=Math.min(0.05,(now-last)/1000); last=now;
+    if(rot4dOn){ alpha += speed*dt; beta += speed*0.61*dt; }
+    if(flowOn){ flowParam = (flowParam + 0.18*dt) % 1; }
+
+    const ca=Math.cos(alpha), sa=Math.sin(alpha);
+    const cb=Math.cos(beta),  sb=Math.sin(beta);
+    const showMarks = flowOn && !surfaceMode;
+
+    if(!surfaceMode){
+      for(const f of fibers){
+        const r4=f.r4, pos=f.lineF.geometry.attributes.position.array;
+        for(let i=0;i<N;i++){
+          const X1=r4[4*i],X2=r4[4*i+1],X3=r4[4*i+2],X4=r4[4*i+3];
+          // rotación 4D: plano (X1,X4) y plano (X2,X3)
+          const x1= X1*ca - X4*sa;
+          const x4= X1*sa + X4*ca;
+          const x2= X2*cb - X3*sb;
+          const x3= X2*sb + X3*cb;
+          const fp = D4/(D4 - x4);
+          pos[3*i  ]= x1*fp*FOUR_SCALE;
+          pos[3*i+1]= x3*fp*FOUR_SCALE;
+          pos[3*i+2]= x2*fp*FOUR_SCALE;
+        }
+        f.lineF.geometry.attributes.position.needsUpdate=true;
+
+        // marcadores del flujo de Hopf
+        f.markS.visible=showMarks; f.markF.visible=showMarks;
+        if(showMarks){
+          const idx=Math.floor(flowParam*N)%N;
+          f.markS.position.set(f.stereo[3*idx],f.stereo[3*idx+1],f.stereo[3*idx+2]);
+          f.markF.position.set(pos[3*idx],pos[3*idx+1],pos[3*idx+2]);
+        }
+      }
+    } else {
+      for(const f of fibers){ f.markS.visible=false; f.markF.visible=false; }
+      for(const s of surfaces){
+        const r4=s.r4, pos=s.meshF.geometry.attributes.position.array, count=s.count;
+        for(let k=0;k<count;k++){
+          const X1=r4[4*k],X2=r4[4*k+1],X3=r4[4*k+2],X4=r4[4*k+3];
+          const x1= X1*ca - X4*sa;
+          const x4= X1*sa + X4*ca;
+          const x2= X2*cb - X3*sb;
+          const x3= X2*sb + X3*cb;
+          const fp = D4/(D4 - x4);
+          pos[3*k  ]= x1*fp*FOUR_SCALE;
+          pos[3*k+1]= x3*fp*FOUR_SCALE;
+          pos[3*k+2]= x2*fp*FOUR_SCALE;
+        }
+        s.meshF.geometry.attributes.position.needsUpdate=true;
+      }
+    }
+
+    baseV.renderer.render(baseV.scene,baseV.camera);
+    stereoV.renderer.render(stereoV.scene,stereoV.camera);
+    fourV.renderer.render(fourV.scene,fourV.camera);
+    requestAnimationFrame(animate);
+  }
+
+  // ============================================================
+  //  UI
+  // ============================================================
+  document.querySelectorAll('[data-preset]').forEach(b=>{
+    b.addEventListener('click',()=>preset(b.dataset.preset));
+  });
+  document.getElementById('rot4d').addEventListener('change',e=>rot4dOn=e.target.checked);
+  document.getElementById('flow').addEventListener('change',e=>flowOn=e.target.checked);
+  document.getElementById('surf').addEventListener('change',e=>{surfaceMode=e.target.checked; refreshSurfaces(); applyMode();});
+  const spd=document.getElementById('speed'), spdRead=document.getElementById('spdRead');
+  spd.addEventListener('input',()=>{speed=parseFloat(spd.value);spdRead.textContent=speed.toFixed(2);});
+
+  function resizeAll(){ baseV.resize(); stereoV.resize(); fourV.resize(); }
+  window.addEventListener('resize',resizeAll);
+  // dar tiempo al layout antes de medir
+  setTimeout(()=>{resizeAll(); preset('nested');},60);
+
+  requestAnimationFrame(animate);
+})();
+</script>
+</body>
+</html>
+Mostrando animacion.html.
