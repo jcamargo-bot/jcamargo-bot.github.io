@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 464 – Seminario de Topología "Rafael Isaacs"</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Georgia, serif; color: #222; background: #fff; }
+header { background: #67B93E; border-bottom: 1px solid #4a9a2a; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+header h1 { font-size: 1.2rem; font-weight: normal; color: #fff; }
+header p { font-size: 0.85rem; color: rgba(255,255,255,0.85); margin-top: 3px; }
+nav a { font-size: 0.85rem; color: rgba(255,255,255,0.85); text-decoration: none; margin-left: 1.5rem; }
+nav a:hover { color: #fff; text-decoration: underline; }
+.breadcrumb { font-size: 0.8rem; color: #999; padding: 1rem 2rem; border-bottom: 1px solid #f0f0f0; }
+.breadcrumb a { color: #67B93E; text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.content { max-width: 780px; padding: 2rem; margin: 0 auto; }
+.session-num { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 0.5rem; }
+.session-title { font-size: 1.6rem; font-weight: normal; line-height: 1.3; margin-bottom: 1.5rem; }
+.meta-grid { display: flex; gap: 2rem; flex-wrap: wrap; background: #f7f7f7; padding: 1.25rem 1.5rem; border-radius: 6px; margin-bottom: 1.5rem; }
+.meta-item label { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 3px; }
+.meta-item span { font-size: 0.9rem; color: #222; }
+.section-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; border-bottom: 1px solid #eee; padding-bottom: 0.4rem; margin-bottom: 1rem; margin-top: 2rem; }
+.body-text { font-size: 0.95rem; color: #444; line-height: 1.8; margin-bottom: 1rem; }
+.back-link { display: inline-block; margin-top: 2.5rem; font-size: 0.85rem; color: #67B93E; text-decoration: none; }
+.back-link:hover { text-decoration: underline; }
+footer { border-top: 1px solid #eee; padding: 1.5rem 2rem; font-size: 0.8rem; color: #aaa; margin-top: 3rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex; align-items:center; gap:1rem;">
+    <img src="LOGO%20UIS_PNG.png" alt="Logo UIS" style="height:50px; width:auto;">
+    <div>
+      <h1>Seminario de Topología "Rafael Isaacs"</h1>
+      <p>Escuela de Matemáticas · Universidad Industrial de Santander</p>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html">Sesiones</a>
+    <a href="expositores.html">Expositores</a>
+    <a href="temas.html">Temas</a>
+    <a href="sesiones-1-328.html">Sesiones 1–328</a>
+    <a href="sesiones-329-450.html">Sesiones 329–450</a>
+  </nav>
+</header>
+
+<div class="breadcrumb">
+  <a href="index.html">Inicio</a> › Sesión 464
+</div>
+
+<div class="content">
+  <div class="session-num">Sesión 464 · 28 de julio de 2026</div>
+  <h1 class="session-title">Continuos semi-Kelley</h1>
+
+  <div class="meta-grid">
+    <div class="meta-item"><label>Expositor</label><span>David Maya</span></div>
+    <div class="meta-item"><label>Institución</label><span>Universidad Autónoma del Estado de México</span></div>
+    <div class="meta-item"><label>Fecha</label><span>Lunes 28 de julio, 2026</span></div>
+    <div class="meta-item"><label>Hora y lugar</label><span>4:00 p.m. · Sala Lezama, Edificio Camilo Torres</span></div>
+  </div>
+
+  <div class="section-label">Resumen</div>
+  <p class="body-text">Un <em>continuo</em> es un espacio métrico, compacto, conexo y no vacío. Dado un continuo <em>X</em>, <em>C</em>(<em>X</em>) denota el hiperespacio de todos los subcontinuos de <em>X</em> dotado con la métrica de Hausdorff <em>H</em>.</p>
+
+  <p class="body-text">Un continuo <em>X</em> es <em>Kelley</em> si para cada ε &gt; 0, existe δ &gt; 0 tal que si <em>a</em> ∈ <em>A</em> ∈ <em>C</em>(<em>X</em>), entonces cada elemento <em>b</em> de la δ-vecindad de <em>a</em> pertenece a un elemento <em>B</em> ∈ <em>C</em>(<em>X</em>) que cumple que <em>H</em>(<em>A</em>, <em>B</em>) &lt; ε. Esta propiedad fue introducida por J.L. Kelley como Propiedad 3.2 en 1942. Surge como una condición que garantiza la contractibilidad de <em>C</em>(<em>X</em>) y tiene un papel importante en el estudio de varias propiedades de continuos, con implicaciones significativas en la teoría de continuos no necesariamente relacionadas con hiperespacios.</p>
+
+  <p class="body-text">Los continuos semi-Kelley, una forma débil de la propiedad de Kelley para continuos, se introdujeron en 1998 por J.J. Charatonik y W.J. Charatonik. Un problema interesante en esta área es determinar qué resultados conocidos para continuos Kelley pueden extenderse a los continuos semi-Kelley.</p>
+
+  <p class="body-text">En esta charla presentaremos una caracterización de los continuos semi-Kelley y su aplicación en la prueba de algunos resultados conocidos.</p>
+
+  <a class="back-link" href="index.html">← Volver a sesiones recientes</a>
+</div>
+
+<footer>
+  <span>Seminario de Topología "Rafael Isaacs" · UIS · Bucaramanga, Colombia</span>
+  <span>jcamargo-bot.github.io</span>
+</footer>
+
+</body>
+</html>
